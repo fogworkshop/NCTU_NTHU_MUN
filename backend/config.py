@@ -1,0 +1,5 @@
+DBNAME = ''
+DBUSER = ''
+DBPASSWORD = ''
+COOKIE_SECRET = 'wef wqfqw wqefwqf2 f'
+PORT = '2519'

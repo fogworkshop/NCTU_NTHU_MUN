@@ -46,7 +46,7 @@ class RequestHandler(tornado.web.RequestHandler):
             self.finish(json.dumps(kwargs,cls = _encoder))
 
         else:
-            tpldr = tornado.template.Loader('./templates')
+            tpldr = tornado.template.Loader('./templ')
             data = tpldr.load(templ).generate(**kwargs)
             self.finish(data)
 
