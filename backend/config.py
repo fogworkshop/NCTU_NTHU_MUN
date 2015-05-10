@@ -1,5 +1,5 @@
-DBNAME = ''
-DBUSER = ''
-DBPASSWORD = ''
+DBNAME = 'mun'
+DBUSER = 'root'
+DBPASSWORD = 'root'
 COOKIE_SECRET = 'wef wqfqw wqefwqf2 f'
 PORT = '2519'

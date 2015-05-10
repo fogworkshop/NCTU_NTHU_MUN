@@ -26,9 +26,9 @@ class RequestHandler(tornado.web.RequestHandler):
     def error(self,err):
         self.finish(err)
         return
-        
+
     def render(self,templ,**kwargs):
-        kwargs['acct'] = self.acct
+        #kwargs['acct'] = self.acct
         class _encoder(json.JSONEncoder):
             def default(self,obj):
                 if isinstance(obj,datetime.datetime):
@@ -54,11 +54,12 @@ class RequestHandler(tornado.web.RequestHandler):
 
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
     def __init__(self,*args,**kwargs):
-            super().__init__(*args,**kwargs)
+        super().__init__(*args,**kwargs)
 
 def reqenv(func):
     @tornado.gen.coroutine
     def wrap(self,*args,**kwargs):
+        '''
         try:
             uid = self.get_secure_cookie('uid').decode()
         except:
@@ -67,7 +68,7 @@ def reqenv(func):
             err, self.acct = yield from Service.Login.get_account_info(str(uid))
         else:
             self.acct = None
-
+        '''
         ret = func(self,*args,**kwargs)
         if isinstance(ret,types.GeneratorType):
             ret = yield from ret
