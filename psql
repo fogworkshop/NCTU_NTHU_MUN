@@ -1,0 +1,18 @@
+CREATE OR REPLACE FUNCTION update_modified_column()	
+RETURNS TRIGGER AS $$
+BEGIN
+	NEW.modified = now();
+	RETURN NEW;	
+END;
+$$ language 'plpgsql';
+
+CREATE TABLE account(
+    uid SERIAL,
+	email varchar(256),
+	pwd varchar(256),
+	level varchar(256),
+	created timestamp DEFAULT now(),
+	modified timestamp DEFAULT now()
+);
+
+CREATE TRIGGER account_modified BEFORE UPDATE ON account FOR EACH ROW EXECUTE PROCEDURE  update_modified_column();
