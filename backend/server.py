@@ -14,7 +14,19 @@ from login import LoginService
 class IndexHandler(RequestHandler):
     @reqenv
     def get(self):
-        self.render('index.html')
+        islogin = False
+        issetdata = False
+        acct = "normal"
+        if not islogin:
+            self.render("login.html")
+        else:
+            if acct[0:5] == "admin":
+                self.render(acct)
+            else:
+                if not issetdata:
+                    self.render("modify_user.html")
+                else:
+                    self.render("show_data.html")
         return
 
     @reqenv
