@@ -43,7 +43,7 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Nationality</label>
 					<div class="col-sm-3">
-						<select name="nationality" class="selectpicker" data-width="100%" data-size="auto" data-live-search="true" value="Taiwan">
+						<select name="nationality" class="selectpicker" data-width="100%" data-size="20" data-live-search="true">
 							{% for x in nationality %}
 								<option>{{nationality[x]}}</option>
 							{% end %}
@@ -54,18 +54,120 @@
 					<label class="col-sm-2 control-label">Vegetarian</label>
 					<div class="col-sm-3">
 						<select name="vegetarian" class="selectpicker" data-width="100%">
-							<option value="0">No</option>
 							<option value="1">Yes</option>
+							<option value="0">No</option>
 						</select>
 					</div>
 				</div>
 				<h1>University</h1>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">University(Full Chinese name of School)</label>
+					<label class="col-sm-2 control-label">University</label>
 					<div class="col-sm-3">
-						<input name="englishname" class="form-control" type="text">
+						<input name="university" class="form-control" type="text">
+					</div>
+					<label class="col-sm-3 control-label" style="text-align: left">Full Chinese name of School</label>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Department</label>
+					<div class="col-sm-3">
+						<input name="deparement" class="form-control" type="text">
 					</div>
 				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Grade</label>
+					<div class="col-sm-3">
+						<select name="grade" class="selectpicker" data-width="100%">
+							{% for x in range(2010, 2021) %}
+								<option>{{x}}</option>
+							{% end %}
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Delegation</label>
+					<div class="col-sm-3">
+						<select name="delegation" class="selectpicker" data-width="100%" onchange="delegation_change();">
+							<option value="1">Single</option>
+							<option value="2">Double</option>
+						</select>
+					</div>
+				</div>
+				<div class="delegation form-group" hidden>
+					<label class="col-sm-2 control-label">Partner's English Name</label>
+					<div class="col-sm-3">
+						<input name="delegation_englishname" class="form-control" type="text">
+					</div>
+					<label class="col-sm-4 control-label" style="text-align: left">
+						Exactly the same as how your partner wrote it
+					</label>
+				</div>
+				<div class="delegation form-group" hidden>
+					<label class="col-sm-2 control-label">Partner's Email</label>
+					<div class="col-sm-3">
+						<input name="delegation_email" class="form-control" type="text">
+					</div>
+				</div>
+				<h1>Contact Information</h1>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Country of Residence</label>
+					<div class="col-sm-3">
+						<select name="residence" class="selectpicker" data-width="100%" data-size="20" data-live-search="true">
+							{% for x in nationality %}
+								<option>{{nationality[x]}}</option>
+							{% end %}
+						</select>
+					</div>
+				</div>
+				<div class="delegation form-group">
+					<label class="col-sm-2 control-label">City</label>
+					<div class="col-sm-3">
+						<input name="city" class="form-control" type="text">
+					</div>
+				</div>
+				<div class="delegation form-group">
+					<label class="col-sm-2 control-label">Address</label>
+					<div class="col-sm-3">
+						<input name="address" class="form-control" type="text">
+					</div>
+				</div>
+				<div class="delegation form-group">
+					<label class="col-sm-2 control-label">Cellphone</label>
+					<div class="col-sm-3">
+						<input name="cellphone" class="form-control" type="text">
+					</div>
+				</div>
+				<h1>Other</h1>
+				<div class="form-group">
+					<label class="col-sm-offset-2 col-sm-10">
+						* Would you require accommodation (We do not help delegates reserve accommodations; however, we will assist you in finding suitable hotels)?
+					</label>
+					<label class="col-sm-2 control-label"></label>
+					<div class="col-sm-3">
+						<select name="require_accommodation" class="selectpicker" data-width="100%" value="0">
+							<option value="1">Yes</option>
+							<option value="0">No</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-offset-2 col-sm-10">
+						Committee Preference
+					</label>
+				</div>
+				{% set ORDER = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth"] %}
+				{% set CP_OPTION = ["Empty", "DISEC", "SPECPOL", "ECOSOC", "IACHR", "PC", "立法院"] %}
+				{% for x in range (6) %}
+					<div class="form-group">
+						<label class="col-sm-2 control-label">{{ORDER[x]}}</label>
+						<div class="col-sm-3">
+							<select name="commitee_preference_{{x}}" class="selectpicker" data-width="100%" value="0">
+								{% for y in range(7) %}
+									<option class="CP_OPTION" value={{y}}>{{CP_OPTION[y]}}</option>
+								{% end %}
+							</select>
+						</div>
+					</div>
+				{% end %}
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-2">
 						<a class="btn btn-success btn-block" onclick="information_update();">Submit</a>
@@ -89,5 +191,16 @@ $(document).ready(function(){
 		endDate: "1999/12/31"
 	});
 });
+function information_update(){
+	data = $(".information-form").serialize();
+	console.log(data);
+}
+function delegation_change(){
+	if($("[name=delegation]").val()=="1"){
+		$(".delegation:visible").animate({height: "toggle"});
+	} else {
+		$(".delegation:hidden").animate({height: "toggle"});
+	}
+}
 </script>
 {% end %}
