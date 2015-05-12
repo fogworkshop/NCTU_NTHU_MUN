@@ -1,6 +1,8 @@
 from req import RequestHandler
 from req import Service
 from req import reqenv
+from mail import MailHandler
+import random
 
 def _hash(pwd):
     C = 1048072
@@ -13,6 +15,7 @@ def _hash(pwd):
 class LoginService:
     def __init__(self, db):
         self.db = db
+        self.forget_mail = MailHandler('templ/forget_mail.html')
         LoginService.inst = self
 
     def signup(self, email, pwd, rpwd):
@@ -43,6 +46,23 @@ class LoginService:
         if _hash(pwd) != hpwd:
             return ('Epwd', None)
         return (None, int(uid))
+
+    def forget_password(self, email):
+        def random_password():
+            return str(random.randint(0,100000000000))
+        cur = yield self.db.cursor()
+        yield cur.execute('SELECT "uid" FROM "account" WHERE "email" = %s;', (email))
+        if cur.rowcount != 1:
+            return ('Eemail', None)
+        uid = cur.fetchone()[0]
+        npwd = random_password()
+        hnpwd = _hash(npwd)
+        yield cur.execute('UPDATE "account" SET "pwd" = %s WHERE "uid" = %s;', (hnpwd, uid))
+        err = self.forget_mail.send(email, 'chamge password', email=email, pwd=npwd)
+        if err:
+            return ('Esendmail', None)
+        return (None, uid)
+
 
     def get_account_info(self, uid):
         cur = yield self.db.cursor()
@@ -76,6 +96,12 @@ class LoginHandler(RequestHandler):
             email = self.get_argument('email', None)
             pwd = self.get_argument('pwd', None)
             err, uid = yield from LoginService.inst.signin(email, pwd)
+            if err:
+                self.finish(err)
+            self.finish(str(uid))
+        elif req == 'forget':
+            email = self.get_argument('email', None)
+            err, uid = yield from LoginService.inst.forget_password(email)
             if err:
                 self.finish(err)
             self.finish(str(uid))
