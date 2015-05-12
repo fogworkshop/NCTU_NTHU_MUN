@@ -20,7 +20,7 @@
 		<div class="col-lg-4 text-center">
 			<div class="login-border">
 				<h3>Login</h3>
-				<form class="form-horizontal">
+				<form class="form-horizontal login-form">
 					<div class="form-group">
 						<label class="col-sm-offset-1 col-sm-3 control-label">Email</label>
 						<div class="col-sm-7">
@@ -33,15 +33,16 @@
 							<input class="form-control" type="password">
 						</div>
 					</div>
+					<input type="hidden" name="req" value="signin">
 					<div class="form-group">
-						<div class="col-sm-4">
-							<a class="btn btn-default">LogIn</a>
+						<div class="col-sm-offset-2 col-sm-3">
+							<a class="btn btn-default btn-block" onclick="login();">LogIn</a>
 						</div>
-						<div class="col-sm-4">
-							<a class="btn btn-default">Register</a>
+						<div class="col-sm-3">
+							<a class="btn btn-default btn-block" onclick="register();">Register</a>
 						</div>
-						<div class="col-sm-4">
-							<a class="btn btn-default">Forgot</a>
+						<div class="col-sm-3">
+							<a class="btn btn-default btn-block" onclick="forgot();">Forgot</a>
 						</div>
 					</div>
 				</form>
@@ -51,15 +52,99 @@
 		</div>
 	</div>
 </div>
+<div class="hidden register-modal">
+	<form class="form-horizontal register-form">
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Email</label>
+			<div class="col-sm-7">
+				<input name="email" class="form-control" type="text">
+			</div>
+		</div>	
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Password</label>
+			<div class="col-sm-7">
+				<input name="pwd" class="form-control" type="password">
+			</div>
+		</div>	
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Confirm Password</label>
+			<div class="col-sm-7">
+				<input name="rpwd" class="form-control" type="password">
+			</div>
+		</div>
+		<input type="hidden" name="req" value="signin">
+	</form>
+</div>
+<div class="hidden forgot-modal">
+	<form class="form-horizontal forgot-form">
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Email</label>
+			<div class="col-sm-7">
+				<input name="email" class="form-control" type="text">
+			</div>
+		</div>	
+	</form>
+</div>
 <script>
 $(document).ready(function(){
-	document.title = "login | MUN";
+	document.title = "Login | MUN";
 })
-function forgot_password(){
-}
 function login(){
 }
-function logout(){
+function register(){
+	message = $(".register-modal").html();
+	bootbox.dialog({
+		message: message,
+		title: "Register",
+		buttons: {
+			success: {
+				label: "Register",
+				className: "btn-success",
+				callback: function() {
+					data = $(".register-form:visible").serialize();
+					$.post("/login", data, function(msg){
+						bootbox.alert(msg);
+					});
+					return false;
+				}
+			},
+			danger: {
+				label: "Cancel",
+				className: "btn-danger",
+				callback: function() {
+				}
+			}
+		}
+	});
+}
+function forgot(){
+	message = $(".forgot-modal").html();
+
+	bootbox.dialog({
+		message: message,
+		title: "Forgot Password",
+		buttons: {
+			success: {
+				label: "Send",
+				className: "btn-success",
+				callback: function(){
+					return false;
+				}
+			},
+			danger: {
+				label: "Cancel",
+				className: "btn-danger",
+				callback: function(){
+				}
+			}
+		}
+	});
+	/*
+	console.log($(".modal-dialog").html());
+	height = ($(document).height() - 200) / 2;
+	console.log(height);
+	$(".modal-dialog").css("margin-top", height+"px");
+	*/
 }
 </script>
 {% end %}
