@@ -20,7 +20,7 @@ CREATE TRIGGER account_modified BEFORE UPDATE ON account FOR EACH ROW EXECUTE PR
 CREATE TABLE account_info(
     chinesename varchar(256),
     englishname varchar(256),
-    gender int(1),
+    gender varchar(256),
     birth datetime,
     nationality int(11),
     vegertarian bool,
