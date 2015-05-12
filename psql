@@ -36,7 +36,6 @@ CREATE TABLE account_info(
     city varchar(256),
     address varchar(256),
     cellphone varchar(256),
-    email varchar(256),
 
     require_accommodation bool,
 
