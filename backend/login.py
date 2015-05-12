@@ -55,9 +55,12 @@ class LoginHandler(RequestHandler):
         if req == 'signin':
             email = self.get_argument('email', None)
             pwd = self.get_argument('pwd', None)
-            rpwd = self.get_argument('rpwd', None)
-            err, uid = yield from LoginService.inst.signup(email, pwd, rpwd)
+            err, uid = yield from LoginService.inst.signin(email, pwd)
             pass
         elif req == 'signup':
+            email = self.get_argument('email', None)
+            pwd = self.get_argument('pwd', None)
+            rpwd = self.get_argument('rpwd', None)
+            err, uid = yield from LoginService.inst.signup(email, pwd, rpwd)
             pass
         return 
