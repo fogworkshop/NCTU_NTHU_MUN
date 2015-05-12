@@ -16,9 +16,9 @@ class LoginService:
         LoginService.inst = self
 
     def signup(self, email, pwd, rpwd):
-        if email == '':
+        if not email or email == '':
             return ('Eemptyemail', None)
-        if pwd == '':
+        if not pwd or pwd == '':
             return ('Eemptypwd', None)
         if pwd != rpwd:
             return ('Erpwd', None)
@@ -44,6 +44,18 @@ class LoginService:
             return ('Epwd', None)
         return (None, int(uid))
 
+    def get_account_info(self, uid):
+        cur = yield self.db.cursor()
+        yield cur.execute('SELECT "email", "type" FROM "account" WHERE "uid" = %s;', (uid,))
+        if cur.rowcount != 1:
+            return ('Euid', None)
+        (email, _type) = cur.fetchone()
+        meta = {'uid': uid,
+                'email': email,
+                'type': _type
+                }
+        return (None, meta)
+
 class LoginHandler(RequestHandler):
     @reqenv
     def get(self):
@@ -56,8 +68,15 @@ class LoginHandler(RequestHandler):
             email = self.get_argument('email', None)
             pwd = self.get_argument('pwd', None)
             rpwd = self.get_arguemnt('rpwd', None)
-            err, uid = yield from LoginService.inst.signup()    
-            pass
+            err, uid = yield from LoginService.inst.signup(email, pwd, rpwd)
+            if err:
+                self.finish(err)
+            self.finish(str(uid))
         elif req == 'signup':
-            pass
+            email = self.get_argument('email', None)
+            pwd = self.get_argument('pwd', None)
+            err, uid = yield from LoginService.inst.signin(email, pwd)
+            if err:
+                self.finish(err)
+            self.finish(str(uid))
         return 

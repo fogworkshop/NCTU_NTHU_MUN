@@ -1,5 +1,6 @@
 DBNAME = 'mun'
 DBUSER = 'root'
 DBPASSWORD = 'root'
+DBHOST = '140.113.240.138'
 COOKIE_SECRET = 'wef wqfqw wqefwqf2 f'
 PORT = '2519'
