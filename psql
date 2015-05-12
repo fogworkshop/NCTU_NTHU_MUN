@@ -11,6 +11,7 @@ CREATE TABLE account(
 	email varchar(256),
 	pwd varchar(256),
 	"type" integer DEFAULT 0,
+    info_confirm bool DEFAULT FALSE,
 	created timestamp DEFAULT now(),
 	modified timestamp DEFAULT now()
 );
@@ -21,17 +22,17 @@ CREATE TABLE account_info(
     chinesename varchar(256),
     englishname varchar(256),
     gender varchar(256),
-    birth datetime,
-    nationality int(11),
+    birth date,
+    nationality integer,
     vegertarian bool,
 
     university varchar(256),
     department varchar(256),
-    grade int(4),
+    grade integer,
     delegation_englishname varchar(256),
     delegation_email varchar(256),
 
-    residence int(11),
+    residence integer,
     city varchar(256),
     address varchar(256),
     cellphone varchar(256),
@@ -42,6 +43,9 @@ CREATE TABLE account_info(
     commitee_preference varchar(256),
     pc_top bool,
     pc_text text,
+
+	created timestamp DEFAULT now(),
+	modified timestamp DEFAULT now()
 );
 
 CREATE TRIGGER account_info_modified BEFORE UPDATE ON account FOR EACH ROW EXECUTE PROCEDURE  update_modified_column();
