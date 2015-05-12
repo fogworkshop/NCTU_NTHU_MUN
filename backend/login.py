@@ -91,18 +91,18 @@ class LoginHandler(RequestHandler):
             err, uid = yield from LoginService.inst.signup(email, pwd, rpwd)
             if err:
                 self.finish(err)
-            self.finish(str(uid))
+            self.finish('S')
         elif req == 'signup':
             email = self.get_argument('email', None)
             pwd = self.get_argument('pwd', None)
             err, uid = yield from LoginService.inst.signin(email, pwd)
             if err:
                 self.finish(err)
-            self.finish(str(uid))
+            self.finish('S')
         elif req == 'forget':
             email = self.get_argument('email', None)
             err, uid = yield from LoginService.inst.forget_password(email)
             if err:
                 self.finish(err)
-            self.finish(str(uid))
+            self.finish('S')
         return 
