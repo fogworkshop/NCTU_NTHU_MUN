@@ -14,7 +14,7 @@ from login import LoginService
 class IndexHandler(RequestHandler):
     @reqenv
     def get(self):
-        islogin = False
+        islogin = True
         issetdata = False
         acct = "normal"
         if not islogin:

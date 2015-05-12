@@ -26,6 +26,49 @@
 						<input class="form-control" type="text">
 					</div>
 				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Gender</label>
+					<div class="col-sm-3">
+						<select class="selectpicker" data-width="100%">
+							<option>Male</option>
+							<option>Female</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Birth</label>
+					<div class="col-sm-2">
+						<div class="input-group">
+							<select class="selectpicker" data-width="100%">
+								{% for i in range(1990, 2001) %}
+									<option>{{i}}</option>
+								{% end %}
+							</select>
+							<div class="input-group-addon">年</div>
+						</div>
+					</div>
+					<div class="col-sm-1">
+						<select class="selectpicker" data-width="100%">
+							{% for i in range(1, 13) %}
+								<option>{{i}}</option>
+							{% end %}
+						</select>
+					</div>
+					<div class="col-sm-1">
+						<select class="selectpicker" data-width="100%">
+							{% for i in range(1, 32) %}
+								<option>{{i}}</option>
+							{% end %}
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">English Name</label>
+					<div class="col-sm-3">
+						<input class="form-control" type="text">
+					</div>
+				</div>
+				
 			</form>
 		</div>
 		<div class="col-lg-2">
@@ -35,6 +78,9 @@
 <script>
 $(document).ready(function(){
 	document.title = "Information | MUN";
+	$(".selectpicker").selectpicker({
+		"dropupAuto": 0;
+		});
 })
 </script>
 {% end %}
