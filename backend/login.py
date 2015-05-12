@@ -39,11 +39,11 @@ class LoginService:
 
     def signin(self, email, pwd):
         cur = yield self.db.cursor()
-        yield cur.execute('SELECT "uid", "pwd" FROM "account" WHERE "email" = %s;', (email))
+        yield cur.execute('SELECT "uid", "pwd" FROM "account" WHERE "email" = %s;', (email,))
         if cur.rowcount != 1:
             return ('Eemail', None)
         (uid, hpwd) = cur.fetchone()
-        if _hash(pwd) != hpwd:
+        if str(_hash(pwd)) != hpwd:
             return ('Epwd', None)
         return (None, int(uid))
 
@@ -58,7 +58,7 @@ class LoginService:
         npwd = random_password()
         hnpwd = _hash(npwd)
         yield cur.execute('UPDATE "account" SET "pwd" = %s WHERE "uid" = %s;', (hnpwd, uid))
-        err = self.forget_mail.send(email, 'chamge password', email=email, pwd=npwd)
+        err = self.forget_mail.send(email, 'change password', email=email, pwd=npwd)
         if err:
             return ('Esendmail', None)
         return (None, uid)
@@ -88,8 +88,10 @@ class LoginHandler(RequestHandler):
             email = self.get_argument('email', None)
             pwd = self.get_argument('pwd', None)
             err, uid = yield from LoginService.inst.signin(email, pwd)
+            self.set_secure_cookie('uid', str(uid))
             if err:
                 self.finish(err)
+                return
             self.finish('S')
         elif req == 'signup':
             email = self.get_argument('email', None)
@@ -98,11 +100,13 @@ class LoginHandler(RequestHandler):
             err, uid = yield from LoginService.inst.signup(email, pwd, rpwd)
             if err:
                 self.finish(err)
+                return
             self.finish('S')
         elif req == 'forget':
             email = self.get_argument('email', None)
             err, uid = yield from LoginService.inst.forget_password(email)
             if err:
                 self.finish(err)
+                return
             self.finish('S')
         return 

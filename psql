@@ -17,31 +17,32 @@ CREATE TABLE account(
 
 CREATE TRIGGER account_modified BEFORE UPDATE ON account FOR EACH ROW EXECUTE PROCEDURE  update_modified_column();
 
+CREATE TABLE account_info(
+    chinesename varchar(256),
+    englishname varchar(256),
+    gender int(1),
+    birth datetime,
+    nationality int(11),
+    vegertarian bool,
 
-/*
-chinesename varchar(256),
-englishname varchar(256),
-gender int(1),
-birth datetime,
-nationality int(11),
-vegertarian bool,
+    university varchar(256),
+    department varchar(256),
+    grade int(4),
+    delegation_englishname varchar(256),
+    delegation_email varchar(256),
 
-university varchar(256),
-department varchar(256),
-grade int(4),
-delegation_englishname varchar(256),
-delegation_email varchar(256),
+    residence int(11),
+    city varchar(256),
+    address varchar(256),
+    cellphone varchar(256),
+    email varchar(256),
 
-residence int(11),
-city varchar(256),
-address varchar(256),
-cellphone varchar(256),
-email varchar(256),
+    require_accommodation bool,
 
-require_accommodation bool,
+    commitee_preference varchar(256),
+    pc_top bool,
+    pc_text text,
+);
 
-commitee_preference varchar(256),
-pc_top bool,
-pc_text text,
+CREATE TRIGGER account_info_modified BEFORE UPDATE ON account FOR EACH ROW EXECUTE PROCEDURE  update_modified_column();
 
-*/
