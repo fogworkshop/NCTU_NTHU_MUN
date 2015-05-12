@@ -17,14 +17,14 @@ class IndexHandler(RequestHandler):
         islogin = True
         issetdata = False
         acct = "normal"
-        if not self.acct:
+        if not islogin:
             self.render("login.html")
         else:
             if acct[0:5] == "admin":
                 self.render(acct)
             else:
                 if not issetdata:
-                    self.render("modify_user.html")
+                    self.render("modify_user.html", nationality=config.id2nationality)
                 else:
                     self.render("show_data.html")
         return

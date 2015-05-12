@@ -1,6 +1,5 @@
 {% extends 'frame.html' %}
 {% block content %}
-
 <div class="container-fluid">
 	<div class="row" style="height: 120px; background-color: red;">
 	</div>
@@ -17,19 +16,19 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Chinese Name</label>
 					<div class="col-sm-3">
-						<input class="form-control" type="text">
+						<input name="chinesename" class="form-control" type="text">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">English Name</label>
 					<div class="col-sm-3">
-						<input class="form-control" type="text">
+						<input name="englishname" class="form-control" type="text">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Gender</label>
 					<div class="col-sm-3">
-						<select class="selectpicker" data-width="100%">
+						<select name="gender" class="selectpicker" data-width="100%">
 							<option>Male</option>
 							<option>Female</option>
 						</select>
@@ -37,38 +36,41 @@
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Birth</label>
-					<div class="col-sm-2">
-						<div class="input-group">
-							<select class="selectpicker" data-width="100%">
-								{% for i in range(1990, 2001) %}
-									<option>{{i}}</option>
-								{% end %}
-							</select>
-							<div class="input-group-addon">年</div>
-						</div>
+					<div class="col-sm-3">
+						<input name="birth" type="text" class="form-control datepicker" value="1990/01/01">
 					</div>
-					<div class="col-sm-1">
-						<select class="selectpicker" data-width="100%">
-							{% for i in range(1, 13) %}
-								<option>{{i}}</option>
-							{% end %}
-						</select>
-					</div>
-					<div class="col-sm-1">
-						<select class="selectpicker" data-width="100%">
-							{% for i in range(1, 32) %}
-								<option>{{i}}</option>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">Nationality</label>
+					<div class="col-sm-3">
+						<select name="nationality" class="selectpicker" data-width="100%" data-size="auto" data-live-search="true" value="Taiwan">
+							{% for x in nationality %}
+								<option>{{nationality[x]}}</option>
 							{% end %}
 						</select>
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-2 control-label">English Name</label>
+					<label class="col-sm-2 control-label">Vegetarian</label>
 					<div class="col-sm-3">
-						<input class="form-control" type="text">
+						<select name="vegetarian" class="selectpicker" data-width="100%">
+							<option value="0">No</option>
+							<option value="1">Yes</option>
+						</select>
 					</div>
 				</div>
-				
+				<h1>University</h1>
+				<div class="form-group">
+					<label class="col-sm-2 control-label">University(Full Chinese name of School)</label>
+					<div class="col-sm-3">
+						<input name="englishname" class="form-control" type="text">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-2">
+						<a class="btn btn-success btn-block" onclick="information_update();">Submit</a>
+					</div>
+				</div>
 			</form>
 		</div>
 		<div class="col-lg-2">
@@ -79,8 +81,13 @@
 $(document).ready(function(){
 	document.title = "Information | MUN";
 	$(".selectpicker").selectpicker({
-		"dropupAuto": 0;
-		});
-})
+		"dropupAuto": 0
+	});
+	$(".datepicker").datepicker({
+		format: "yyyy/mm/dd",
+		startDate: "1990/01/01",
+		endDate: "1999/12/31"
+	});
+});
 </script>
 {% end %}
