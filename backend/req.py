@@ -27,8 +27,14 @@ class RequestHandler(tornado.web.RequestHandler):
         self.finish(err)
         return
 
+    def get_args(self, name):
+        meta = {}
+        for n in name:
+            meta[n] = self.get_argument(n, None)
+        return meta
+
     def render(self,templ,**kwargs):
-        #kwargs['acct'] = self.acct
+        kwargs['acct'] = self.acct
         class _encoder(json.JSONEncoder):
             def default(self,obj):
                 if isinstance(obj,datetime.datetime):
