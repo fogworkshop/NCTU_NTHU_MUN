@@ -64,7 +64,7 @@
 					<div class="col-sm-3">
 						<input name="university" class="form-control" type="text">
 					</div>
-					<label class="col-sm-3 control-label" style="text-align: left">Full Chinese name of School</label>
+					<label class="col-sm-7 control-label" style="text-align: left">Full Chinese name of School</label>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Department</label>
@@ -138,7 +138,7 @@
 				<h1>Other</h1>
 				<div class="form-group">
 					<label class="col-sm-offset-2 col-sm-10">
-						* Would you require accommodation (We do not help delegates reserve accommodations; however, we will assist you in finding suitable hotels)?
+						Would you require accommodation (We do not help delegates reserve accommodations; however, we will assist you in finding suitable hotels)?
 					</label>
 					<label class="col-sm-2 control-label"></label>
 					<div class="col-sm-3">
@@ -154,12 +154,12 @@
 					</label>
 				</div>
 				{% set ORDER = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth"] %}
-				{% set CP_OPTION = ["Empty", "DISEC", "SPECPOL", "ECOSOC", "IACHR", "PC", "立法院"] %}
+				{% set CP_OPTION = ["　", "DISEC", "SPECPOL", "ECOSOC", "IACHR", "PC", "立法院"] %}
 				{% for x in range (6) %}
 					<div class="form-group">
 						<label class="col-sm-2 control-label">{{ORDER[x]}}</label>
 						<div class="col-sm-3">
-							<select name="commitee_preference_{{x}}" class="selectpicker" data-width="100%" value="0">
+							<select class="CP selectpicker" data-width="100%" value="0" onchange="CP_CHANGE();">
 								{% for y in range(7) %}
 									<option class="CP_OPTION" value={{y}}>{{CP_OPTION[y]}}</option>
 								{% end %}
@@ -167,6 +167,25 @@
 						</div>
 					</div>
 				{% end %}
+				<input type="hidden" name="commitee_preference">
+				<div class="form-group PC" hidden>
+					<label class="col-sm-offset-2 col-sm-10">
+						1. How much you know about the PC?
+					</label>
+					<div class="col-sm-offset-2 col-sm-5">
+						<textarea class="form-control" rows="5" style="resize: none">
+						</textarea>
+					</div>
+				</div>
+				<div class="form-group PC" hidden>
+					<label class="col-sm-offset-2 col-sm-10">
+						2. Why do you want to join the PC and how would you play your roll in the whole conference?
+					</label>
+					<div class="col-sm-offset-2 col-sm-5">
+						<textarea class="form-control" rows="5" style="resize: none">
+						</textarea>
+					</div>
+				</div>
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-2">
 						<a class="btn btn-success btn-block" onclick="information_update();">Submit</a>
@@ -189,6 +208,7 @@ $(document).ready(function(){
 		startDate: "1990/01/01",
 		endDate: "1999/12/31"
 	});
+	CP_CHANGE();
 });
 function information_update(){
 	data = $(".information-form").serialize();
@@ -200,6 +220,41 @@ function delegation_change(){
 	} else {
 		$(".delegation:hidden").animate({height: "toggle"});
 	}
+}
+function PC_CHANGE(order){
+	show = false;
+	for(i = 0 ; i < 3 ; i++)
+		show = show | (order[i]==5);
+	for(i = 0 ; i < 6 ; i++)
+		if(!order[i])
+			show = false;
+	if(show){
+		$(".PC:hidden").animate({height: "toggle"});
+	} else {
+		$(".PC:visible").animate({height: "toggle"});
+	}
+}
+function CP_CHANGE(){
+	choose = [0, 0, 0, 0, 0, 0, 0];
+	order = [0,0,0,0,0,0];
+	now = 0;
+	$(".CP.selectpicker").each(function(){
+		x = parseInt($(this).val());
+		choose[x] = 1;
+		order[now++] = x;
+	});
+	$(".CP.selectpicker").each(function(){
+		for(i = 1 ; i <= 6 ; i++){
+			if(!choose[i] || parseInt($(this).val()) == i){
+				$(this).find("[value="+i+"]").prop("disabled", false);
+			} else {
+				$(this).find("[value="+i+"]").prop("disabled", true);
+			}
+		}
+	});
+	$(".CP.selectpicker").selectpicker("refresh");
+	$("[name=commitee_preference]").val("["+order+"]");
+	PC_CHANGE(order);
 }
 </script>
 {% end %}
