@@ -11,7 +11,7 @@
 		<div class="col-lg-8">
 		
 			<form class="form-horizontal information-form">
-				<h1>Personal Information</h1>
+				<h1>　</h1>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Chinese Name</label>
 					<div class="col-sm-3">
@@ -58,13 +58,14 @@
 						</select>
 					</div>
 				</div>
-				<h1>University</h1>
+				<h1>　</h1>
+				<!--h1>University</h1-->
 				<div class="form-group">
 					<label class="col-sm-2 control-label">University</label>
 					<div class="col-sm-3">
 						<input name="university" class="form-control" type="text">
 					</div>
-					<label class="col-sm-7 control-label" style="text-align: left">Full Chinese name of School</label>
+					<label class="col-sm-offset-2 col-sm-10 control-label" style="text-align: left">Full Chinese name of School</label>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Department</label>
@@ -106,7 +107,8 @@
 						<input name="delegation_email" class="form-control" type="text">
 					</div>
 				</div>
-				<h1>Contact Information</h1>
+				<h1>　</h1>
+				<!--h1>Contact Information</h1-->
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Country of Residence</label>
 					<div class="col-sm-3">
@@ -135,21 +137,22 @@
 						<input name="cellphone" class="form-control" type="text">
 					</div>
 				</div>
-				<h1>Other</h1>
+				<h1>　</h1>
+				<!--h1>Other</h1-->
 				<div class="form-group">
-					<label class="col-sm-offset-2 col-sm-10">
-						Would you require accommodation (We do not help delegates reserve accommodations; however, we will assist you in finding suitable hotels)?
-					</label>
-					<label class="col-sm-2 control-label"></label>
+					<label class="col-sm-2 control-label">Accommodation</label>
 					<div class="col-sm-3">
 						<select name="require_accommodation" class="selectpicker" data-width="100%" value="0">
 							<option value="1">Yes</option>
 							<option value="0">No</option>
 						</select>
 					</div>
+					<label class="col-sm-offset-2 col-sm-10 control-label" style="text-align: left;">
+						(We do not help delegates reserve accommodations; however, we will assist you in finding suitable hotels)
+					</label>
 				</div>
 				<div class="form-group">
-					<label class="col-sm-offset-2 col-sm-10">
+					<label class="col-sm-12">
 						Committee Preference
 					</label>
 				</div>
@@ -210,6 +213,9 @@
 
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-2">
+						<a class="btn btn-success btn-block" onclick="information_save();">Save</a>
+					</div>
+					<div class="col-sm-2">
 						<a class="btn btn-success btn-block" onclick="information_update();">Submit</a>
 					</div>
 				</div>
@@ -232,6 +238,10 @@ $(document).ready(function(){
 	});
 	CP_CHANGE();
 });
+function information_update(){
+	data = $(".information-form").serialize();
+	console.log(data);
+}
 function information_update(){
 	data = $(".information-form").serialize();
 	console.log(data);
