@@ -258,6 +258,7 @@ $(document).ready(function(){
     $("[name=gender]").selectpicker('val', '{{ meta["gender"] }}');
     $("[name=grade]").selectpicker('val', '{{ meta["grade"] }}');
     $("[name=delegation]").selectpicker('val', parseInt({{ meta["delegation"] }}));
+    $("[name=require_accommodation]").selectpicker('val', parseInt({{ meta["require_accommodation"] }}));
 	CP = JSON.parse('{{meta["committee_preference"]}}');
 	now = 0;
 	$(".CP.selectpicker").each(function(){
@@ -271,6 +272,7 @@ function information_save(ele){
     $.post('/user', data, function(res){
         alert(res);
         $(ele).toggleClass("active disabled");
+        window.location = window.location;
     });
 }
 function information_submit(ele){
