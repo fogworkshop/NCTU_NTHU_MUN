@@ -17,7 +17,7 @@ class IndexHandler(RequestHandler):
         islogin = False
         issetdata = False
         acct = "normal"
-        if not islogin:
+        if not self.acct:
             self.render("login.html")
         else:
             if acct[0:5] == "admin":

@@ -34,7 +34,7 @@ class UserHandler(RequestHandler):
     def post(self):
         req = self.get_argument('req', None)
         if req == 'modify_info':
-            data = {}
+            args = ['chinesename', 'englishname', 'gender', 'birth', 'nationality', 'vegeterian', 'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 'residence', 'city', 'address', 'cellphone', 'require_accommodation', 'committee_preference']
             pass
         elif req == 'confirm_info':
             pass

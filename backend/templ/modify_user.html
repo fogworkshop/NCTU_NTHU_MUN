@@ -170,7 +170,7 @@
 						</div>
 					</div>
 				{% end %}
-				<input type="hidden" name="commitee_preference">
+				<input type="hidden" name="committee_preference">
 				<div class="form-group PC" hidden>
 					<label class="col-sm-offset-2 col-sm-10">
 						1. How much you know about the PC?
@@ -238,12 +238,14 @@ $(document).ready(function(){
 	});
 	CP_CHANGE();
 });
-function information_update(){
+function information_save(){
 	data = $(".information-form").serialize();
+    data += "&req=modify_info";
 	console.log(data);
 }
 function information_update(){
 	data = $(".information-form").serialize();
+    data += "&req=confirm_info";
 	console.log(data);
 }
 function delegation_change(){
@@ -285,7 +287,7 @@ function CP_CHANGE(){
 		}
 	});
 	$(".CP.selectpicker").selectpicker("refresh");
-	$("[name=commitee_preference]").val("["+order+"]");
+	$("[name=committee_preference]").val("["+order+"]");
 	PC_CHANGE(order);
 }
 </script>
