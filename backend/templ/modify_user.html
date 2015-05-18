@@ -184,7 +184,7 @@
 						1. How much you know about the PC?
 					</label>
 					<div class="col-sm-offset-2 col-sm-5">
-						<textarea class="form-control" rows="5" style="resize: none">
+						<textarea name="pc1" class="form-control" rows="5" style="resize: none">
 						</textarea>
 					</div>
 				</div>
@@ -193,7 +193,26 @@
 						2. Why do you want to join the PC and how would you play your roll in the whole conference?
 					</label>
 					<div class="col-sm-offset-2 col-sm-5">
-						<textarea class="form-control" rows="5" style="resize: none">
+						<textarea name="pc2" class="form-control" rows="5" style="resize: none">
+						</textarea>
+					</div>
+				</div>
+				<br><br>
+				<div class="form-group IACHR" hidden>
+					<label class="col-sm-offset-2 col-sm-10">
+						1. Tell us if you have any experience discussing topics related to human rights. If not, why do you think that human rights are important for humanity?
+					</label>
+					<div class="col-sm-offset-2 col-sm-5">
+						<textarea name="iachr1" class="form-control" rows="5" style="resize: none">
+						</textarea>
+					</div>
+				</div>
+				<div class="form-group IACHR" hidden>
+					<label class="col-sm-offset-2 col-sm-10">
+						2. Have you ever played a simulation of court before? If yes, which type of court and what role did you simulate? If not, what do you expect from the simulation?
+					</label>
+					<div class="col-sm-offset-2 col-sm-5">
+						<textarea name="iachr2" class="form-control" rows="5" style="resize: none">
 						</textarea>
 					</div>
 				</div>
@@ -250,7 +269,6 @@ $(document).ready(function(){
 		startDate: "1990/01/01",
 		endDate: "1999/12/31"
 	});
-	CP_CHANGE();
 	delegation_change();
     $("[name=nationality]").selectpicker('val', '{{ meta["nationality"] }}');
     $("[name=residence]").selectpicker('val', '{{ meta["residence"] }}');
@@ -262,7 +280,9 @@ $(document).ready(function(){
 	CP = JSON.parse('{{meta["committee_preference"]}}');
 	now = 0;
 	$(".CP.selectpicker").each(function(){
+		$(this).selectpicker('val', CP[now++]);
 	});
+	CP_CHANGE();
 });
 function information_save(ele){
 	data = $(".information-form").serialize();
@@ -312,6 +332,19 @@ function PC_CHANGE(order){
 		$(".PC:visible").animate({height: "toggle"});
 	}
 }
+function IACHR_CHANGE(order){
+	show = false;
+	for(i = 0 ; i < 3 ; i++)
+		show = show | (order[i]==4);
+	for(i = 0 ; i < 6 ; i++)
+		if(!order[i])
+			show = false;
+	if(show){
+		$(".IACHR:hidden").animate({height: "toggle"});
+	} else {
+		$(".IACHR:visible").animate({height: "toggle"});
+	}
+}
 function CP_CHANGE(){
 	choose = [0, 0, 0, 0, 0, 0, 0];
 	order = [0,0,0,0,0,0];
@@ -334,6 +367,7 @@ function CP_CHANGE(){
 	$("[name=committee_preference]").val("["+order+"]");
 	console.log($("[name=committee_preference]").val());
 	PC_CHANGE(order);
+	IACHR_CHANGE(order);
 }
 </script>
 {% end %}
