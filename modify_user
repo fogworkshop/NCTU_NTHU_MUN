@@ -1,0 +1,20 @@
+chinesename varchar
+english varchar
+gender varchar
+birth varchar
+nationality varchar
+vegetarian bool
+university varchar
+department varchar
+grade int
+delegation int
+delegation_englishname varchar
+delegation_email varchar
+residence varchar
+city varchar
+address varchar
+cellphone varchar
+accommodation bool
+committee_preference varchar
+
+
