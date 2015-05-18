@@ -1,4 +1,5 @@
 import tornado.ioloop
+import tornado.httpserver
 import tornado.web
 
 import pg
@@ -9,6 +10,8 @@ from req import Service
 
 from login import LoginHandler
 from login import LoginService
+import signal
+import time
 
 
 class IndexHandler(RequestHandler):
@@ -33,16 +36,38 @@ class IndexHandler(RequestHandler):
     def post(self):
         return
 
+def sig_handler(sig, frame):
+    print('catch stop signal')
+    tornado.ioloop.IOLoop.instance().add_callback(shutdown)
+
+def shutdown():
+    print('stopping server')
+    srv.stop()
+    io_loop = tornado.ioloop.IOLoop.instance()
+    deadline = time.time() + config.MAX_WAIT_SECOND_BEFORE_SHUTDOWN
+
+    def stop_loop():
+        now = time.time()
+        if now < deadline and (io_loop._callbacks or io_loop._timeouts):
+            io_loop.add_timeout(now + 1, stop_loop)
+        else:
+            io_loop.stop()
+            print('Shutdown')
+    stop_loop()
+
+
 if __name__ == '__main__':
-    print('start')
     db = pg.AsyncPG(config.DBNAME, config.DBUSER, config.DBPASSWORD, host=config.DBHOST, dbtz='+8')
     app = tornado.web.Application([
         ('/', IndexHandler),
         ('/login', LoginHandler),
         ('/(.*)', tornado.web.StaticFileHandler, {'path': '../http'}),
         ], cookie_secret=config.COOKIE_SECRET, autoescape='xhtml_escape')
-    print('app')
-    app.listen(config.PORT)
+    global srv
+    srv = tornado.httpserver.HTTPServer(app)
+    srv.listen(config.PORT)
     Service.Login = LoginService(db)
-    print('service')
+    print('start')
+    signal.signal(signal.SIGTERM, sig_handler)
+    signal.signal(signal.SIGINT, sig_handler)
     tornado.ioloop.IOLoop().instance().start()
