@@ -30,7 +30,7 @@ CREATE TABLE account_info(
     university varchar(256) DEFAULT '',
     department varchar(256) DEFAULT '',
     grade integer DEFAULT 2015,
-    delegation integer,
+    delegation integer DEFAULT 1,
     delegation_englishname varchar(256) DEFAULT '',
     delegation_email varchar(256) DEFAULT '',
 

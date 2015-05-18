@@ -13,6 +13,9 @@ class AdminService:
 
         if not flag_img:
             return ('Eflagimg', None)
+
+        cur = yield self.db.cursor()
+
         pass
 
 

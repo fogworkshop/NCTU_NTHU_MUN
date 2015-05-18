@@ -29,12 +29,12 @@ class IndexHandler(RequestHandler):
             if self.acct['admin'] == 1 and False:
                 self.render(self.acct['email'])
             else:
+                err, meta = yield from Service.User.get_info(self.acct, self.acct['uid'])
                 if self.acct['info_confirm'] == False:
-                    err, meta = yield from Service.User.get_info(self.acct, self.acct['uid'])
                     print(meta)
                     self.render("modify_user.html", nationality=config.id2nationality, meta=meta)
                 else:
-                    self.render("show_data.html")
+                    self.render("show_data.html", meta=meta)
         return
 
     @reqenv
