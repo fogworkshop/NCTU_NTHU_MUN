@@ -226,6 +226,7 @@
 	</div>
 </div>
 <script>
+
 $(document).ready(function(){
 	document.title = "Information | MUN";
 	$(".selectpicker").selectpicker({
@@ -237,6 +238,8 @@ $(document).ready(function(){
 		endDate: "1999/12/31"
 	});
 	CP_CHANGE();
+	$("[name=nationality]").selectpicker('val', 'Taiwan');
+	$("[name=residence]").selectpicker('val', 'Taiwan');
 });
 function information_save(){
 	data = $(".information-form").serialize();
