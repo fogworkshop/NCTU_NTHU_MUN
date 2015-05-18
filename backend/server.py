@@ -10,6 +10,7 @@ from req import Service
 
 from login import LoginHandler
 from login import LoginService
+from logout import LogoutHandler
 import signal
 import time
 
@@ -61,6 +62,7 @@ if __name__ == '__main__':
     app = tornado.web.Application([
         ('/', IndexHandler),
         ('/login', LoginHandler),
+        ('/logout', LogoutHandler),
         ('/(.*)', tornado.web.StaticFileHandler, {'path': '../http'}),
         ], cookie_secret=config.COOKIE_SECRET, autoescape='xhtml_escape')
     global srv
