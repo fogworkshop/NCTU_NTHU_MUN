@@ -50,6 +50,10 @@ CREATE TABLE account_info(
     experience varchar(256) DEFAULT '',
     hearabout varchar(256) DEFAULT '',
 
+    represent_country varchar(256) DEFAULT '',
+    represent_committee varchar(256) DEFAULT '',
+    
+
 	created timestamp DEFAULT now(),
 	modified timestamp DEFAULT now()
 );

@@ -3,6 +3,7 @@ from req import Service
 from req import reqenv
 from mail import MailHandler
 import random
+import os
 
 def _hash(pwd):
     C = 1048072
@@ -38,6 +39,9 @@ class LoginService:
             return ('Edb', None)
         uid = int(cur.fetchone()[0])
         yield cur.execute('INSERT INTO "account_info" ("uid") VALUES(%s);', (uid,))
+        path = os.path.abspath(os.path.join(os.path.dirname("__file__"),os.path.pardir)) + '/http/'
+        path += str(uid)
+        os.mkdir(path)
         return (None, uid)
 
     def signin(self, email, pwd):

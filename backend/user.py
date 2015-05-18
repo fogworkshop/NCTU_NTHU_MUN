@@ -119,6 +119,7 @@ class UserHandler(RequestHandler):
             args = ['uid', 'chinesename', 'englishname', 'gender', 'birth', 'nationality', 'vegetarian', 
                     'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
                     'residence', 'city', 'address', 'cellphone', 'require_accommodation', 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2']
+            meta = self.get_args(args)
             err, uid = yield from UserService.inst.confirm_info(self.acct, meta)
             if err:
                 self.finish(err)
