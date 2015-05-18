@@ -59,7 +59,7 @@ class UserService:
 
         uid = acct['uid']
         cur = yield self.db.cursor()
-        yield cur.execute('UPDATE "account" SET "info_confirm" = %s', (True, ))
+        yield cur.execute('UPDATE "account" SET "info_confirm" = %s WHERE "uid" = %s', (True, uid,))
         if cur.rowcount != 1:
             return ('Edb', None)
         return (None, uid)
