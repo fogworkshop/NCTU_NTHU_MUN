@@ -220,10 +220,13 @@
 
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-2">
-						<a class="btn btn-success btn-block" onclick="information_save();">Save</a>
+						<a class="btn btn-success btn-block has-spinner" onclick="information_save(this);"><span class="spinner"><img src="/728-1.GIF"></span>Save</a>
 					</div>
 					<div class="col-sm-2">
-						<a class="btn btn-success btn-block" onclick="information_update();">Submit</a>
+						<a class="btn btn-success btn-block has-spinner" onclick="information_update(this);"><span class="spinner"><img src="/728-1.GIF"></span>Submit</a>
+					</div>
+					<div class="col-sm-2">
+						<a class="btn btn-default btn-block has-spinner" onclick="logout(this);"><span class="spinner"><img src="/728.GIF"></span>Logout</a>
 					</div>
 				</div>
 			</form>
@@ -248,15 +251,25 @@ $(document).ready(function(){
 	$("[name=nationality]").selectpicker('val', 'Taiwan');
 	$("[name=residence]").selectpicker('val', 'Taiwan');
 });
-function information_save(){
+function information_save(ele){
+	
 	data = $(".information-form").serialize();
     data += "&req=modify_info";
+	$(ele).toggleClass("active disabled");
 	console.log(data);
 }
-function information_update(){
+function information_update(ele){
 	data = $(".information-form").serialize();
     data += "&req=confirm_info";
+	$(ele).toggleClass("active disabled");
 	console.log(data);
+}
+function logout(ele){
+	$(ele).toggleClass("active disabled");
+	$.post("/logout", function(){
+		$(ele).toggleClass("active disabled");
+		window.location = window.location;
+	});
 }
 function delegation_change(){
 	if($("[name=delegation]").val()=="1"){
