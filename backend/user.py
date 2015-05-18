@@ -64,11 +64,35 @@ class UserService:
         return (None, uid)
 
     def get_info(self, acct, uid):
+        def gen_sql(data):
+            sql = ' '
+            first = True
+            for d in data:
+                if first == False:
+                    sql += ' , '
+                first = False
+                sql += ' "%s" '%d
+            return sql
+
         if not acct:
             return ('Elogin', None)
 
         if acct['uid'] != uid and acct['admin'] == 0:
             return ('Eaccess', None)
+        args = ['uid', 'chinesename', 'englishname', 'gender', 'birth', 'nationality', 'vegetarian', 
+                'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
+                'residence', 'city', 'address', 'cellphone', 'require_accommodation', 'committee_preference']
+        sql = gen_sql(args)
+        cur = yield self.db.cursor()
+        yield cur.execute('SELECT '+sql+'FROM "account_info" WHERE "uid" = %s;', (uid, ))
+        if cur.rowcount != 1:
+            return ('Enoinfo', None)
+        q = cur.fetchone()
+        meta = {}
+        for i, a in enumerate(args):
+            meta[a] = q[i]
+        return (None, meta)
+
 
 class UserHandler(RequestHandler):
     @reqenv
