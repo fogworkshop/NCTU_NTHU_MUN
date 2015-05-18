@@ -26,7 +26,7 @@ class LoginService:
         if pwd != rpwd:
             return ('Erpwd', None)
         cur = yield self.db.cursor()
-        yield cur.execute('SELECT "uid" FROM "account" WHERE "email" = %s;', (email,))
+#        yield cur.execute('SELECT "uid" FROM "account" WHERE "email" = %s;', (email,))
         if cur.rowcount != 0:
             return ('Eemail', None)
         hpwd = _hash(pwd)

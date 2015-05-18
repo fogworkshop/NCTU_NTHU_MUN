@@ -1,27 +1,43 @@
 <!DOCTYPE>
 <html>
 <head>
-    <title>NCTU</title>
-    <meta name="keywords" content="">
-    <meta charset="UTF-8">
-	<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/silviomoreto-bootstrap-select/dist/css/bootstrap-select.min.css">
-	<link rel="stylesheet" href="/bootstrap-datepicker-1.4.0-dist/css/bootstrap-datepicker.min.css">
-	<link rel="stylesheet" href="/default.css">
-	<script type="text/javascript" src="/jquery.js"></script>
-	<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="/bootbox/bootbox.min.js"></script>
-	<script type="text/javascript" src="/silviomoreto-bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-	<script type="text/javascript" src="/bootstrap-datepicker-1.4.0-dist/js/bootstrap-datepicker.min.js"></script>
+<title>NCTU</title>
+<meta name="keywords" content="">
+<meta charset="UTF-8">
+<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/silviomoreto-bootstrap-select/dist/css/bootstrap-select.min.css">
+<link rel="stylesheet" href="/bootstrap-datepicker-1.4.0-dist/css/bootstrap-datepicker.min.css">
+<link rel="stylesheet" href="/default.css">
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Crimson+Text" />
+<script type="text/javascript" src="/jquery.js"></script>
+<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/bootbox/bootbox.min.js"></script>
+<script type="text/javascript" src="/silviomoreto-bootstrap-select/dist/js/bootstrap-select.min.js"></script>
+<script type="text/javascript" src="/bootstrap-datepicker-1.4.0-dist/js/bootstrap-datepicker.min.js"></script>
 </head>
 <body>
 
-	<div class="wrapper">
-		<div class="content">
-			{% block content %}
-			{% end %}
-		</div>
-		<div class="footer">
-		</div>
+<style>
+</style>
+<div class="logobar">
+	<div class="logo_blue_bar">
 	</div>
+</div>
+<div class="logobar">
+	<img src="/background/logo__top.png" class="img-circle" style="display: block; margin: auto; height: 100%; background-color: #F2F1EF;">
+</div>
+<div class="wrapper">
+	<div class="content" style="background: url('/background/logo_for_watermark.png') 50% no-repeat fixed;">
+		{% block content %}
+		{% end %}
+	</div>
+	<div class="footer text-center" style="color: white;">
+		<p>
+		TWMUN HOME<br>
+		SECGEN@TAIWANMUN.ORG<br>
+		Copyright 2015<br>
+		Website developed by <a style="color: blue;" href="http://fogworkshop.com/" target="_blank">fogworkshop</a>
+		</p>
+	</div>
+</div>
 </html>
