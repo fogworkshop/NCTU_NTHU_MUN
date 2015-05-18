@@ -67,6 +67,7 @@ def reqenv(func):
     def wrap(self,*args,**kwargs):
         uid = self.get_secure_cookie('uid')
         if uid:
+            uid = uid.decode()
             err, self.acct = yield from Service.Login.get_account_info(str(uid))
         else:
             self.acct = None
