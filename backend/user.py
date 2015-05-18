@@ -50,7 +50,7 @@ class UserService:
         if not acct:
             return ('Elogin', None)
 
-        err, _ = yield from self.modify_info(acct, data)
+        err, _ = yield from self.modify_info(acct, dict(data))
         if err:
             return (err, None)
 
@@ -58,7 +58,8 @@ class UserService:
         data.pop('uid')
 
         uid = acct['uid']
-        cur = yield self.db.cursor('UPDATE "account" SET "info_confirm" = %s', (True, ))
+        cur = yield self.db.cursor()
+        yield cur.execute('UPDATE "account" SET "info_confirm" = %s', (True, ))
         if cur.rowcount != 1:
             return ('Edb', None)
         return (None, uid)

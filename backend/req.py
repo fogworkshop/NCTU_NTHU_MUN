@@ -69,12 +69,13 @@ def reqenv(func):
         if uid:
             uid = uid.decode()
             err, self.acct = yield from Service.Login.get_account_info(str(uid))
-            if self.acct['email'][:5] == 'admin' and len(self.acct['email']) == 6:
+            if self.acct['email'][:5] == 'admin' and len(self.acct['email']) <= 6:
                 self.acct['admin'] = 1
             else:
                 self.acct['admin'] = 0
         else:
             self.acct = None
+        print(self.acct)
         ret = func(self,*args,**kwargs)
         if isinstance(ret,types.GeneratorType):
             ret = yield from ret

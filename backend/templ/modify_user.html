@@ -270,6 +270,10 @@ function information_submit(ele){
     data += "&req=confirm_info";
 	$(ele).toggleClass("active disabled");
 	console.log(data);
+    $.post('/user', data, function(res){
+        alert(res);
+        $(ele).toggleClass("active disabled");
+    });
 }
 function logout(ele){
 	$(ele).toggleClass("active disabled");
