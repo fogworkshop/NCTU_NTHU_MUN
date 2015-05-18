@@ -44,6 +44,7 @@
 						</div>
 					</div>
 					<input type="hidden" name="req" value="signin">
+					<div class="col-sm-offset-2 col-sm-9 alert alert-danger" role="alert" hidden>Invalid email or password.</div>
 					<div class="form-group">
 						<div class="col-sm-offset-5 col-sm-3">
 							<a class="btn btn-default btn-block" onclick="login();">LogIn</a>
@@ -97,7 +98,11 @@ function login(){
 	data = $(".login-form").serialize();
 	console.log(data);
 	$.post("/login", data, function(msg){
-		bootbox.alert(msg);
+		if(msg != "S"){
+			$(".alert.alert-danger").show();
+		} else {
+			window.location = window.location;
+		}
 	});
 }
 function register(){
