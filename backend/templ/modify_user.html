@@ -252,10 +252,10 @@ $(document).ready(function(){
 	delegation_change();
     $("[name=nationality]").selectpicker('val', '{{ meta["nationality"] }}');
     $("[name=residence]").selectpicker('val', '{{ meta["residence"] }}');
-    $("[name=vegetarian]").selectpicker('val', '{{ meta["vegetarian"] }}')
+    $("[name=vegetarian]").selectpicker('val', parseInt({{ meta["vegetarian"] }}));
     $("[name=gender]").selectpicker('val', '{{ meta["gender"] }}');
     $("[name=grade]").selectpicker('val', '{{ meta["grade"] }}');
-    $("[name=delegation]").selectpicker('val', '{{ meta["delegation"] }}')
+    $("[name=delegation]").selectpicker('val', parseInt({{ meta["delegation"] }}));
 });
 function information_save(ele){
 	data = $(".information-form").serialize();
