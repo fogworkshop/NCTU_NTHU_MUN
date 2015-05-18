@@ -69,6 +69,20 @@ class LoginService:
         if err:
             return ('Esendmail', None)
         return (None, uid)
+    
+    def change_password(self, acct, data):
+        cur = yield self.db.cursor()
+        yield cur.execute('SELECT "pwd" FROM "account" WHERE "uid" = %s;', (acct['uid'],))
+        hpwd = cur.fetchone()[0]
+        if hpwd != _hash(data['opwd']):
+            return ('Epwd', None)
+
+        if data['npwd'] != data['rnpwd']:
+            return ('Enpwd', None)
+        yield cur.execute('UPDATE "account" SET "pwd" = %s WHERE "uid" = %s;', (_hash(data['npwd']), data['uid'], ))
+        if cur.rowcount != 1:
+            return ('Edb', None)
+        return (None, data['uid'])
 
 
     def get_account_info(self, uid):
@@ -113,6 +127,14 @@ class LoginHandler(RequestHandler):
         elif req == 'forget':
             email = self.get_argument('email', None)
             err, uid = yield from LoginService.inst.forget_password(email)
+            if err:
+                self.finish(err)
+                return
+            self.finish('S')
+        elif req == 'change':
+            agrs = ['opwd', 'npwd', 'rnpwd']
+            meta = self.get_args(args)
+            err, uid = yield from LoginService.inst.change_password(self.acct, data)
             if err:
                 self.finish(err)
                 return
