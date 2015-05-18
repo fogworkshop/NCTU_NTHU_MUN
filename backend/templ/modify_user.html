@@ -233,9 +233,11 @@
 			</form>
 		</div>
 		<div class="col-lg-2">
+			{{meta["committee_preference"]}}
 		</div>
 	</div>
 </div>
+
 <script>
 
 $(document).ready(function(){
@@ -256,6 +258,10 @@ $(document).ready(function(){
     $("[name=gender]").selectpicker('val', '{{ meta["gender"] }}');
     $("[name=grade]").selectpicker('val', '{{ meta["grade"] }}');
     $("[name=delegation]").selectpicker('val', parseInt({{ meta["delegation"] }}));
+	CP = JSON.parse('{{meta["committee_preference"]}}');
+	now = 0;
+	$(".CP.selectpicker").each(function(){
+	});
 });
 function information_save(ele){
 	data = $(".information-form").serialize();
@@ -324,6 +330,7 @@ function CP_CHANGE(){
 	});
 	$(".CP.selectpicker").selectpicker("refresh");
 	$("[name=committee_preference]").val("["+order+"]");
+	console.log($("[name=committee_preference]").val());
 	PC_CHANGE(order);
 }
 </script>
