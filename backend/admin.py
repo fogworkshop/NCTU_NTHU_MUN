@@ -12,7 +12,7 @@ class AdminService:
             return ('Eaccess', None)
 
         if not flag_img:
-            return ('Eflag', None)
+            return ('Eflagimg', None)
         pass
 
 
@@ -26,7 +26,10 @@ class AdminHandler(RequestHandler):
         req = self.get_argument('req', None)
         if req == 'admin1':
             args = ['uid', 'represent_country', 'represent_committee']
-            flag_img = self.request.files['flag'][0]
+            try:
+                flag_img = self.request.files['flag'][0]
+            except:
+                flag_img = None
             meta = self.get_args(args)
             pass
         elif req == 'admin2':
