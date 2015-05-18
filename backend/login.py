@@ -37,6 +37,7 @@ class LoginService:
         if cur.rowcount != 1:
             return ('Edb', None)
         uid = int(cur.fetchone()[0])
+        yield cur.execute('INSERT INTO "account_info" ("uid") VALUES(%s);', (uid,))
         return (None, uid)
 
     def signin(self, email, pwd):
