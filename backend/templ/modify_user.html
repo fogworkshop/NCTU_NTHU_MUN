@@ -238,12 +238,14 @@ $(document).ready(function(){
 	});
 	CP_CHANGE();
 });
-function information_update(){
+function information_save(){
 	data = $(".information-form").serialize();
+    data += "&req=modify_info";
 	console.log(data);
 }
 function information_update(){
 	data = $(".information-form").serialize();
+    data += "&req=confirm_info";
 	console.log(data);
 }
 function delegation_change(){
