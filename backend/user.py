@@ -92,6 +92,7 @@ class UserService:
         meta = {}
         for i, a in enumerate(args):
             meta[a] = q[i]
+        print(type(meta['chinesename']))
         return (None, meta)
 
 
