@@ -88,10 +88,10 @@ class LoginHandler(RequestHandler):
             email = self.get_argument('email', None)
             pwd = self.get_argument('pwd', None)
             err, uid = yield from LoginService.inst.signin(email, pwd)
-            self.set_secure_cookie('uid', str(uid))
             if err:
                 self.finish(err)
                 return
+            self.set_secure_cookie('uid', str(uid))
             self.finish('S')
         elif req == 'signup':
             email = self.get_argument('email', None)

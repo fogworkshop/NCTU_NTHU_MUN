@@ -238,6 +238,7 @@ class AsyncPG:
         conn[4].close()
 
     def _dispatch(self,fd,evt):
+        #print(fd)
         err = None
 
         try:

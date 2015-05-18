@@ -170,7 +170,7 @@
 						</div>
 					</div>
 				{% end %}
-				<input type="hidden" name="commitee_preference">
+				<input type="hidden" name="committee_preference">
 				<div class="form-group PC" hidden>
 					<label class="col-sm-offset-2 col-sm-10">
 						1. How much you know about the PC?
@@ -287,7 +287,7 @@ function CP_CHANGE(){
 		}
 	});
 	$(".CP.selectpicker").selectpicker("refresh");
-	$("[name=commitee_preference]").val("["+order+"]");
+	$("[name=committee_preference]").val("["+order+"]");
 	PC_CHANGE(order);
 }
 </script>
