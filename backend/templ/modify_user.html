@@ -23,13 +23,13 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Chinese Name</label>
 					<div class="col-sm-3">
-						<input name="chinesename" class="form-control" type="text">
+                        <input name="chinesename" class="form-control" type="text" value="{{meta['chinesename']}}">
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">English Name</label>
 					<div class="col-sm-3">
-						<input name="englishname" class="form-control" type="text">
+                        <input name="englishname" class="form-control" type="text" value="{{meta['englishname']}}">
 					</div>
 				</div>
 				<div class="form-group">
@@ -44,7 +44,7 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Birth</label>
 					<div class="col-sm-3">
-						<input name="birth" type="text" class="form-control datepicker" value="1990/01/01">
+                        <input name="birth" type="text" class="form-control datepicker" value="{{meta['birth']}}">
 					</div>
 				</div>
 				<div class="form-group">
@@ -52,7 +52,7 @@
 					<div class="col-sm-3">
 						<select name="nationality" class="selectpicker" data-width="100%" data-size="20" data-live-search="true">
 							{% for x in nationality %}
-								<option>{{nationality[x]}}</option>
+                                <option value="{{nationality[x]}}">{{nationality[x]}}</option>
 							{% end %}
 						</select>
 					</div>
@@ -61,7 +61,7 @@
 					<label class="col-sm-2 control-label">Vegetarian</label>
 					<div class="col-sm-3">
 						<select name="vegetarian" class="selectpicker" data-width="100%">
-							<option value="1">Yes</option>
+                            <option value="1" >Yes</option>
 							<option value="0">No</option>
 						</select>
 					</div>
@@ -71,14 +71,14 @@
 				<div class="form-group">
 					<label class="col-sm-2 control-label">University</label>
 					<div class="col-sm-3">
-						<input name="university" class="form-control" type="text">
+                        <input name="university" class="form-control" type="text" value="{{ meta['university'] }}">
 					</div>
 					<label class="col-sm-offset-2 col-sm-10 control-label" style="text-align: left">Full Chinese name of School</label>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Department</label>
 					<div class="col-sm-3">
-						<input name="deparement" class="form-control" type="text">
+                        <input name="department" class="form-control" type="text" value="{{ meta['department'] }}">
 					</div>
 				</div>
 				<div class="form-group">
@@ -103,7 +103,7 @@
 				<div class="delegation form-group" hidden>
 					<label class="col-sm-2 control-label">Partner's English Name</label>
 					<div class="col-sm-3">
-						<input name="delegation_englishname" class="form-control" type="text">
+                        <input name="delegation_englishname" class="form-control" type="text" value="{{ meta['delegation_englishname'] }}">
 					</div>
 					<label class="col-sm-4 control-label" style="text-align: left">
 						Exactly the same as how your partner wrote it
@@ -112,7 +112,7 @@
 				<div class="delegation form-group" hidden>
 					<label class="col-sm-2 control-label">Partner's Email</label>
 					<div class="col-sm-3">
-						<input name="delegation_email" class="form-control" type="text">
+                        <input name="delegation_email" class="form-control" type="text" value="{{ meta['delegation_email'] }}">
 					</div>
 				</div>
 				<h1>　</h1>
@@ -127,22 +127,22 @@
 						</select>
 					</div>
 				</div>
-				<div class="delegation form-group">
+				<div class="form-group">
 					<label class="col-sm-2 control-label">City</label>
 					<div class="col-sm-3">
-						<input name="city" class="form-control" type="text">
+                        <input name="city" class="form-control" type="text" value="{{ meta['city'] }}">
 					</div>
 				</div>
-				<div class="delegation form-group">
+				<div class="form-group">
 					<label class="col-sm-2 control-label">Address</label>
 					<div class="col-sm-3">
-						<input name="address" class="form-control" type="text">
+                        <input name="address" class="form-control" type="text" value="{{ meta['address'] }}">
 					</div>
 				</div>
-				<div class="delegation form-group">
+				<div class="form-group">
 					<label class="col-sm-2 control-label">Cellphone</label>
 					<div class="col-sm-3">
-						<input name="cellphone" class="form-control" type="text">
+                        <input name="cellphone" class="form-control" type="text" value="{{ meta['cellphone'] }}">
 					</div>
 				</div>
 				<h1>　</h1>
@@ -251,6 +251,9 @@ $(document).ready(function(){
 	CP_CHANGE();
 	$("[name=nationality]").selectpicker('val', 'Taiwan');
 	$("[name=residence]").selectpicker('val', 'Taiwan');
+    $("[name=gender]").selectpicker('val', '{{ meta["gender"] }}');
+    $("[name=grade]").selectpicker('val', '{{ meta["grade"] }}');
+    $("[name=delegation]").selectpicker('val', '{{ meta["delegation"] }}')
 });
 function information_save(ele){
 	data = $(".information-form").serialize();

@@ -32,7 +32,7 @@ class IndexHandler(RequestHandler):
                 if not issetdata:
                     err, meta = yield from Service.User.get_info(self.acct, self.acct['uid'])
                     print(meta)
-                    self.render("modify_user.html", nationality=config.id2nationality)
+                    self.render("modify_user.html", nationality=config.id2nationality, meta=meta)
                 else:
                     self.render("show_data.html")
         return
