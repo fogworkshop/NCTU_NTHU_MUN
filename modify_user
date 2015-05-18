@@ -16,5 +16,7 @@ address varchar
 cellphone varchar
 accommodation bool
 committee_preference varchar
-
-
+pc varchar
+iachr varchar
+experience varchar
+hearabout varchar
