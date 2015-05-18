@@ -95,6 +95,23 @@ class UserService:
         print(type(meta['chinesename']))
         return (None, meta)
 
+    def update_pay(self, acct, data):
+        if not acct or acct['uid'] != data['uid']:
+            return ('Eaccess', None)
+
+        cur = yield self.db.cursor()
+        yield cur.execute('SELECT "paycode", "paydate" FROM "account_info" WHERE "uid" = %s;', (data['uid'], ))
+        paycode, paydate = cur.fetchone()
+        if paycode != '' or paydate == '':
+            return ('Efilled', None)
+
+        yield cur.execute('UPDATE "account_info" SET "paycode" = %s, "paydate" = %s WHERE "uid" = %s;', (data['paycode'], data['paydate'], data['uid'], ))
+        if cur.rowcount != 1:
+            return ('Edb', None)
+        return (None, data['uid'])
+        
+
+
 
 class UserHandler(RequestHandler):
     @reqenv
@@ -121,6 +138,15 @@ class UserHandler(RequestHandler):
                     'residence', 'city', 'address', 'cellphone', 'require_accommodation', 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2']
             meta = self.get_args(args)
             err, uid = yield from UserService.inst.confirm_info(self.acct, meta)
+            if err:
+                self.finish(err)
+                return
+            self.finish('S')
+            return
+        elif req == 'update_pay':
+            args = ['paycode', 'paydate']
+            meta = self.get_args(args)
+            err, uid = yield from UserService.inst.update_pay(self.acct, data)
             if err:
                 self.finish(err)
                 return
