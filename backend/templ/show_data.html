@@ -2,11 +2,17 @@
 {% block content %}
 
 <div class="container-fluid">
-	<div class="row" style="height: 120px; background-color: red;">
+	<div class="row" style="height: 120px;">
 	</div>
 </div>
 
 <script>
+$(document).ready(function(){
+	document.title = "Homepage | TWMUN";
+	$(".selectpicker").selectpicker({
+		"dropupAuto": 0
+	});
+});
 
 </script>
 {% end %}
