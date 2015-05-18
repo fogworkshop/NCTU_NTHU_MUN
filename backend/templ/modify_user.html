@@ -249,6 +249,7 @@ $(document).ready(function(){
 		endDate: "1999/12/31"
 	});
 	CP_CHANGE();
+	delegation_change();
     $("[name=nationality]").selectpicker('val', '{{ meta["nationality"] }}');
     $("[name=residence]").selectpicker('val', '{{ meta["residence"] }}');
     $("[name=vegetarian]").selectpicker('val', '{{ meta["vegetarian"] }}')
