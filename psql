@@ -25,7 +25,7 @@ CREATE TABLE account_info(
     gender varchar(256) DEFAULT 'Male',
     birth date DEFAULT '1990/1/1',
     nationality varchar(256) DEFAULT 'Taiwan',
-    vegetarian bool DEFAULT TRUE,
+    vegetarian integer DEFAULT 0,
 
     university varchar(256) DEFAULT '',
     department varchar(256) DEFAULT '',
@@ -39,9 +39,9 @@ CREATE TABLE account_info(
     address varchar(256) DEFAULT '',
     cellphone varchar(256) DEFAULT '',
 
-    require_accommodation bool DEFAULT TRUE,
+    require_accommodation integer DEFAULT 1,
 
-    committee_preference varchar(256) DEFAULT '',
+    committee_preference varchar(256) DEFAULT '[0,0,0,0,0,0]',
     pc varchar(256) DEFAULT '',
     iachr varchar(256) DEFAULT '',
     experience varchar(256) DEFAULT '',
