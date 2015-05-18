@@ -18,6 +18,7 @@
 		<div class="col-lg-8">
 		
 			<form class="form-horizontal information-form">
+                <input type="hidden" name="uid" value="{{acct['uid']}}">
 				<h1>　</h1>
 				<div class="form-group">
 					<label class="col-sm-2 control-label">Chinese Name</label>
@@ -223,7 +224,7 @@
 						<a class="btn btn-success btn-block has-spinner" onclick="information_save(this);"><span class="spinner"><img src="/728-1.GIF"></span>Save</a>
 					</div>
 					<div class="col-sm-2">
-						<a class="btn btn-success btn-block has-spinner" onclick="information_update(this);"><span class="spinner"><img src="/728-1.GIF"></span>Submit</a>
+						<a class="btn btn-success btn-block has-spinner" onclick="information_submit(this);"><span class="spinner"><img src="/728-1.GIF"></span>Submit</a>
 					</div>
 					<div class="col-sm-2">
 						<a class="btn btn-default btn-block has-spinner" onclick="logout(this);"><span class="spinner"><img src="/728.GIF"></span>Logout</a>
@@ -252,13 +253,16 @@ $(document).ready(function(){
 	$("[name=residence]").selectpicker('val', 'Taiwan');
 });
 function information_save(ele){
-	
 	data = $(".information-form").serialize();
     data += "&req=modify_info";
 	$(ele).toggleClass("active disabled");
 	console.log(data);
+    $.post('/user', data, function(res){
+        alert(res);
+        $(ele).toggleClass("active disabled");
+    });
 }
-function information_update(ele){
+function information_submit(ele){
 	data = $(".information-form").serialize();
     data += "&req=confirm_info";
 	$(ele).toggleClass("active disabled");

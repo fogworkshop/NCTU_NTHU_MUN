@@ -10,6 +10,8 @@ from req import Service
 
 from login import LoginHandler
 from login import LoginService
+from user import UserHandler
+from user import UserService
 from logout import LogoutHandler
 import signal
 import time
@@ -57,18 +59,27 @@ def shutdown():
     stop_loop()
 
 
+class TestHandler(RequestHandler):
+    @reqenv
+    def get(self):
+        self.render('test.html')
+        return
+
 if __name__ == '__main__':
     db = pg.AsyncPG(config.DBNAME, config.DBUSER, config.DBPASSWORD, host=config.DBHOST, dbtz='+8')
     app = tornado.web.Application([
         ('/', IndexHandler),
         ('/login', LoginHandler),
         ('/logout', LogoutHandler),
+        ('/user', UserHandler),
+        ('/test', TestHandler),
         ('/(.*)', tornado.web.StaticFileHandler, {'path': '../http'}),
         ], cookie_secret=config.COOKIE_SECRET, autoescape='xhtml_escape')
     global srv
     srv = tornado.httpserver.HTTPServer(app)
     srv.listen(config.PORT)
     Service.Login = LoginService(db)
+    Service.User = UserService(db)
     print('start')
     signal.signal(signal.SIGTERM, sig_handler)
     signal.signal(signal.SIGINT, sig_handler)

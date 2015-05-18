@@ -14,9 +14,13 @@ class UserService:
 
     def modify_info(self, acct, data):
         def gen_sql(data):
+            first = True
             sql = ' SET '
             prama = ()
             for i in data:
+                if first == False:
+                    sql += ','
+                first = False
                 sql += '"%s" = '%i
                 sql += '%s '
                 prama = prama + (data[i],)
@@ -24,13 +28,18 @@ class UserService:
         if not acct:
             return ('Elogin', None)
 
+        uid = data['uid']
+        data.pop('uid')
+
         if acct['info_confirm']:
             return ('Econfirm', None)
         
         cur = yield self.db.cursor()
+        yield cur.execute('SELECT 1 FROM "account_info" WHERE "uid" = %s;', (uid, ))
+        if cur.rowcount == 0:
+            yield cur.execute('INSERT INTO "account_info" ("uid") VALUES(%s);', (uid,))
         (sql, prama) = gen_sql(data)
-        uid = acct['uid']
-        yield cur.execute('UPDATE "account_info" '+sql+' WHRER "uid" = %s;', prama+(uid,))
+        yield cur.execute('UPDATE "account_info" '+sql+' WHERE "uid" = %s;', prama+(uid,))
         
         if cur.rowcount != 1:
             return ('Edb', None)
@@ -45,11 +54,21 @@ class UserService:
         if err:
             return (err, None)
 
+        uid = data['uid']
+        data.pop('uid')
+
         uid = acct['uid']
         cur = yield self.db.cursor('UPDATE "account" SET "info_confirm" = %s', (True, ))
         if cur.rowcount != 1:
             return ('Edb', None)
         return (None, uid)
+
+    def get_info(self, acct, uid):
+        if not acct:
+            return ('Elogin', None)
+
+        if acct['uid'] != uid and acct['admin'] == 0:
+            return ('Eaccess', None)
 
 class UserHandler(RequestHandler):
     @reqenv
@@ -60,7 +79,7 @@ class UserHandler(RequestHandler):
     def post(self):
         req = self.get_argument('req', None)
         if req == 'modify_info':
-            args = ['chinesename', 'englishname', 'gender', 'birth', 'nationality', 'vegeterian', 
+            args = ['uid', 'chinesename', 'englishname', 'gender', 'birth', 'nationality', 'vegetarian', 
                     'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
                     'residence', 'city', 'address', 'cellphone', 'require_accommodation', 'committee_preference']
             meta = self.get_args(args)
@@ -71,7 +90,7 @@ class UserHandler(RequestHandler):
             self.finish('S')
             return
         elif req == 'confirm_info':
-            args = ['chinesename', 'englishname', 'gender', 'birth', 'nationality', 'vegeterian', 
+            args = ['uid', 'chinesename', 'englishname', 'gender', 'birth', 'nationality', 'vegetarian', 
                     'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
                     'residence', 'city', 'address', 'cellphone', 'require_accommodation', 'committee_preference']
             meta = self.get_args(args)

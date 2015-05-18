@@ -19,12 +19,13 @@ CREATE TABLE account(
 CREATE TRIGGER account_modified BEFORE UPDATE ON account FOR EACH ROW EXECUTE PROCEDURE  update_modified_column();
 
 CREATE TABLE account_info(
+    uid integer,
     chinesename varchar(256),
     englishname varchar(256),
     gender varchar(256),
     birth date,
-    nationality integer,
-    vegertarian bool,
+    nationality varchar(256),
+    vegetarian bool,
 
     university varchar(256),
     department varchar(256),
@@ -32,20 +33,22 @@ CREATE TABLE account_info(
     delegation_englishname varchar(256),
     delegation_email varchar(256),
 
-    residence integer,
+    residence varchar(256),
     city varchar(256),
     address varchar(256),
     cellphone varchar(256),
 
     require_accommodation bool,
 
-    commitee_preference varchar(256),
-    pc_top bool,
-    pc_text text,
+    committee_preference varchar(256),
+    pc varchar(256),
+    iachr varchar(256),
+    experience varchar(256),
+    hearabout varchar(256),
 
 	created timestamp DEFAULT now(),
 	modified timestamp DEFAULT now()
 );
 
-CREATE TRIGGER account_info_modified BEFORE UPDATE ON account FOR EACH ROW EXECUTE PROCEDURE  update_modified_column();
+CREATE TRIGGER account_info_modified BEFORE UPDATE ON account_info FOR EACH ROW EXECUTE PROCEDURE  update_modified_column();
 
