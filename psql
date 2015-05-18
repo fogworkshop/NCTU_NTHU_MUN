@@ -42,7 +42,10 @@ CREATE TABLE account_info(
     require_accommodation integer DEFAULT 1,
 
     committee_preference varchar(256) DEFAULT '[0,0,0,0,0,0]',
-    pc varchar(256) DEFAULT '',
+    pc1 character varying DEFAULT '',
+    pc2 character varying DEFAULT '',
+    iachr1 character varying DEFAULT '',
+    iachr2 character varying DEFAULT '',
     iachr varchar(256) DEFAULT '',
     experience varchar(256) DEFAULT '',
     hearabout varchar(256) DEFAULT '',
