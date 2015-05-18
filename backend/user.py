@@ -23,7 +23,19 @@ class UserService:
             return (sql, prama)
         if not acct:
             return ('Elogin', None)
-        pass
+
+        if acct['info_confirm']:
+            return ('Econfirm', None)
+        
+        cur = yield self.db.cursor()
+        (sql, prama) = gen_sql(data)
+        uid = acct['uid']
+        yield cur.execute('UPDATE "account_info" '+sql+' WHRER "uid" = %s;', prama+(uid,))
+        
+        if cur.rowcount != 1:
+            return ('Edb', None)
+
+        return (None, uid)
 
     def confirm_info(self, acct, data):
         if not acct:
@@ -33,9 +45,11 @@ class UserService:
         if err:
             return (err, None)
 
-        uid = int(acct['uid'])
-        cur = yield self.db.cursor()
-        pass
+        uid = acct['uid']
+        cur = yield self.db.cursor('UPDATE "account" SET "info_confirm" = %s', (True, ))
+        if cur.rowcount != 1:
+            return ('Edb', None)
+        return (None, uid)
 
 class UserHandler(RequestHandler):
     @reqenv
@@ -50,11 +64,21 @@ class UserHandler(RequestHandler):
                     'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
                     'residence', 'city', 'address', 'cellphone', 'require_accommodation', 'committee_preference']
             meta = self.get_args(args)
-            pass
+            err, uid = yield from UserService.inst.modify_info(self.acct, meta)
+            if err:
+                self.finish(err)
+                return
+            self.finish('S')
+            return
         elif req == 'confirm_info':
             args = ['chinesename', 'englishname', 'gender', 'birth', 'nationality', 'vegeterian', 
                     'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
                     'residence', 'city', 'address', 'cellphone', 'require_accommodation', 'committee_preference']
             meta = self.get_args(args)
-            pass
-        pass
+            err, uid = yield from UserService.inst.confirm_info(self.acct, meta)
+            if err:
+                self.finish(err)
+                return
+            self.finish('S')
+            return
+        self.finish('undefined')
