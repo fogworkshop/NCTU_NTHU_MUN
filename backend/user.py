@@ -1,6 +1,7 @@
 from req import Service
 from req import RequestHandler
 from req import reqenv
+import json
 
 class UserService:
     def __init__(self, db):
@@ -82,7 +83,7 @@ class UserService:
             return ('Eaccess', None)
         args = ['uid', 'chinesename', 'englishname', 'gender', 'birth', 'nationality', 'vegetarian', 
                 'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
-                'residence', 'city', 'address', 'cellphone', 'require_accommodation', 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2']
+                'residence', 'city', 'address', 'cellphone', 'require_accommodation', 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2', 'hearabout']
         sql = gen_sql(args)
         cur = yield self.db.cursor()
         yield cur.execute('SELECT '+sql+' FROM "account_info" WHERE "uid" = %s;', (uid, ))
@@ -92,7 +93,7 @@ class UserService:
         meta = {}
         for i, a in enumerate(args):
             meta[a] = q[i]
-
+        meta['hearabout'] = json.loads(meta['hearabout'])
         args = ['email', 'pay', 'info_confirm']
         sql = gen_sql(args)
         cur = yield self.db.cursor()
@@ -155,7 +156,7 @@ class UserHandler(RequestHandler):
         if req == 'modify_info':
             args = ['uid', 'chinesename', 'englishname', 'gender', 'birth', 'nationality', 'vegetarian', 
                     'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
-                    'residence', 'city', 'address', 'cellphone', 'require_accommodation', 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2']
+                    'residence', 'city', 'address', 'cellphone', 'require_accommodation', 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2', 'hearabout']
             meta = self.get_args(args)
             err, uid = yield from UserService.inst.modify_info(self.acct, meta)
             if err:
@@ -166,7 +167,7 @@ class UserHandler(RequestHandler):
         elif req == 'confirm_info':
             args = ['uid', 'chinesename', 'englishname', 'gender', 'birth', 'nationality', 'vegetarian', 
                     'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
-                    'residence', 'city', 'address', 'cellphone', 'require_accommodation', 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2']
+                    'residence', 'city', 'address', 'cellphone', 'require_accommodation', 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2', 'hearabout']
             meta = self.get_args(args)
             err, uid = yield from UserService.inst.confirm_info(self.acct, meta)
             if err:
