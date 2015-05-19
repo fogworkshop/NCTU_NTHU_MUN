@@ -13,6 +13,8 @@ from login import LoginService
 from user import UserHandler
 from user import UserService
 from logout import LogoutHandler
+from payment import PaymentHandler
+from payment import PaymentService
 import signal
 import time
 
@@ -74,6 +76,7 @@ if __name__ == '__main__':
         ('/login', LoginHandler),
         ('/logout', LogoutHandler),
         ('/user', UserHandler),
+        ('/payment', PaymentHandler),
         ('/test', TestHandler),
         ('/(.*)', tornado.web.StaticFileHandler, {'path': '../http'}),
         ], cookie_secret=config.COOKIE_SECRET, autoescape='xhtml_escape')
@@ -82,6 +85,7 @@ if __name__ == '__main__':
     srv.listen(config.PORT)
     Service.Login = LoginService(db)
     Service.User = UserService(db)
+    Service.Payment = PaymentService(db)
     print('start')
     signal.signal(signal.SIGTERM, sig_handler)
     signal.signal(signal.SIGINT, sig_handler)
