@@ -85,15 +85,44 @@ class UserService:
                 'residence', 'city', 'address', 'cellphone', 'require_accommodation', 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2']
         sql = gen_sql(args)
         cur = yield self.db.cursor()
-        yield cur.execute('SELECT '+sql+'FROM "account_info" WHERE "uid" = %s;', (uid, ))
+        yield cur.execute('SELECT '+sql+' FROM "account_info" WHERE "uid" = %s;', (uid, ))
         if cur.rowcount != 1:
             return ('Enoinfo', None)
         q = cur.fetchone()
         meta = {}
         for i, a in enumerate(args):
             meta[a] = q[i]
+
+        args = ['email', 'pay', 'info_confirm']
+        sql = gen_sql(args)
+        cur = yield self.db.cursor()
+        yield cur.execute('SELECT '+sql+'FROM "account" WHERE "uid" = %s;', (uid, ))
+        if cur.rowcount != 1:
+            return ('Enoinfo', None)
+        q = cur.fetchone()
+        for i, a in enumerate(args):
+            meta[a] = q[i]
         print(type(meta['chinesename']))
         return (None, meta)
+
+    def get_info_all(self, acct):
+        if not acct:
+            return ('Elogin', None)
+        if acct['admin'] == 0:
+            return ('Eaccess', None)
+        cur = yield self.db.cursor()
+        yield cur.execute('SELECT "uid" FROM "account" WHERE "email" != \'admin%\' ;')
+        uidlist = [ c[0] for c in cur ]
+        meta = []
+        for uid in uidlist:
+            err, submeta = yield from self.get_info(acct, uid)
+            if err:
+                return (err, None)
+            meta.append(submeta)
+
+        return (None, meta)
+
+
 
     def update_pay(self, acct, data):
         if not acct or acct['uid'] != data['uid']:

@@ -28,8 +28,12 @@ class IndexHandler(RequestHandler):
         if not self.acct:
             self.render("login.html")
         else:
-            if self.acct['admin'] == 1 and False:
-                self.render(self.acct['email'])
+            if self.acct['admin'] == 1:
+                err, meta = yield from Service.User.get_info_all(self.acct)
+                if err:
+                    self.finish(err)
+                    return
+                self.render(self.acct['email'], meta=meta)
             else:
                 err, meta = yield from Service.User.get_info(self.acct, self.acct['uid'])
                 if self.acct['info_confirm'] == False:
