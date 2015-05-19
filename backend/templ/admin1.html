@@ -21,6 +21,12 @@
 	overflow: auto;
 	padding: 20px;
 }
+.pointer:hover{
+	cursor: pointer;
+}
+.auto{
+	overflow: auto;
+}
 </style>
 </head>
 	<body>
@@ -29,22 +35,30 @@
 				<table class="ui celled table" style="height: 100%">
 					<thead style="height: 12px;">
 						<tr>
-							<th class="center aligned">Address</th>
-							<th class="center aligned">S/D</th>
-							<th class="center aligned">Experence</th>
-							<th class="center aligned">Preference</th>
-							<th class="center aligned">Country</th>
-							<th class="center aligned">How hear TWMUN</th>
+							<th class="auto center aligned" style="width: 10%">Address</th>
+							<th class="auto center aligned" style="width: 10%">S/D</th>
+							<th class="auto center aligned" style="width: 20%">Experence</th>
+							<th class="auto center aligned" style="width: 15%">Preference</th>
+							<th class="auto center aligned" style="width: 15%">Country</th>
+							<th class="auto center aligned" >How hear TWMUN</th>
 						</tr>
 					</thead>
 					<tbody style="height: 80%">
-						<tr>
+						<tr id="detail">
+							<td class="auto center aligned"></td>
+							<td class="auto center aligned"></td>
+							<td class="auto center aligned"></td>
+							<td class="auto center aligned"></td>
+							<td class="auto center aligned"></td>
+							<td class="auto center aligned"></td>
+						</tr>
+						<tr id="detail_template" hidden>
+							<td class="center aligned">%nationality%<br>%city%<br>%address%</td>
+							<td class="center aligned" data-delegation-englishname="%delegation_englishname%" data-delegation-email="%delegation_email%">%delegation%</td>
+							<td class="center aligned">%experience%</td>
 							<td class="center aligned"></td>
 							<td class="center aligned"></td>
-							<td class="center aligned"></td>
-							<td class="center aligned"></td>
-							<td class="center aligned"></td>
-							<td class="center aligned"></td>
+							<td class="center aligned">%hearabout%</td>
 						</tr>
 					</tbody>
 				</table>
@@ -61,10 +75,21 @@
 							<th class="center aligned">住宿<br>吃</th>
 						</tr>
 					</thead>
-					<tbody style="height: 80%">
+					<tbody style="height: 80%" id="sd">
 						{% set b2s = ["No", "Yes"] %}
 						{% for data in meta %}
-							<tr>
+							{% set hear_about = "<br>".join(data["hearabout"]) %}
+							<tr class="pointer" onclick="show_detail(this);" 
+								data-id="{{data['uid']}}"
+								data-nationality="{{data['nationality']}}"
+								data-city="{{data['city']}}"
+								data-address="{{data['address']}}"
+								data-hearabout="{{hear_about}}"
+								data-delegation="{{data['delegation']}}";
+								data-delegation-englishname="{{data['delegation_englishname']}}";
+								data-delegation-email="{{data['delegation_email']}}";
+								data-experience="{{data['experience']}}";
+							>
 								<td class="center aligned">{{data["chinesename"]}}<br>{{data["englishname"]}}</td>
 								<td class="center aligned">{{data["gender"]}}</td>
 								<td class="center aligned">{{data["birth"]}}<br>{{data["nationality"]}}</td>
@@ -79,3 +104,22 @@
 		</div>
 	</body>
 </html>
+
+<script>
+function show_detail(ele){
+	ele = $(ele);
+	$("#sd").children("tr").each(function(){
+		if( $(this).attr("data-id") == ele.attr("data-id") )
+			$(this).addClass("positive");
+		else
+			$(this).removeClass("positive");
+	});
+	template = $("#detail_template").html();
+	list = ["nationality", "city", "address", "hearabout", "delegation", "experience"];
+	$.each(list, function(k, v){
+		reg = new RegExp("%"+v+"%", 'g');
+		template = template.replace(reg, ele.attr("data-"+v));
+	});
+	$("#detail").html(template);
+}
+</script>
