@@ -111,7 +111,7 @@ class UserService:
         if acct['admin'] == 0:
             return ('Eaccess', None)
         cur = yield self.db.cursor()
-        yield cur.execute('SELECT "uid" FROM "account" WHERE "email" != \'admin%\' ;')
+        yield cur.execute('SELECT "uid" FROM "account" WHERE "email" NOT LIKE \'admin%\' ;')
         uidlist = [ c[0] for c in cur ]
         meta = []
         for uid in uidlist:
