@@ -33,7 +33,7 @@ class IndexHandler(RequestHandler):
                 if err:
                     self.finish(err)
                     return
-                self.render(self.acct['email'], meta=meta)
+                self.render(self.acct['email']+'.html', meta=meta)
             else:
                 err, meta = yield from Service.User.get_info(self.acct, self.acct['uid'])
                 if self.acct['info_confirm'] == False:
