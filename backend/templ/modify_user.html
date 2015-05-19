@@ -293,9 +293,10 @@ function information_save(ele){
 	$(ele).toggleClass("active disabled");
 	console.log(data);
     $.post('/user', data, function(res){
-        alert(res);
         $(ele).toggleClass("active disabled");
-        window.location = window.location;
+        bootbox.alert('Saved', function(){
+            window.location = window.location;
+        });
     });
 }
 function information_submit(ele){
@@ -306,6 +307,9 @@ function information_submit(ele){
     $.post('/user', data, function(res){
         alert(res);
         $(ele).toggleClass("active disabled");
+        bootbox.alert('Jump to next page', function(){
+            window.location = window.location;
+        });
     });
 }
 function logout(ele){
