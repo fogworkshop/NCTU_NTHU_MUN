@@ -256,7 +256,6 @@
 			</form>
 		</div>
 		<div class="col-lg-2">
-			{{meta["committee_preference"]}}
 		</div>
 	</div>
 </div>
@@ -273,7 +272,6 @@ $(document).ready(function(){
 		startDate: "1990/01/01",
 		endDate: "1999/12/31"
 	});
-	delegation_change();
     $("[name=nationality]").selectpicker('val', '{{ meta["nationality"] }}');
     $("[name=residence]").selectpicker('val', '{{ meta["residence"] }}');
     $("[name=vegetarian]").selectpicker('val', parseInt({{ meta["vegetarian"] }}));
@@ -281,6 +279,7 @@ $(document).ready(function(){
     $("[name=grade]").selectpicker('val', '{{ meta["grade"] }}');
     $("[name=delegation]").selectpicker('val', parseInt({{ meta["delegation"] }}));
     $("[name=require_accommodation]").selectpicker('val', parseInt({{ meta["require_accommodation"] }}));
+	delegation_change();
 	CP = JSON.parse('{{meta["committee_preference"]}}');
 	now = 0;
 	$(".CP.selectpicker").each(function(){

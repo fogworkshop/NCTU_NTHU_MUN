@@ -3,17 +3,153 @@
 
 <div class="container-fluid">
 	<div class="row" style="height: 120px;">
+		<div class="col-lg-10 col-md-9 col-sm-8 col-xs-8">
+			<h2><p>Welcome to TWMUN</p></h2>
+		</div>
+		<div class="col-lg-2 col-md-3 col-sm-4 col-xs-4" style="text-align: right; margin-top: 18px;">
+			<div class="dropdown">
+				<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+					<span class="glyphicon glyphicon-menu-hamburger"></span>
+				</button>
+				<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">帳戶$</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Upload PP</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" onclick="changepassword();">Change Password</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Log Out</a></li>
+				</ul>
+			</div>
+		</div>
 	</div>
 </div>
-
+<div class="container-fluid">
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+	XD<br>
+</div>
+<div class="hidden change-password-modal">
+	<form class="form-horizontal changepassword-form">
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Password</label>
+			<div class="col-sm-7">
+				<input name="opwd" class="form-control" type="text">
+			</div>
+		</div>	
+		<div class="form-group">
+			<label class="col-sm-4 control-label">New Password</label>
+			<div class="col-sm-7">
+				<input name="npwd" class="form-control" type="password">
+			</div>
+		</div>	
+		<div class="form-group">
+			<label class="col-sm-4 control-label">Confirm Password</label>
+			<div class="col-sm-7">
+				<input name="rnpwd" class="form-control" type="password">
+			</div>
+		</div>
+		<input type="hidden" name="req" value="change">
+	</form>
+</div>
 <script>
 $(document).ready(function(){
 	document.title = "Homepage | TWMUN";
-	$(".selectpicker").selectpicker({
-		"dropupAuto": 0
-	});
+	/*
+	   $(".selectpicker").selectpicker({
+	   "dropupAuto": 0
+	   });
+	 */
 });
 
+function changepassword(){
+	message = $(".change-password-modal").html();
+	bootbox.dialog({
+		message: message,
+		title: "Register",
+		buttons: {
+			success: {
+				label: "Change Password",
+				className: "btn-success",
+				callback: function() {
+					data = $(".changepassword-form:visible").serialize();
+					$.post("/login", data, function(msg){
+						bootbox.alert(msg);
+					});
+					return false;
+				}
+			},
+			danger: {
+				label: "Cancel",
+				className: "btn-danger",
+				callback: function() {
+				}
+			}
+		}
+	});
+}
 </script>
 {% end %}
 
