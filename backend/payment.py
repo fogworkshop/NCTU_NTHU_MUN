@@ -49,6 +49,7 @@ class PaymentService:
         res = paypal.execute()
         if res:
             yield cur.execute('UPDATE "account" SET "pay" = %s WHERE "uid" = %s;', (1, acct['uid']))
+            yield cur.execute('UPDATE "account_info" SET "paydate" = now() WHERE "uid" = %s;',(acct['uid'],))
         return (None, res)
         
 
