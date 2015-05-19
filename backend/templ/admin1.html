@@ -2,19 +2,80 @@
 <html>
 <head>
 <title>Admin1 | TWMUN</title>
-<meta name="keywords" content="">
 <meta charset="UTF-8">
-<link rel="stylesheet" href="/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="/silviomoreto-bootstrap-select/dist/css/bootstrap-select.min.css">
-<link rel="stylesheet" href="/bootstrap-datepicker-1.4.0-dist/css/bootstrap-datepicker.min.css">
-<link rel="stylesheet" href="/default.css">
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Crimson+Text" />
+<link rel="stylesheet" type="text/css" href="/semantic/semantic.min.css">
 <script type="text/javascript" src="/jquery.js"></script>
-<script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/bootbox/bootbox.min.js"></script>
-<script type="text/javascript" src="/silviomoreto-bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-<script type="text/javascript" src="/bootstrap-datepicker-1.4.0-dist/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="/semantic/semantic.min.js"></script>
+<style>
+.wrapper{
+	height: 100%;
+}
+.up_table{
+	height: 30%;
+	overflow: auto;
+	padding: 20px;
+}
+.down_table{
+	height: 70%;
+	overflow: auto;
+	padding: 20px;
+}
+</style>
 </head>
 	<body>
+		<div class="wrapper">
+			<div class="up_table">
+				<table class="ui celled table" style="height: 100%">
+					<thead style="height: 12px;">
+						<tr>
+							<th class="center aligned">Address</th>
+							<th class="center aligned">S/D</th>
+							<th class="center aligned">Experence</th>
+							<th class="center aligned">Preference</th>
+							<th class="center aligned">Country</th>
+							<th class="center aligned">How hear TWMUN</th>
+						</tr>
+					</thead>
+					<tbody style="height: 80%">
+						<tr>
+							<td class="center aligned"></td>
+							<td class="center aligned"></td>
+							<td class="center aligned"></td>
+							<td class="center aligned"></td>
+							<td class="center aligned"></td>
+							<td class="center aligned"></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="down_table">
+				<table class="ui celled table" style="height: 100%">
+					<thead style="height: 24px;">
+						<tr>
+							<th class="center aligned">中文名<br>英文名</th>
+							<th class="center aligned">性別</th>
+							<th class="center aligned">生日<br>國籍</th>
+							<th class="center aligned">大學<br>科系<br>class of</th>
+							<th class="center aligned">手機<br>Email</th>
+							<th class="center aligned">住宿<br>吃</th>
+						</tr>
+					</thead>
+					<tbody style="height: 80%">
+						{% set b2s = ["No", "Yes"] %}
+						{% for data in meta %}
+							<tr>
+								<td class="center aligned">{{data["chinesename"]}}<br>{{data["englishname"]}}</td>
+								<td class="center aligned">{{data["gender"]}}</td>
+								<td class="center aligned">{{data["birth"]}}<br>{{data["nationality"]}}</td>
+								<td class="center aligned">{{data["university"]}}<br>{{data["department"]}}<br>{{data["grade"]}}</td>
+								<td class="center aligned">{{data["cellphone"]}}<br>{{data["email"]}}</td>
+								<td class="center aligned">{{b2s[data["require_accommodation"]]}}<br>{{b2s[data["vegetarian"]]}}</td>
+							</tr>
+						{% end %}
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</body>
 </html>
