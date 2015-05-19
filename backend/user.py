@@ -120,6 +120,8 @@ class UserService:
                 return (err, None)
             meta.append(submeta)
 
+        meta = sorted(meta, key=lambda m: int(m['uid']))
+
         return (None, meta)
 
 
