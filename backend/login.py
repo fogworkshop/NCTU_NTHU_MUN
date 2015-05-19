@@ -74,15 +74,15 @@ class LoginService:
         cur = yield self.db.cursor()
         yield cur.execute('SELECT "pwd" FROM "account" WHERE "uid" = %s;', (acct['uid'],))
         hpwd = cur.fetchone()[0]
-        if hpwd != _hash(data['opwd']):
+        if str(hpwd) != str(_hash(data['opwd'])):
             return ('Epwd', None)
 
         if data['npwd'] != data['rnpwd']:
             return ('Enpwd', None)
-        yield cur.execute('UPDATE "account" SET "pwd" = %s WHERE "uid" = %s;', (_hash(data['npwd']), data['uid'], ))
+        yield cur.execute('UPDATE "account" SET "pwd" = %s WHERE "uid" = %s;', (_hash(data['npwd']), acct['uid'], ))
         if cur.rowcount != 1:
             return ('Edb', None)
-        return (None, data['uid'])
+        return (None, acct['uid'])
 
 
     def get_account_info(self, uid):
@@ -132,9 +132,9 @@ class LoginHandler(RequestHandler):
                 return
             self.finish('S')
         elif req == 'change':
-            agrs = ['opwd', 'npwd', 'rnpwd']
+            args = ['opwd', 'npwd', 'rnpwd']
             meta = self.get_args(args)
-            err, uid = yield from LoginService.inst.change_password(self.acct, data)
+            err, uid = yield from LoginService.inst.change_password(self.acct, meta)
             if err:
                 self.finish(err)
                 return
