@@ -61,3 +61,6 @@ body{
 .has-spinner.btn-large.active .spinner {
 	width: 19px;
 }
+a:hover{
+	cursor: pointer;
+}

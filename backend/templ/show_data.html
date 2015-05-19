@@ -12,8 +12,13 @@
 					<span class="glyphicon glyphicon-menu-hamburger"></span>
 				</button>
 				<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
-					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">帳戶$</a></li>
-					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Upload PP</a></li>
+					
+					{% if meta["nationality"] == meta["residence"] and meta["residence"] == "Taiwan" %}
+						<li role="presentation"><a role="menuitem" tabindex="-1" onclick="pay();">付款帳戶</a></li>
+					{% else %}
+						<li role="presentation"><a role="menuitem" tabindex="-1" onclick="pay_online();">Pay Online</a></li>
+					{% end %}
+					<li role="presentation"><a role="menuitem" tabindex="-1" onclick="upload_pp();">Upload PP</a></li>
 					<li class="divider"></li>
 					<li role="presentation"><a role="menuitem" tabindex="-1" onclick="changepassword();">Change Password</a></li>
 					<li role="presentation"><a role="menuitem" tabindex="-1" onclick="logout();">Log Out</a></li>
@@ -23,74 +28,6 @@
 	</div>
 </div>
 <div class="container-fluid">
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
-	XD<br>
 </div>
 <div class="hidden change-password-modal">
 	<form class="form-horizontal changepassword-form">
@@ -115,14 +52,37 @@
 		<input type="hidden" name="req" value="change">
 	</form>
 </div>
+<div class="hidden pay-modal">
+	<form class="form-horizontal pay-form">
+		<div class="form-group">
+			<label class="col-sm-4 control-label">帳號後五碼</label>
+			<div class="col-sm-7">
+				<input name="opwd" class="form-control" type="text">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label">繳費日期</label>
+			<div class="col-sm-7">
+				<input name="npwd" class="form-control" type="password" placeholder="2015/07/01">
+			</div>
+		</div>
+		<input type="hidden" name="req" value="change">
+	</form>
+</div>
+<div class="hidden upload-pp-modal">
+	<form class="form-horizontal upload-pp-form">
+		<div class="form-group">
+			<label class="col-sm-4 control-label">繳費日期</label>
+			<div class="col-sm-7">
+				<input name="npwd" class="form-control" type="password" placeholder="2015/07/01">
+			</div>
+		</div>
+		<input type="hidden" name="req" value="change">
+	</form>
+</div>
 <script>
 $(document).ready(function(){
 	document.title = "Homepage | TWMUN";
-	/*
-	   $(".selectpicker").selectpicker({
-	   "dropupAuto": 0
-	   });
-	 */
 });
 
 function changepassword(){
@@ -136,6 +96,7 @@ function changepassword(){
 				className: "btn-success",
 				callback: function() {
 					data = $(".changepassword-form:visible").serialize();
+					bootbox.alert(data);
 					$.post("/login", data, function(msg){
 						bootbox.alert(msg);
 					});
@@ -155,6 +116,38 @@ function logout(){
 	$.post("/logout", function(){
 		window.location = window.location;
 	});
+}
+function pay(){
+	message = $(".pay-modal").html();
+	bootbox.dialog({
+		message: message,
+		title: "Register",
+		buttons: {
+			success: {
+				label: "Change Password",
+				className: "btn-success",
+				callback: function() {
+					data = $(".pay-form:visible").serialize();
+					$.post("/login", data, function(msg){
+						bootbox.alert(msg);
+					});
+					return false;
+				}
+			},
+			danger: {
+				label: "Cancel",
+				className: "btn-danger",
+				callback: function() {
+				}
+			}
+		}
+	});
+
+}
+function pay_online(){
+}
+function upload_pp(){
+	bootbox.alert("XD");
 }
 </script>
 {% end %}
