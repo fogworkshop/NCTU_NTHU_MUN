@@ -1,6 +1,5 @@
 {% extends 'frame.html' %}
 {% block content %}
-
 <div class="container-fluid">
 	<div class="row" style="height: 120px;">
 		<div class="col-lg-10 col-md-9 col-sm-8 col-xs-8">
@@ -8,14 +7,16 @@
 		</div>
 		<div class="col-lg-2 col-md-3 col-sm-4 col-xs-4" style="text-align: right; margin-top: 18px;">
 			<div class="dropdown">
+				<span>{{meta["chinesename"]}}</span>
 				<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
 					<span class="glyphicon glyphicon-menu-hamburger"></span>
 				</button>
 				<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
 					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">帳戶$</a></li>
 					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Upload PP</a></li>
+					<li class="divider"></li>
 					<li role="presentation"><a role="menuitem" tabindex="-1" onclick="changepassword();">Change Password</a></li>
-					<li role="presentation"><a role="menuitem" tabindex="-1" href="#">Log Out</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" onclick="logout();">Log Out</a></li>
 				</ul>
 			</div>
 		</div>
@@ -148,6 +149,11 @@ function changepassword(){
 				}
 			}
 		}
+	});
+}
+function logout(){
+	$.post("/logout", function(){
+		window.location = window.location;
 	});
 }
 </script>
