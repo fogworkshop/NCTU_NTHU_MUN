@@ -52,7 +52,7 @@
 							<td class="auto center aligned"></td>
 							<td class="auto center aligned"></td>
 							<td class="auto center aligned"></td>
-							<td class="auto center aligned"></td>
+							<td class="auto center aligned hearabout"></td>
 							<td></td>
 						</tr>
 						<tr id="detail_template" hidden>
@@ -137,6 +137,7 @@
                                 data-committee-preference="{{data['committee_preference']}}"
                                 data-preference="{{data['preference']}}"
                                 data-country="{{data['country']}}"
+                                data-hearabout="{{'<br>'.join(data['hearabout'])}}"
 								>
 								<td class="center aligned">{{data["chinesename"]}}<br>{{data["englishname"]}}</td>
 								<td class="center aligned">{{data["gender"]}}</td>
