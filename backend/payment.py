@@ -15,7 +15,7 @@ class PaymentService:
         if not acct:
             return('Elogin', None)
         if acct['pay'] == 1:
-            return('Epaid', None)
+            return(None, None)
         if acct['nationality'] == acct['residence'] and acct['residence'] == 'Taiwan':
             return (None, None)
         paypal = PaypalPayment()
