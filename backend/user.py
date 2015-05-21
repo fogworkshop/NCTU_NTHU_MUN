@@ -150,7 +150,7 @@ class UserService:
         yield cur.execute('UPDATE "account_info" SET "paycode" = %s, "paydate" = %s WHERE "uid" = %s;', (data['paycode'], data['paydate'], acct['uid'], ))
         if cur.rowcount != 1:
             return ('Edb', None)
-        return (None, acct:['uid'])
+        return (None, acct['uid'])
        
     def admin_set_pay(self, acct, data):
         if not acct:
