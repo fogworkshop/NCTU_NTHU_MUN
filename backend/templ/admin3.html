@@ -23,18 +23,32 @@
 			<tbody>
 				{% for data in meta %}
 					<tr>
-						<td class="center aligned">{{data["chinesename"]}}<br>{{data["englishname"]}}</td>
-						<td class="center aligned" style="padding: 0px;">
-							<textarea style="width: 100%; height: 100%; border: 0px; resize: none; background: inherit;">{{data["country"]}}</textarea>
-						</td>
-						<td class="center aligned" style="padding: 0px;">
-							<textarea style="width: 100%; height: 100%; border: 0px; resize: none; background: inherit;">{{data["committee"]}}</textarea>
-						</td>
-						<td class="center aligned"><input type="file"></td>
-						<td class="center aligned"><div class="ui green button">Update</div></td>
+                            <td class="center aligned">{{data["chinesename"]}}<br>{{data["englishname"]}}</td>
+                            <td class="center aligned" style="padding: 0px;">
+                                <textarea name="country-{{data['uid']}}" style="width: 100%; height: 100%; border: 0px; resize: none; background: inherit;">{{data["country"]}}</textarea>
+                            </td>
+                            <td class="center aligned" style="padding: 0px;">
+                                <textarea name="committee-{{data['uid']}}" style="width: 100%; height: 100%; border: 0px; resize: none; background: inherit;">{{data["committee"]}}</textarea>
+                            </td>
+                            <td class="center aligned"><input name="flag" type="file"></td>
+                            <td class="center aligned"><div class="ui green button" onclick="update({{data['uid']}})">Update</div></td>
 					</tr>
 				{% end %}
 			</tbody>
 		</table>
 	</body>
 </html>
+<script>
+function update(uid){
+    country = $('textarea[name=country-'+uid+']').val();
+    committee = $('textarea[name=committee-'+uid+']').val();
+    alert(country);
+    alert(committee);
+    $.post('/admin', {
+        'req': 'admin3',
+        'uid': uid,
+        'country': country,
+        'committee':committee;
+    });
+}
+</script>

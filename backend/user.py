@@ -203,7 +203,7 @@ class UserHandler(RequestHandler):
         elif req == 'update_pay':
             args = ['paycode', 'paydate']
             meta = self.get_args(args)
-            err, uid = yield from UserService.inst.update_pay(self.acct, data)
+            err, uid = yield from UserService.inst.update_pay(self.acct, meta)
             if err:
                 self.finish(err)
                 return
