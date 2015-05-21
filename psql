@@ -50,6 +50,7 @@ CREATE TABLE account_info(
     iachr varchar(256) DEFAULT '',
     experience varchar(256) DEFAULT '',
     hearabout varchar(256) DEFAULT '',
+    other varchar(256) DEFAULT '',
 
     represent_country varchar(256) DEFAULT '',
     represent_committee varchar(256) DEFAULT '',
