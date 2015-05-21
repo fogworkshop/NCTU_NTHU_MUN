@@ -29,7 +29,7 @@ class UserService:
 
         if not acct:
             return ('Elogin', None)
-        if data['englishname'].find(',') != -1 || data['englishname'].find('-') != -1:
+        if data['englishname'].find(',') != -1 or data['englishname'].find('-') != -1:
             return ('Eenglishname', None)
         if data['cellphone'].isdigit() == False:
             return ('Ecellphone', None)
