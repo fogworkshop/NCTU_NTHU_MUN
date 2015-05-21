@@ -76,11 +76,11 @@ class AdminService:
 
         filename = flag_img['filename']
         path = os.path.abspath(os.path.join(os.path.dirname("__file__"),os.path.pardir)) + '/http/'
-        path += str(data['uid']) + '/flag.' + filename.split('.')[-1]
+        path += str(uid) + '/flag.' + filename.split('.')[-1]
         f = open(path, 'wb')
         f.write(flag_img['body'])
         f.close()
-        return (None, data['uid'])
+        return (None, uid)
 
 
 class AdminHandler(RequestHandler):
@@ -117,6 +117,7 @@ class AdminHandler(RequestHandler):
             except:
                 flag_img = None
             meta = self.get_args(args)
+            print('meta', meta)
             err, uid = yield from AdminService.inst.update_admin3(self.acct, meta, flag_img)
             if err:
                 self.finish(err)

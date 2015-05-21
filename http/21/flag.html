@@ -1,0 +1,190 @@
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head><title>
+	衛星犬企業車隊管理系統
+</title><meta content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" name="viewport" /><meta name="viewport" content="width=device-width" /> 
+
+  <script type="text/javascript">
+  
+  var secs=30;
+  
+function SettimeMsg()
+{
+   var t=setTimeout("StartTheTimer()",1000);
+}
+
+function StartTheTimer()
+{
+    if (secs==0)
+    {
+          secs = 30;         
+          StartTheTimer();
+          document.getElementById('TxtWaitMsg').value = "已更新..." ;
+    }
+    else
+    {
+    
+        self.status = secs;
+        secs = secs - 1;
+        timerID = self.setTimeout('StartTheTimer()', 1000);
+        document.getElementById('TxtWaitMsg').value = (secs + 1) + " 秒" ;
+    }
+} 
+
+</script>
+<script type="text/javascript">
+function resizeWindow() 
+{
+var width = screen.availWidth;  // 螢幕可用寬度 
+var height = screen.availHeight;    // 螢幕可用長度  
+moveTo(0, 0);
+resizeTo(width, height);  
+}
+</script>
+   <style type="text/css">
+        .style1
+        {
+            height: 20px;           
+        }       
+        .style2
+        {
+            width: 100%;
+            background-image:url('Image/B2.gif');
+            height: 50px;
+        }
+         .style3
+        {
+            width: 100%;            
+        }
+        .style4
+        {
+            height: 22px;
+        }
+        .style5
+        {
+            height: 15px;
+        }
+        
+        .header {
+     position: fixed;
+     top: 0;
+     left: 0;
+     width: 100%;        
+     background-image:url('Image/B2.gif');
+     height: 50px;
+}
+    </style> 
+   <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-32234734-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script> 
+</head>
+<body onload="resizeWindow();SettimeMsg();" style="left: 0px; position: absolute; top: 0px">
+    <form name="form1" method="post" action="Main.aspx" id="form1">
+<div>
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKMTcwMzA5MDIxMg9kFgICAw9kFgICAw9kFgJmD2QWBAIBDxBkDxYEZgIBAgICAxYEEAUJ6KuL6YG45pOHBQnoq4vpgbjmk4dnEAUeV0YtMjc5LOWFieW+qS3lrqLpmaIt6auY6ZC157eaBR5XRi0yNzks5YWJ5b6pLeWuoumZoi3pq5jpkLXnt5pnEAUUMTIwLVdELOS6pOWkpy3kuK3lt7QFFDEyMC1XRCzkuqTlpKct5Lit5be0ZxAFGFBBQS01MDMs5YWJ5b6pLeWNmuaEm+e3mgUYUEFBLTUwMyzlhYnlvqkt5Y2a5oSb57eaZxYBZmQCCQ8PEAcAAAAAAAAAAAcAAAAAAAAAAGRkZBgBBR5fX0NvbnRyb2xzUmVxdWlyZVBvc3RCYWNrS2V5X18WAQUHR01hcENhcszl4EeMSIWhvIOSDLDOrfOGR4mJ" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/mcar/WebResource.axd?d=nB_JlYMF5KNNae32FVtQ5v_38Q9K2u689amDa0whazdk16nx7Fuh_2nXZ9FHRE6msgqPvtMErvIK6aajfSx9fK88OoA1&amp;t=635200082789012606" type="text/javascript"></script>
+
+
+<script src="http://maps.google.com/maps?file=api&amp;v=2.x&amp;key=ABQIAAAACuHtscShPPfCpZpSowKRrhTWm4Rw7C1yKkjQtSyGlYGIfOlTjRQj1I4NfUsGXsWjX3xPSpiyqz1uLw" type="text/javascript"></script>
+<script src="/mcar/WebResource.axd?d=8b594mX8pUxz3V6XKacQe34aGfNXbK5Lo7JCJ9HOJ1VpAF8rxviUbFZaw-lr__u0tyLZueerkFPi7FzMWRef80Lvgo1BC1cKwi0zpO4Uz9CgVPzT1uybQ5xTETiI3h-uaq5K7HVK5WwSdIRYvneit4rxwB41&amp;t=633385439280000000" type="text/javascript"></script>
+<script src="/mcar/ScriptResource.axd?d=E0WQJc4YsK9qbj-UdJKqTMm2Kts07_wNb8cB-VZNyIVPN8Kk4uEOUjn9GYh7BXlYEG7FUdcRxOyCwxsuTyRPOTmOQ75coDEB8EjQPvxDkO_cJp5h7ZgR78Tu_T5CuaHNr4rgRVJcKHEQctbzJauMTh04orc1&amp;t=635658270590206238" type="text/javascript"></script>
+<script src="/mcar/ScriptResource.axd?d=ZnoulNdJOOt2vEVLhUC4dBQLtt3QgXarAAmUOf_symuxhk81GkHG-0FNVb--W3x9GgBdx1N1DvFgp6qMMVmhxzQVh6Jqs_3zponq_MtqKuZbEviNOCr1Q3Hht_kwRJuQYH4n1nXF3pD149za0hojsNy1hj8PlhedEpUz2NWqv2v0KrYI0&amp;t=635658270590206238" type="text/javascript"></script>
+<script src="/mcar/ScriptResource.axd?d=zUK28qd4itscSoq6Tknew86RIffxQuOEIVCoEVIcCci4QtL1sSaUYjeg6rX35uUnQax58z4G4Yf7ADLztljTjYELyhjiIxwyzRKER8KGfWU16_ExbYG9qyVKA5iLFSdTk296IGrUpXFfwvvEThs-DBoS6fJfPTvZq0uls84BdLX9P9gm0&amp;t=635658270590206238" type="text/javascript"></script>
+<div>
+
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="/wEWBgLi2NjaAQKPosvfBALD1sSZCAKTtPfZCQLJ3O6VAwKIgtH5A4scTkGc9r9XlRuDIQFtoRKfP0pk" />
+</div>
+   <div>
+        <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('SptMagMain', document.getElementById('form1'));
+Sys.WebForms.PageRequestManager.getInstance()._updateControls(['tupalMap'], ['TimerMap'], [], 90);
+//]]>
+</script>
+       
+    </div>
+   <div id="upalMap">
+	 
+   <table border="0" cellpadding="0" cellspacing="0" class="style2"  >
+    <tr>
+    <td class="style5" rowspan="2" width="15%" style="background-image: url(Image/B1.gif); background-repeat: no-repeat"></td>
+    <td class="style5" width="35%"><select name="DDLCar" onchange="javascript:setTimeout('__doPostBack(\'DDLCar\',\'\')', 0)" id="DDLCar" style="font-size:Small;">
+		<option selected="selected" value="請選擇">請選擇</option>
+		<option value="WF-279,光復-客院-高鐵線">WF-279,光復-客院-高鐵線</option>
+		<option value="120-WD,交大-中巴">120-WD,交大-中巴</option>
+		<option value="PAA-503,光復-博愛線">PAA-503,光復-博愛線</option>
+
+	</select></td>
+    <td width="30%" class="style5" align="center"><span id="lblDTime" style="font-size:Small;"></span></td>
+    <td width="15%" class="style5" align="right"><span id="lblSpeed" style="font-size:Small;"></span></td>
+   </tr>
+    <tr>
+    <td class="style1"  colspan="3" width="100%"><span id="LblRegion" style="font-size:Medium;"></span></td>                 
+    
+   </tr>
+  
+  </table>  
+   <table border="0" cellpadding="0" cellspacing="0" class="style3"  > 
+  <tr><td  colspan="3" style="width: 100%; height: 200px;" valign="top">
+  
+<div id="GMapCar" style="font-size:X-Large;height:200px;width:100%;">
+
+	</div>
+
+  
+        </td></tr>
+       
+  </table> 
+ 
+  
+</div>
+      <span id="TimerMap" style="visibility:hidden;display:none;"></span>
+      <div><input id="TxtWaitMsg" type="text" readonly="readonly" style="left: 80px; position: absolute; top: 72px; width: 40px;" /></div> 
+    
+
+<script type="text/javascript">
+//<![CDATA[
+Artem.Web.GoogleMapManager.initialize();var GMapCar_Map = new Artem.Web.GoogleMap('GMapCar',{view:0,zoom:16,text:'',traffic:false,typeControl:true,enableGoogleBar:false,enableMarkerManager:false,showClientClickPosition:false,zoomPanType:1,lat:0,lng:0});
+GMapCar_Map.load();Sys.Application.initialize();
+Sys.Application.add_init(function() {
+    $create(Sys.UI._Timer, {"enabled":true,"interval":32000,"uniqueID":"TimerMap"}, null, null, $get("TimerMap"));
+});
+//]]>
+</script>
+</form>
+</body>
+</html>

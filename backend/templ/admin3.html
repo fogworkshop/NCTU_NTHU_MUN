@@ -45,15 +45,20 @@ function update(uid){
     form = new FormData();
     form.append('country', country);
     form.append('committee', committee);
-    file= document.getElementById('flag-'+uid);
-
-    $.post('/admin', {
-        'req': 'admin3',
-        'uid': uid,
-        'country': country,
-        'committee':committee
-    }, function(res){
-        alert(res);
+    form.append('req', 'admin3');
+    form.append('uid', uid);
+    file = document.getElementById('flag-'+uid).files[0];
+    form.append('flag', file);
+    console.log(form);
+    $.ajax({
+        url: '/admin',
+        type: 'POST',
+        data: form,
+        contentType: false,
+        processData: false,
+        cache: false,
+        success: function(res){alert(res);},
     });
+
 }
 </script>
