@@ -142,7 +142,7 @@ class UserService:
             return ('Eempty', None)
 
         cur = yield self.db.cursor()
-        yield cur.execute('SELECT "paycode", "paydate" FROM "account_info" WHERE "uid" = %s;', (acct:['uid'], ))
+        yield cur.execute('SELECT "paycode", "paydate" FROM "account_info" WHERE "uid" = %s;', (acct['uid'], ))
         paycode, paydate = cur.fetchone()
         if paycode != '' or paydate == '':
             return ('Efilled', None)
