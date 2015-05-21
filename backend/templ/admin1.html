@@ -60,42 +60,14 @@
 							<td class="center aligned" data-delegation-englishname="%delegation_englishname%" data-delegation-email="%delegation_email%">%delegation%</td>
 							<td class="center aligned">%experience%</td>
 							<td class="committee-preference" >
-                                <div class="field">
-                                    <div class="ui radio checkbox">
-                                        <input type="radio" name="preference" value="0" />
-                                        <label label-id="0"></label>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui radio checkbox">
-                                        <input type="radio" name="preference" value="1" />
-                                        <label label-id="1"></label>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui radio checkbox">
-                                        <input type="radio" name="preference" value="2" />
-                                        <label label-id="2"></label>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui radio checkbox">
-                                        <input type="radio" name="preference" value="3" />
-                                        <label label-id="3"></label>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui radio checkbox">
-                                        <input type="radio" name="preference" value="4" />
-                                        <label label-id="4"></label>
-                                    </div>
-                                </div>
-                                <div class="field">
-                                    <div class="ui radio checkbox">
-                                        <input type="radio" name="preference" value="5" />
-                                        <label label-id="5"></label>
-                                    </div>
-                                </div>
+								{% for i in range(6) %}
+									<div class="field">
+										<div class="ui radio checkbox">
+											<input type="radio" name="preference" value="{{i}}" />
+											<label label-id="{{i}}"></label>
+										</div>
+									</div>
+								{% end %}
                             </td>
                             <td class="center aligned" style="padding: 0px;">
                                 <textarea name="country" style="width: 100%; height: 100%; border: 0px;">
