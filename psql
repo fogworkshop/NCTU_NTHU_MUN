@@ -66,3 +66,4 @@ CREATE TABLE account_info(
 
 CREATE TRIGGER account_info_modified BEFORE UPDATE ON account_info FOR EACH ROW EXECUTE PROCEDURE  update_modified_column();
 
+
