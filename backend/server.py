@@ -40,7 +40,11 @@ class IndexHandler(RequestHandler):
                     print(meta)
                     self.render("modify_user.html", nationality=config.id2nationality, meta=meta)
                 else:
-                    self.render("show_data.html", meta=meta)
+                    err, url = yield from Service.Payment.get_url(self.acct)
+                    if err:
+                        self.finish(err)
+                        return
+                    self.render("show_data.html", meta=meta, payment_url=url)
         return
 
     @reqenv

@@ -70,6 +70,8 @@ def reqenv(func):
             try:
                 uid = uid.decode()
                 err, self.acct = yield from Service.Login.get_account_info(str(uid))
+                err, meta = yield from Service.User.get_info(self.acct, self.acct['uid'])
+                self.acct.update(meta)
                 if self.acct['email'][:5] == 'admin' and len(self.acct['email']) <= 6:
                     self.acct['admin'] = 1
                 else:

@@ -16,6 +16,8 @@ class PaymentService:
             return('Elogin', None)
         if acct['pay'] == 1:
             return('Epaid', None)
+        if acct['nationality'] == acct['residence'] and acct['residence'] == 'Taiwan':
+            return (None, None)
         paypal = PaypalPayment()
         _id, url, meta = paypal.create() 
         cur = yield self.db.cursor()

@@ -130,6 +130,8 @@ class UserService:
     def update_pay(self, acct, data):
         if not acct or acct['uid'] != data['uid']:
             return ('Eaccess', None)
+        if data['paycode'] == '' or data['paydate'] == '':
+            return ('Eempty', None)
 
         cur = yield self.db.cursor()
         yield cur.execute('SELECT "paycode", "paydate" FROM "account_info" WHERE "uid" = %s;', (data['uid'], ))
@@ -141,7 +143,18 @@ class UserService:
         if cur.rowcount != 1:
             return ('Edb', None)
         return (None, data['uid'])
-        
+       
+    def admin_set_pay(self, acct, data):
+        if not acct:
+            return ('Elogin', None)
+        if acct['admin'] == 0:
+            return ('Eaccess', None)
+
+        cur = yield self.db.cursor()
+        yield cur.execute('UPDATE "account" SET "pay" = %s WHERE "uid" = %s;', (data['pay'], data['uid']))
+        if cur.rowcount != 1:
+            return ('Edb', None)
+        return (None, data['uid'])
 
 
 
@@ -156,7 +169,7 @@ class UserHandler(RequestHandler):
         if req == 'modify_info':
             args = ['uid', 'chinesename', 'englishname', 'gender', 'birth', 'nationality', 'vegetarian', 
                     'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
-                    'residence', 'city', 'address', 'cellphone', 'require_accommodation', 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2', 'hearabout']
+                    'residence', 'city', 'address', 'cellphone', 'require_accommodation', 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2', 'hearabout', 'experience']
             meta = self.get_args(args)
             err, uid = yield from UserService.inst.modify_info(self.acct, meta)
             if err:
@@ -167,7 +180,7 @@ class UserHandler(RequestHandler):
         elif req == 'confirm_info':
             args = ['uid', 'chinesename', 'englishname', 'gender', 'birth', 'nationality', 'vegetarian', 
                     'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
-                    'residence', 'city', 'address', 'cellphone', 'require_accommodation', 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2', 'hearabout']
+                    'residence', 'city', 'address', 'cellphone', 'require_accommodation', 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2', 'hearabout', 'experience']
             meta = self.get_args(args)
             err, uid = yield from UserService.inst.confirm_info(self.acct, meta)
             if err:
@@ -179,6 +192,15 @@ class UserHandler(RequestHandler):
             args = ['paycode', 'paydate']
             meta = self.get_args(args)
             err, uid = yield from UserService.inst.update_pay(self.acct, data)
+            if err:
+                self.finish(err)
+                return
+            self.finish('S')
+            return
+        elif req == 'admin_set_pay':
+            args = ['pay', 'uid']
+            meta = self.get_args(args)
+            err, uid = yield from UserService.inst.admin_set_pay(self.acct, meta)
             if err:
                 self.finish(err)
                 return
