@@ -12,9 +12,11 @@
 					<span class="glyphicon glyphicon-menu-hamburger"></span>
 				</button>
 				<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
-					<li role="presentation"><a role="menuitem" tabindex="-1" onclick="pay();">付款帳戶</a></li>
-					{% if not (meta["nationality"] == meta["residence"] and meta["residence"] == "Taiwan") %}
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="{{ payment_url }}">Pay Online</a></li>
+					{% if not meta["pay"] %}
+						<li role="presentation"><a role="menuitem" tabindex="-1" onclick="pay();">付款帳戶</a></li>
+						{% if not (meta["nationality"] == meta["residence"] and meta["residence"] == "Taiwan") %}
+						<li role="presentation"><a role="menuitem" tabindex="-1" href="{{ payment_url }}">Pay Online</a></li>
+						{% end %}
 					{% end %}
 					<li role="presentation"><a role="menuitem" tabindex="-1" onclick="upload_pp();">Upload PP</a></li>
 					<li class="divider"></li>

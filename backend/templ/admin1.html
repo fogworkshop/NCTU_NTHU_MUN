@@ -1,34 +1,35 @@
 <!DOCTYPE>
 <html>
-<head>
-<title>Admin1 | TWMUN</title>
-<meta charset="UTF-8">
-<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Crimson+Text" />
-<link rel="stylesheet" type="text/css" href="/semantic/semantic.min.css">
-<script type="text/javascript" src="/jquery.js"></script>
-<script type="text/javascript" src="/semantic/semantic.min.js"></script>
-<style>
-.wrapper{
-	height: 100%;
-}
-.up_table{
-	height: 30%;
-	overflow: auto;
-	padding: 20px;
-}
-.down_table{
-	height: 70%;
-	overflow: auto;
-	padding: 20px;
-}
-.pointer:hover{
-	cursor: pointer;
-}
-.auto{
-	overflow: auto;
-}
-</style>
-</head>
+	<head>
+		<title>Admin1 | TWMUN</title>
+		<meta charset="UTF-8">
+		<link href="/icon.ico" rel="SHORTCUT ICON">
+		<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Crimson+Text" />
+		<link rel="stylesheet" type="text/css" href="/semantic/semantic.min.css">
+		<script type="text/javascript" src="/jquery.js"></script>
+		<script type="text/javascript" src="/semantic/semantic.min.js"></script>
+		<style>
+			.wrapper{
+				height: 100%;
+			}
+			.up_table{
+				height: 30%;
+				overflow: auto;
+				padding: 20px;
+			}
+			.down_table{
+				height: 70%;
+				overflow: auto;
+				padding: 20px;
+			}
+			.pointer:hover{
+				cursor: pointer;
+			}
+			.auto{
+				overflow: auto;
+			}
+		</style>
+	</head>
 	<body>
 		<div class="wrapper">
 			<div class="up_table">
@@ -92,7 +93,7 @@
 								data-delegation-englishname="{{data['delegation_englishname']}}";
 								data-delegation-email="{{data['delegation_email']}}";
 								data-experience="{{data['experience']}}";
-							>
+								>
 								<td class="center aligned">{{data["chinesename"]}}<br>{{data["englishname"]}}</td>
 								<td class="center aligned">{{data["gender"]}}</td>
 								<td class="center aligned">{{data["birth"]}}<br>{{data["nationality"]}}</td>
@@ -116,7 +117,7 @@ function show_detail(ele){
 			$(this).addClass("positive");
 		else
 			$(this).removeClass("positive");
-	});
+		});
 	template = $("#detail_template").html();
 	list = ["nationality", "city", "address", "hearabout", "delegation", "experience"];
 	$.each(list, function(k, v){
