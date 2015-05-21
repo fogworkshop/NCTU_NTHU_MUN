@@ -33,6 +33,8 @@ class UserService:
             return ('Eenglishname', None)
         if data['cellphone'].isdigit() == False:
             return ('Ecellphone', None)
+        if data['committee_preference'].find('0') != -1:
+            return ('Ecp', None)
 
         uid = data['uid']
         data.pop('uid')
