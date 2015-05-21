@@ -70,7 +70,7 @@
 <div class="hidden upload-pp-modal">
 	<form class="form-horizontal upload-pp-form">
 		<div class="form-group">
-			<label class="col-sm-4 control-label">繳費日期</label>
+			<label class="col-sm-4 control-label">檔案上傳</label>
 			<div class="col-sm-7">
 				<input name="npwd" class="form-control" type="password" placeholder="2015/07/01">
 			</div>
@@ -94,11 +94,9 @@ function changepassword(){
 				className: "btn-success",
 				callback: function() {
 					data = $(".changepassword-form:visible").serialize();
-					bootbox.alert(data);
 					$.post("/login", data, function(msg){
 						bootbox.alert(msg);
 					});
-					return false;
 				}
 			},
 			danger: {
@@ -119,7 +117,7 @@ function pay(){
 	message = $(".pay-modal").html();
 	bootbox.dialog({
 		message: message,
-		title: "Register",
+		title: "付款資訊",
 		buttons: {
 			success: {
 				label: "Change Password",
@@ -129,7 +127,6 @@ function pay(){
 					$.post("/login", data, function(msg){
 						bootbox.alert(msg);
 					});
-					return false;
 				}
 			},
 			danger: {
@@ -145,7 +142,25 @@ function pay(){
 function pay_online(){
 }
 function upload_pp(){
-	bootbox.alert("XD");
+	message = $(".upload-pp-modal").html();
+	bootbox.dialog({
+		message: message,
+		title: "檔案上傳",
+		buttons: {
+			success: {
+				label: "Change Password",
+				className: "btn-success",
+				callback: function() {
+				}
+			},
+			danger: {
+				label: "Cancel",
+				className: "btn-danger",
+				callback: function() {
+				}
+			}
+		}
+	});
 }
 </script>
 {% end %}
