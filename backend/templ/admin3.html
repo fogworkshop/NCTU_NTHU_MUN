@@ -18,14 +18,20 @@
 				<th class="center aligned">國家名</th>
 				<th class="center aligned">委員會</th>
 				<th class="center aligned">上傳國旗圖片</th>
+				<th class="center aligned">Update</th>
 			</thead>
 			<tbody>
 				{% for data in meta %}
 					<tr>
 						<td class="center aligned">{{data["chinesename"]}}<br>{{data["englishname"]}}</td>
-						<td class="center aligned">{{data["country"]}}</td>
-						<td class="center aligned"></td>
-						<td class="center aligned"></td>
+						<td class="center aligned" style="padding: 0px;">
+							<textarea style="width: 100%; height: 100%; border: 0px; resize: none; background: inherit;">{{data["country"]}}</textarea>
+						</td>
+						<td class="center aligned" style="padding: 0px;">
+							<textarea style="width: 100%; height: 100%; border: 0px; resize: none; background: inherit;">{{data["committee"]}}</textarea>
+						</td>
+						<td class="center aligned"><input type="file"></td>
+						<td class="center aligned"><div class="ui green button">Update</div></td>
 					</tr>
 				{% end %}
 			</tbody>
