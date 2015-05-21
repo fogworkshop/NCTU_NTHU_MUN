@@ -91,7 +91,7 @@ class UserService:
         args = ['uid', 'chinesename', 'englishname', 'gender', 'birth', 'nationality', 'vegetarian', 
                 'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
                 'residence', 'city', 'address', 'cellphone', 'require_accommodation', 
-                'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2', 
+                'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2', 'committee' 
                 'hearabout', 'experience', 'paycode', 'paydate', 'preference', 'country', 'other']
         sql = gen_sql(args)
         cur = yield self.db.cursor()
