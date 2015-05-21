@@ -144,7 +144,7 @@ class UserService:
         cur = yield self.db.cursor()
         yield cur.execute('SELECT "paycode", "paydate" FROM "account_info" WHERE "uid" = %s;', (acct['uid'], ))
         paycode, paydate = cur.fetchone()
-        if paycode != '' or paydate == '':
+        if paycode != '' or paydate != '':
             return ('Efilled', None)
 
         yield cur.execute('UPDATE "account_info" SET "paycode" = %s, "paydate" = %s WHERE "uid" = %s;', (data['paycode'], data['paydate'], acct['uid'], ))
