@@ -103,7 +103,6 @@ class UserService:
         q = cur.fetchone()
         for i, a in enumerate(args):
             meta[a] = q[i]
-        print(type(meta['chinesename']))
         return (None, meta)
 
     def get_info_all(self, acct):
