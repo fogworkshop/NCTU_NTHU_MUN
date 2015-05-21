@@ -136,18 +136,18 @@ class UserService:
 
 
     def update_pay(self, acct, data):
-        if not acct or acct['uid'] != data['uid']:
+        if not acct:
             return ('Eaccess', None)
         if data['paycode'] == '' or data['paydate'] == '':
             return ('Eempty', None)
 
         cur = yield self.db.cursor()
-        yield cur.execute('SELECT "paycode", "paydate" FROM "account_info" WHERE "uid" = %s;', (data['uid'], ))
+        yield cur.execute('SELECT "paycode", "paydate" FROM "account_info" WHERE "uid" = %s;', (acct:['uid'], ))
         paycode, paydate = cur.fetchone()
         if paycode != '' or paydate == '':
             return ('Efilled', None)
 
-        yield cur.execute('UPDATE "account_info" SET "paycode" = %s, "paydate" = %s WHERE "uid" = %s;', (data['paycode'], data['paydate'], data['uid'], ))
+        yield cur.execute('UPDATE "account_info" SET "paycode" = %s, "paydate" = %s WHERE "uid" = %s;', (data['paycode'], data['paydate'], acct['uid'], ))
         if cur.rowcount != 1:
             return ('Edb', None)
         return (None, data['uid'])
