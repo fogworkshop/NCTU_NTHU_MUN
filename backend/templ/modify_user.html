@@ -226,7 +226,8 @@
 						Please list your participation related information at Model UN Conferences (countries represented, awards won, etc.). If this is your first Model UN experience, please describe any relevant experience with public speaking/research study related activities:
 					</label>
 					<div class="col-sm-offset-2 col-sm-5">
-						<textarea class="form-control" rows="5" style="resize: none">
+						<textarea name="experience" class="form-control" rows="5" style="resize: none">
+							{{meta["experience"]}}
 						</textarea>
 					</div>
 				</div>
@@ -240,8 +241,33 @@
 						</textarea>
 					</div>
 				</div>
+				<div class="form-group">
+					<label class="col-sm-offset-2 col-sm-10">
+						How did you hear about TWMUN?(複選)
+					</label>
+					<div class="col-sm-offset-2 col-sm-3">
+						<label><input name="_hearabout[]" type="checkbox">Friend</label>
+					</div>
+					<div class="col-sm-3">
+						<label><input name="_hearabout[]" type="checkbox">Facebook</label>
+					</div>
+					<div class="col-sm-3">
+						<label><input name="_hearabout[]" type="checkbox">Website</label>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-3">
+						<label><input name="_hearabout[]" type="checkbox">MUN clubs in school</label>
+					</div>
+					<div class="col-sm-3">
+						<label><input name="_hearabout[]" type="checkbox">School posts</label>
+					</div>
+					<div class="col-sm-3">
+						<label><input name="_hearabout[]" type="checkbox">Other</label>
+					</div>
+					<input name="hearabout" value="[]" hidden>
+				</div>
 				<br><br>
-
 				<div class="form-group">
 					<div class="col-sm-offset-2 col-sm-2">
 						<a class="btn btn-success btn-block has-spinner" onclick="information_save(this);"><span class="spinner"><img src="/728-1.GIF"></span>Save</a>
@@ -300,17 +326,41 @@ function information_save(ele){
     });
 }
 function information_submit(ele){
-	data = $(".information-form").serialize();
-    data += "&req=confirm_info";
-	$(ele).toggleClass("active disabled");
-	console.log(data);
-    $.post('/user', data, function(res){
-        alert(res);
-        $(ele).toggleClass("active disabled");
-        bootbox.alert('Jump to next page', function(){
-            window.location = window.location;
-        });
-    });
+	bootbox.dialog({
+		message: "送出後將無法修改 請確認資料無誤後按確認鍵送出",
+		title: "Confirm",
+		buttons: {
+			success: {
+				label: "確認送出",
+				className: "btn-success",
+				callback: function(){
+					data = $(".information-form").serialize();
+					data += "&req=confirm_info";
+					$(ele).toggleClass("active disabled");
+					console.log(data);
+					$.post('/user', data, function(res){
+						alert(res);
+						$(ele).toggleClass("active disabled");
+						bootbox.alert('Jump to next page', function(){
+							window.location = window.location;
+						});
+					});
+				}
+			},
+			danger: {
+				label: "取消",
+				className: "btn-danger",
+				callback: function(){
+				}
+			}
+		}
+	});
+	/*
+	bootbox.confirm("送出後將無法修改 確認資料無誤後按確認鍵送出", function(result){
+		if(result){
+		}
+	});
+	*/
 }
 function logout(ele){
 	$(ele).toggleClass("active disabled");
