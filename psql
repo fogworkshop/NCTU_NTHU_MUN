@@ -59,6 +59,7 @@ CREATE TABLE account_info(
     paypalid varchar(256) DEFAULT '',
     prefernce integer DEFAULT 0;
     country varchar(256) DEFAULT '';
+    committee varchar(256) DEFAULT '';
 
 	created timestamp DEFAULT now(),
 	modified timestamp DEFAULT now()

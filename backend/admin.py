@@ -38,15 +38,39 @@ class AdminService:
             return ('Edb', None)
         return (None, uid)
 
+    def update_admin2(self, acct, data):
+        if not acct or acct['admin'] == 0:
+            return ('Eaccess', None)
+        cur = yield self.db.cursor()
+        yield cur.execute('UPDATE "account" SET "pay" = %s WHERE "uid" = %s;', (data['pay'], data['uid']))
+        if cur.rowcount != 1:
+            return ('Edb', None)
+        return (None, data['uid'])
+
     def update_admin3(self, acct, data, flag_img):
+        def gen_sql(data):
+            first = True
+            sql = ' SET '
+            prama = ()
+            for i in data:
+                if first == False:
+                    sql += ','
+                first = False
+                sql += '"%s" = '%i
+                sql += '%s '
+                prama = prama + (data[i],)
+            return (sql, prama)
         if not acct or acct['admin'] == 0:
             return ('Eaccess', None)
 
         if not flag_img:
             return ('Eflagimg', None)
 
+        uid = data['uid']
+        data.pop('uid')
+        sql, prama = gen_sql(data)
         cur = yield self.db.cursor()
-        yield cur.execute('UPDATE "account_info" SET "represent_country" = %s, "represent_committe" = %s WHERE "uid" = %s;', (data['represent_country'], data['represent_committee'], data['uid'],))
+        yield cur.execute('UPDATE "account_info" '+sql+' WHERE "uid" = %s;', prama + (uid,))
         if cur.rowcount != 1:
             return ('Edb', None)
 
@@ -78,9 +102,16 @@ class AdminHandler(RequestHandler):
             self.finish('S')
             return
         elif req == 'admin2':
-            pass
+            args = ['uid', 'pay']
+            meta = self.get_args(args)
+            err, uid = yield from AdminService.inst.update_admin2(self.acct, meta)
+            if err:
+                self.finish(err)
+                return
+            self.finish('S')
+            return
         elif req == 'admin3':
-            args = ['uid', 'represent_country', 'represent_committee']
+            args = ['uid', 'country', 'committee']
             try:
                 flag_img = self.request.files['flag'][0]
             except:
