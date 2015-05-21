@@ -117,7 +117,7 @@ class AdminHandler(RequestHandler):
             except:
                 flag_img = None
             meta = self.get_args(args)
-            err, uid = yield from AdminService.inst.update_admin1(self.acct, meta, flag_img)
+            err, uid = yield from AdminService.inst.update_admin3(self.acct, meta, flag_img)
             if err:
                 self.finish(err)
                 return
