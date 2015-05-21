@@ -181,43 +181,35 @@
 				<input type="hidden" name="committee_preference">
 				<div class="form-group PC" hidden>
 					<label class="col-sm-offset-2 col-sm-10">
-						1. How much you know about the PC?
+						How much you know about the PC?
 					</label>
 					<div class="col-sm-offset-2 col-sm-5">
-						<textarea name="pc1" class="form-control" rows="5" style="resize: none">
-							{{meta["pc1"]}}
-						</textarea>
+						<textarea name="pc1" class="form-control" rows="5" style="resize: none">{{meta["pc1"]}}</textarea>
 					</div>
 				</div>
 				<div class="form-group PC" hidden>
 					<label class="col-sm-offset-2 col-sm-10">
-						2. Why do you want to join the PC and how would you play your roll in the whole conference?
+						Why do you want to join the PC and how would you play your roll in the whole conference?
 					</label>
 					<div class="col-sm-offset-2 col-sm-5">
-						<textarea name="pc2" class="form-control" rows="5" style="resize: none">
-							{{meta["pc2"]}}
-						</textarea>
+						<textarea name="pc2" class="form-control" rows="5" style="resize: none">{{meta["pc2"]}}</textarea>
 					</div>
 				</div>
 				<br><br>
 				<div class="form-group IACHR" hidden>
 					<label class="col-sm-offset-2 col-sm-10">
-						1. Tell us if you have any experience discussing topics related to human rights. If not, why do you think that human rights are important for humanity?
+						Tell us if you have any experience discussing topics related to human rights. If not, why do you think that human rights are important for humanity?
 					</label>
 					<div class="col-sm-offset-2 col-sm-5">
-						<textarea name="iachr1" class="form-control" rows="5" style="resize: none">
-							{{meta["iachr1"]}}
-						</textarea>
+						<textarea name="iachr1" class="form-control" rows="5" style="resize: none">{{meta["iachr1"]}}</textarea>
 					</div>
 				</div>
 				<div class="form-group IACHR" hidden>
 					<label class="col-sm-offset-2 col-sm-10">
-						2. Have you ever played a simulation of court before? If yes, which type of court and what role did you simulate? If not, what do you expect from the simulation?
+						Have you ever played a simulation of court before? If yes, which type of court and what role did you simulate? If not, what do you expect from the simulation?
 					</label>
 					<div class="col-sm-offset-2 col-sm-5">
-						<textarea name="iachr2" class="form-control" rows="5" style="resize: none">
-							{{meta["iachr1"]}}
-						</textarea>
+						<textarea name="iachr2" class="form-control" rows="5" style="resize: none">{{meta["iachr1"]}}</textarea>
 					</div>
 				</div>
 				<br><br>
@@ -237,35 +229,43 @@
 						Is there anything else that you would like us to know?
 					</label>
 					<div class="col-sm-offset-2 col-sm-5">
-						<textarea class="form-control" rows="5" style="resize: none">
-						</textarea>
+						<textarea class="form-control" rows="5" style="resize: none"></textarea>
 					</div>
 				</div>
 				<div class="form-group">
 					<label class="col-sm-offset-2 col-sm-10">
 						How did you hear about TWMUN?(複選)
 					</label>
-					<div class="col-sm-offset-2 col-sm-3">
-						<label><input name="_hearabout[]" type="checkbox">Friend</label>
+					<br>
+					<div class="col-sm-offset-2 col-sm-8">
+						{% set _hearabout = ["Friend", "Facebook", "Website", "MUN clubs in school", "School posts"] %}
+						{% for x in _hearabout %}
+							<div class="col-sm-4">
+								<label>
+									<input class="_hearabout" type="checkbox" onchange="HA_CHANGE();"
+									{% if x in meta["hearabout"] %}
+										checked
+									{% end %}
+									>{{x}}
+								</label>
+							</div>
+						{% end %}
+						<div class="col-sm-4">
+							<div class="form-inline">
+								<label><input class="_hearabout" type="checkbox" onchange="HA_CHANGE"
+								{% if meta["hearabout"][-1] not in _hearabout %}
+									checked
+								{% end %}
+								>Other:</label>
+								<input class="HA_OTHER" type="text" onchange="HA_CHANGE" style="background-color: white; border: 0px; border-bottom: 1px solid; width: 120px;"
+								{% if meta["hearabout"][-1] not in _hearabout %}
+									value="{{meta['hearabout'][-1]}}"
+								{% end %}
+								>
+							</div>
+						</div>
 					</div>
-					<div class="col-sm-3">
-						<label><input name="_hearabout[]" type="checkbox">Facebook</label>
-					</div>
-					<div class="col-sm-3">
-						<label><input name="_hearabout[]" type="checkbox">Website</label>
-					</div>
-				</div>
-				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-3">
-						<label><input name="_hearabout[]" type="checkbox">MUN clubs in school</label>
-					</div>
-					<div class="col-sm-3">
-						<label><input name="_hearabout[]" type="checkbox">School posts</label>
-					</div>
-					<div class="col-sm-3">
-						<label><input name="_hearabout[]" type="checkbox">Other</label>
-					</div>
-					<input name="hearabout" value="[]" hidden>
+					<input name="hearabout" value="[]" type="hidden">
 				</div>
 				<br><br>
 				<div class="form-group">
@@ -312,6 +312,7 @@ $(document).ready(function(){
 		$(this).selectpicker('val', CP[now++]);
 	});
 	CP_CHANGE();
+	HA_CHANGE();
 });
 function information_save(ele){
 	data = $(".information-form").serialize();
@@ -355,12 +356,6 @@ function information_submit(ele){
 			}
 		}
 	});
-	/*
-	bootbox.confirm("送出後將無法修改 確認資料無誤後按確認鍵送出", function(result){
-		if(result){
-		}
-	});
-	*/
 }
 function logout(ele){
 	$(ele).toggleClass("active disabled");
@@ -425,6 +420,25 @@ function CP_CHANGE(){
 	console.log($("[name=committee_preference]").val());
 	PC_CHANGE(order);
 	IACHR_CHANGE(order);
+}
+function HA_CHANGE(){
+	HA = ["Friend", "Facebook", "Website", "MUN clubs in school", "School posts", "other"];
+	str = "";
+	now = 0;
+	$("._hearabout").each(function(){
+		if($(this).prop("checked")){
+			if(str.length) str += ", ";
+			if(now < 5){
+				str += "\"" + HA[now] + "\"";
+			} else {
+				str += "\"" + $(".HA_OTHER").val() + "\"";
+			}
+		}
+		now++;
+	});
+	console.log(str);
+	$("input[name=hearabout]").val("["+str+"]");
+	console.log($("input[name=hearabout]").val());
 }
 </script>
 {% end %}
