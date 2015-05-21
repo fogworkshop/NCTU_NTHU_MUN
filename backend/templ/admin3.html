@@ -1,3 +1,34 @@
-{% extends 'frame.html' %}
-{% block content %}
-{% end %}
+<!DOCTYPE>
+<html>
+<head>
+<title>Admin2 | TWMUN</title>
+<meta charset="UTF-8">
+<link href="/icon.ico" rel="SHORTCUT ICON">
+<link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Crimson+Text" />
+<link rel="stylesheet" type="text/css" href="/semantic/semantic.min.css">
+<script type="text/javascript" src="/jquery.js"></script>
+<script type="text/javascript" src="/semantic/semantic.min.js"></script>
+<style>
+</style>
+</head>
+	<body style="padding: 20px;">
+		<table class="ui celled table">
+			<thead>
+				<th class="center aligned">中文名<br>英文名</th>
+				<th class="center aligned">國家名</th>
+				<th class="center aligned">委員會</th>
+				<th class="center aligned">上傳國旗圖片</th>
+			</thead>
+			<tbody>
+				{% for data in meta %}
+					<tr>
+						<td class="center aligned">{{data["chinesename"]}}<br>{{data["englishname"]}}</td>
+						<td class="center aligned">{{data["country"]}}</td>
+						<td class="center aligned"></td>
+						<td class="center aligned"></td>
+					</tr>
+				{% end %}
+			</tbody>
+		</table>
+	</body>
+</html>

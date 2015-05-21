@@ -68,12 +68,10 @@
 										</div>
 									</div>
 								{% end %}
-                            </td>
-                            <td class="center aligned" style="padding: 0px;">
-                                <textarea name="country" style="width: 100%; height: 100%; border: 0px;">
-                                    %country%
-                                </textarea>
-                            </td>
+							</td>
+							<td class="center aligned" style="padding: 0px;">
+								<textarea name="country" style="width: 100%; height: 100%; border: 0px;">%country%</textarea>
+							</td>
 							<td class="center aligned">%hearabout%</td>
 							<td class="center aligned"><div class="ui green button" onclick="save();">Save</div></td>
 						</tr>
@@ -106,10 +104,10 @@
 								data-delegation-englishname="{{data['delegation_englishname']}}"
 								data-delegation-email="{{data['delegation_email']}}"
 								data-experience="{{data['experience']}}"
-                                data-committee-preference="{{data['committee_preference']}}"
-                                data-preference="{{data['preference']}}"
-                                data-country="{{data['country']}}"
-                                data-hearabout="{{'<br>'.join(data['hearabout'])}}"
+								data-committee-preference="{{data['committee_preference']}}"
+								data-preference="{{data['preference']}}"
+								data-country="{{data['country']}}"
+								data-hearabout="{{'<br>'.join(data['hearabout'])}}"
 								>
 								<td class="center aligned">{{data["chinesename"]}}<br>{{data["englishname"]}}</td>
 								<td class="center aligned">{{data["gender"]}}</td>
@@ -135,7 +133,7 @@ function show_detail(ele){
 		else
 			$(this).removeClass("positive");
 		});
-    $('#detail').attr('data-uid', ele.attr('data-id'));
+	$('#detail').attr('data-uid', ele.attr('data-id'));
 	template = $("#detail_template").html();
 	list = ["nationality", "city", "address", "hearabout", "delegation", "experience", "country"];
 	$.each(list, function(k, v){
@@ -144,27 +142,27 @@ function show_detail(ele){
 	});
 	$("#detail").html(template);
 	CP_OPTION = ["　", "DISEC", "SPECPOL", "ECOSOC", "IACHR", "PC", "立法院"];
-    CP = JSON.parse(ele.attr('data-committee-preference'));
-    $('td.committee-preference').find('label').each(function(){
-        $(this).text(CP_OPTION[CP[$(this).attr('label-id')]]);
-    });
-    $('#detail').find('label[label-id='+ele.attr('data-preference')+']').parent().children('input').attr('checked',true);
-    $('.ui.radio.checkbox').checkbox();
+	CP = JSON.parse(ele.attr('data-committee-preference'));
+	$('td.committee-preference').find('label').each(function(){
+		$(this).text(CP_OPTION[CP[$(this).attr('label-id')]]);
+	});
+	$('#detail').find('label[label-id='+ele.attr('data-preference')+']').parent().children('input').attr('checked',true);
+	$('.ui.radio.checkbox').checkbox();
 }
 function save(){
-    preference = $('td.committee-preference').find('input[name=preference]:checked').val();
-    country = $('textarea[name=country]').val();
-    uid = $('#detail').attr('data-uid');
-    if(typeof(preference) == 'undefined' || country == ''){
-        return false;
-    }
-    $.post('/admin', {
-        'req': 'admin1',
-        'uid': uid,
-        'preference': preference,
-        'country': country
-    },function(res){
-        alert(res);
-    });
+	preference = $('td.committee-preference').find('input[name=preference]:checked').val();
+	country = $('textarea[name=country]').val();
+	uid = $('#detail').attr('data-uid');
+	if(typeof(preference) == 'undefined' || country == ''){
+		return false;
+	}
+	$.post('/admin', {
+		'req': 'admin1',
+		'uid': uid,
+		'preference': preference,
+		'country': country
+	},function(res){
+		alert(res);
+	});
 }
 </script>

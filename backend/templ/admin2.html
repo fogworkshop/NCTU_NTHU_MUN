@@ -12,7 +12,6 @@
 </style>
 </head>
 	<body style="padding: 20px;">
-	{{meta}}
 		<table class="ui celled table">
 			<thead>
 				<th class="center aligned">中文名<br>英文名</th>
@@ -24,8 +23,8 @@
 				{% for data in meta %}
 					<tr>
 						<td class="center aligned">{{data["chinesename"]}}<br>{{data["englishname"]}}</td>
-						<td class="center aligned">data["paycode"]</td>
-						<td class="center aligned">data["paydate"]</td>
+						<td class="center aligned">{{data["paycode"]}}</td>
+						<td class="center aligned">{{data["paydate"]}}</td>
 						<td class="center aligned">
 							{% if data["pay"] %}
 								<div class="ui green button">已付</div>
