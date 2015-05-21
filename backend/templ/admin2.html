@@ -27,9 +27,9 @@
 						<td class="center aligned">{{data["paydate"]}}</td>
 						<td class="center aligned">
 							{% if data["pay"] %}
-								<div class="ui green button" >已付</div>
+                            <div class="ui green button" onclick="update({{data['uid']}}, 0);">已付</div>
 							{% else %}
-								<div class="ui red button">未付</div>
+                            <div class="ui red button" onclick="update({{data['uid']}}, 1);">未付</div>
 							{% end %}
 						</td>
 					</tr>
@@ -39,4 +39,13 @@
 	</body>
 </html>
 <script>
+function update(uid, pay){
+    $.post('/admin', {
+        'req': 'admin2',
+        'uid': uid,
+        'pay': pay
+    }, function(res){
+        window.location.reload();
+    });
+}
 </script>
