@@ -218,9 +218,7 @@
 						Please list your participation related information at Model UN Conferences (countries represented, awards won, etc.). If this is your first Model UN experience, please describe any relevant experience with public speaking/research study related activities:
 					</label>
 					<div class="col-sm-offset-2 col-sm-5">
-						<textarea name="experience" class="form-control" rows="5" style="resize: none">
-							{{meta["experience"]}}
-						</textarea>
+						<textarea name="experience" class="form-control" rows="5" style="resize: none">{{meta["experience"]}}</textarea>
 					</div>
 				</div>
 				<br><br>
@@ -229,7 +227,7 @@
 						Is there anything else that you would like us to know?
 					</label>
 					<div class="col-sm-offset-2 col-sm-5">
-						<textarea class="form-control" rows="5" style="resize: none"></textarea>
+						<textarea name="other" class="form-control" rows="5" style="resize: none">{{meta["other"]}}</textarea>
 					</div>
 				</div>
 				<div class="form-group">
@@ -252,12 +250,12 @@
 						{% end %}
 						<div class="col-sm-4">
 							<div class="form-inline">
-								<label><input class="_hearabout" type="checkbox" onchange="HA_CHANGE"
+								<label><input class="_hearabout" type="checkbox" onchange="HA_CHANGE();"
 								{% if meta["hearabout"][-1] not in _hearabout %}
 									checked
 								{% end %}
 								>Other:</label>
-								<input class="HA_OTHER" type="text" onchange="HA_CHANGE" style="background-color: white; border: 0px; border-bottom: 1px solid; width: 120px;"
+								<input class="HA_OTHER" type="text" onchange="HA_CHANGE();" style="background-color: white; border: 0px; border-bottom: 1px solid; width: 120px;"
 								{% if meta["hearabout"][-1] not in _hearabout %}
 									value="{{meta['hearabout'][-1]}}"
 								{% end %}
