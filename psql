@@ -53,9 +53,11 @@ CREATE TABLE account_info(
 
     represent_country varchar(256) DEFAULT '',
     represent_committee varchar(256) DEFAULT '',
-    paycode varchar(256),
-    paydate varchar(256),
-    paypalid varchar(256),
+    paycode varchar(256) DEFAULT '',
+    paydate varchar(256) DEFAULT '',
+    paypalid varchar(256) DEFAULT '',
+    prefernce integer DEFAULT 0;
+    country varchar(256) DEFAULT '';
 
 	created timestamp DEFAULT now(),
 	modified timestamp DEFAULT now()

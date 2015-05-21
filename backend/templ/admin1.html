@@ -46,7 +46,7 @@
 						</tr>
 					</thead>
 					<tbody style="height: 80%">
-						<tr id="detail">
+						<tr id="detail" data-uid="">
 							<td class="auto center aligned"></td>
 							<td class="auto center aligned"></td>
 							<td class="auto center aligned"></td>
@@ -59,10 +59,51 @@
 							<td class="center aligned">%nationality%<br>%city%<br>%address%</td>
 							<td class="center aligned" data-delegation-englishname="%delegation_englishname%" data-delegation-email="%delegation_email%">%delegation%</td>
 							<td class="center aligned">%experience%</td>
-							<td class="center aligned"></td>
-							<td class="center aligned"></td>
+							<td class="committee-preference" >
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="preference" value="0" />
+                                        <label label-id="0"></label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="preference" value="1" />
+                                        <label label-id="1"></label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="preference" value="2" />
+                                        <label label-id="2"></label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="preference" value="3" />
+                                        <label label-id="3"></label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="preference" value="4" />
+                                        <label label-id="4"></label>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <div class="ui radio checkbox">
+                                        <input type="radio" name="preference" value="5" />
+                                        <label label-id="5"></label>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="center aligned" style="padding: 0px;">
+                                <textarea name="country" style="width: 100%; height: 100%; border: 0px;">
+                                    %country%
+                                </textarea>
+                            </td>
 							<td class="center aligned">%hearabout%</td>
-							<td class="center aligned"><div class="ui green button">Save</div></td>
+							<td class="center aligned"><div class="ui green button" onclick="save();">Save</div></td>
 						</tr>
 					</tbody>
 				</table>
@@ -89,10 +130,13 @@
 								data-city="{{data['city']}}"
 								data-address="{{data['address']}}"
 								data-hearabout="{{hear_about}}"
-								data-delegation="{{data['delegation']}}";
-								data-delegation-englishname="{{data['delegation_englishname']}}";
-								data-delegation-email="{{data['delegation_email']}}";
-								data-experience="{{data['experience']}}";
+								data-delegation="{{data['delegation']}}"
+								data-delegation-englishname="{{data['delegation_englishname']}}"
+								data-delegation-email="{{data['delegation_email']}}"
+								data-experience="{{data['experience']}}"
+                                data-committee-preference="{{data['committee_preference']}}"
+                                data-preference="{{data['preference']}}"
+                                data-country="{{data['country']}}"
 								>
 								<td class="center aligned">{{data["chinesename"]}}<br>{{data["englishname"]}}</td>
 								<td class="center aligned">{{data["gender"]}}</td>
@@ -118,12 +162,36 @@ function show_detail(ele){
 		else
 			$(this).removeClass("positive");
 		});
+    $('#detail').attr('data-uid', ele.attr('data-id'));
 	template = $("#detail_template").html();
-	list = ["nationality", "city", "address", "hearabout", "delegation", "experience"];
+	list = ["nationality", "city", "address", "hearabout", "delegation", "experience", "country"];
 	$.each(list, function(k, v){
 		reg = new RegExp("%"+v+"%", 'g');
 		template = template.replace(reg, ele.attr("data-"+v));
 	});
 	$("#detail").html(template);
+	CP_OPTION = ["　", "DISEC", "SPECPOL", "ECOSOC", "IACHR", "PC", "立法院"];
+    CP = JSON.parse(ele.attr('data-committee-preference'));
+    $('td.committee-preference').find('label').each(function(){
+        $(this).text(CP_OPTION[CP[$(this).attr('label-id')]]);
+    });
+    $('#detail').find('label[label-id='+ele.attr('data-preference')+']').parent().children('input').attr('checked',true);
+    $('.ui.radio.checkbox').checkbox();
+}
+function save(){
+    preference = $('td.committee-preference').find('input[name=preference]:checked').val();
+    country = $('textarea[name=country]').val();
+    uid = $('#detail').attr('data-uid');
+    if(typeof(preference) == 'undefined' || country == ''){
+        return false;
+    }
+    $.post('/admin', {
+        'req': 'admin1',
+        'uid': uid,
+        'preference': preference,
+        'country': country
+    },function(res){
+        alert(res);
+    });
 }
 </script>

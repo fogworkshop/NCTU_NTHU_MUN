@@ -26,6 +26,7 @@ class UserService:
                 sql += '%s '
                 prama = prama + (data[i],)
             return (sql, prama)
+
         if not acct:
             return ('Elogin', None)
 
@@ -85,7 +86,7 @@ class UserService:
                 'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
                 'residence', 'city', 'address', 'cellphone', 'require_accommodation', 
                 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2', 
-                'hearabout', 'experience', 'paycode', 'paydate']
+                'hearabout', 'experience', 'paycode', 'paydate', 'preference', 'country']
         sql = gen_sql(args)
         cur = yield self.db.cursor()
         yield cur.execute('SELECT '+sql+' FROM "account_info" WHERE "uid" = %s;', (uid, ))
