@@ -1,7 +1,7 @@
 {% extends 'frame.html' %}
 {% block content %}
 <div class="container-fluid">
-	<div class="row" style="height: 120px;">
+	<div class="row title-bar-height">
 		<div class="col-lg-10 col-md-9 col-sm-8 col-xs-8">
 			<h2><p>Welcome to TWMUN</p></h2>
 			{{meta["country"]}}<br>
@@ -72,7 +72,9 @@
 	</form>
 </div>
 <div class="hidden pay-online-modal">
-	<div class="btn btn-block"></div>
+	<a href="{{payment_url}}" target="_blank" class="btn btn-large btn-success btn-block"><h3>Go to paypal</h3></a>
+	<br>
+	<br>
 	<form class="form-horizontal pay-form">
 		<div class="form-group">
 			<label class="col-sm-4 control-label">金融卡後四碼</label>
@@ -161,9 +163,32 @@ function pay(){
 			}
 		}
 	});
-
 }
 function pay_online(){
+	message = $(".pay-online-modal").html();
+	bootbox.dialog({
+		message: message,
+		title: "Pay Online",
+		buttons: {
+			success: {
+				label: "Submit",
+				className: "btn-success",
+				callback: function() {
+					data = $(".pay-form:visible").serialize();
+					bootbox.alert(data);
+					$.post("/user", data, function(msg){
+						bootbox.alert(msg);
+					});
+				}
+			},
+			danger: {
+				label: "Cancel",
+				className: "btn-danger",
+				callback: function() {
+				}
+			}
+		}
+	});
 }
 function upload_pp(){
 	message = $(".upload-pp-modal").html();
