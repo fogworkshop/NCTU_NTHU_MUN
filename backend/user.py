@@ -116,7 +116,6 @@ class UserService:
         uid = meta['uid']
         sub = subprocess.Popen('find ../http/'+str(uid)+' | grep flag', shell=True, stdout=subprocess.PIPE)
         sub = sub.communicate()[0].decode()
-
         if sub != '' and sub[-1] == '\n':
             sub = sub[:-1]
         if sub != '':
