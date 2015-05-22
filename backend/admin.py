@@ -1,6 +1,7 @@
 from req import RequestHandler
 from req import reqenv
 from req import Service
+import subprocess
 import os
 
 class AdminService:
@@ -71,6 +72,13 @@ class AdminService:
         if cur.rowcount != 1:
             return ('Edb', None)
 
+        sub = subprocess.Popen('find ../http/'+str(uid)+' | grep flag', shell=True, stdout=subprocess.PIPE)
+        sub = sub.communicate()[0].decode()
+        print('sub',sub)
+        if sub != '' and sub[-1] == '\n':
+            sub = sub[:-1]
+        if sub != '':
+            subprocess.call('rm '+sub, shell=True)
         filename = flag_img['filename']
         path = os.path.abspath(os.path.join(os.path.dirname("__file__"),os.path.pardir)) + '/http/'
         path += str(uid) + '/flag.' + filename.split('.')[-1]
