@@ -58,8 +58,8 @@ CREATE TABLE account_info(
     paydate varchar(256) DEFAULT '',
     paypalid varchar(256) DEFAULT '',
     prefernce integer DEFAULT 0;
-    country varchar(256) DEFAULT '';
-    committee varchar(256) DEFAULT '';
+    country varchar(256) DEFAULT '',
+    committee varchar(256) DEFAULT '',
 
 	created timestamp DEFAULT now(),
 	modified timestamp DEFAULT now()
