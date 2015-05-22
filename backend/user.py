@@ -116,6 +116,7 @@ class UserService:
         uid = meta['uid']
         sub = subprocess.Popen('find ../http/'+str(uid)+' | grep flag', shell=True, stdout=subprocess.PIPE)
         sub = sub.communicate()[0].decode()
+        print('sub',sub)
         if sub != '' and sub[-1] == '\n':
             sub = sub[:-1]
         if sub != '':
@@ -252,7 +253,6 @@ class UserHandler(RequestHandler):
                 pp = self.request.files['pp'][0]
             except:
                 pp = None
-            print(pp)
             err, uid = UserService.inst.upload_pp(self.acct, pp)
             if err:
                 self.finish(err)

@@ -39,7 +39,6 @@ class IndexHandler(RequestHandler):
             else:
                 err, meta = yield from Service.User.get_info(self.acct, self.acct['uid'])
                 if self.acct['info_confirm'] == False:
-                    print(meta)
                     self.render("modify_user.html", nationality=config.id2nationality, meta=meta)
                 else:
                     err, url = yield from Service.Payment.get_url(self.acct)
