@@ -90,14 +90,14 @@
 	</form>
 </div>
 <div class="hidden upload-pp-modal">
-	<form class="form-horizontal upload-pp-form">
+	<form name="pp" class="form-horizontal upload-pp-form">
 		<div class="form-group">
 			<label class="col-sm-4 control-label">檔案上傳</label>
 			<div class="col-sm-7">
 				<input name="pp" type="file">
 			</div>
 		</div>
-		<input type="hidden" name="req" value="change">
+		<input type="hidden" name="req" value="upload_pp">
 	</form>
 </div>
 <!--href="payment_url"-->
@@ -172,9 +172,24 @@ function upload_pp(){
 		title: "檔案上傳",
 		buttons: {
 			success: {
-				label: "Change Password",
+				label: "Upload",
 				className: "btn-success",
 				callback: function() {
+                    alert('upload');
+                    data = new FormData($('form[name=pp]:visible')[0]);
+                    alert('upload');
+                    $.ajax({
+                        url: '/user',
+                        type: 'POST',
+                        data: data,
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        success: function(res){
+                            alert(res);
+                            //window.location.reload();
+                        }
+                    });
 				}
 			},
 			danger: {

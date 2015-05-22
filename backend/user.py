@@ -2,6 +2,7 @@ from req import Service
 from req import RequestHandler
 from req import reqenv
 import json
+import subprocess
 
 class UserService:
     def __init__(self, db):
@@ -112,6 +113,15 @@ class UserService:
         q = cur.fetchone()
         for i, a in enumerate(args):
             meta[a] = q[i]
+        uid = meta['uid']
+        sub = subprocess.Popen('find ../http/'+str(uid)+' | grep flag', shell=True, stdout=subprocess.PIPE)
+        sub = sub.communicate()[0].decode()
+        if sub != '' and sub[-1] == '\n':
+            sub = sub[:-1]
+        if sub != '':
+            meta['flag'] = '/flag.'+sub.split('.')[-1]
+        else:
+            meta['flag'] = None
         return (None, meta)
 
     def get_info_all(self, acct):
@@ -164,7 +174,26 @@ class UserService:
             return ('Edb', None)
         return (None, data['uid'])
 
-
+    def upload_pp(self, acct, pp):
+        if not pp:
+            return ('Enofile', None)
+        if not acct:
+            return ('Elogin', None)
+        if not acct['info_confirm']:
+            return ('Econfirm', None)
+        path = '../http/' + str(acct['uid']) + '/'
+        sub = subprocess.Popen('find '+path+' | grep pp' , shell=True, stdout=subprocess.PIPE)
+        sub = sub.communicate()[0].decode()
+        if sub != '' and sub[-1] == '\n':
+            sub = sub[:-1]
+        if sub != '':
+            subprocess.call('rm '+sub, shell=True)
+        filename = pp['filename']
+        subname = filename.split('.')[-1]
+        f = open(path+'pp.'+subname, 'wb')
+        f.write(pp['body'])
+        f.close()
+        return (None, acct['uid'])
 
 class UserHandler(RequestHandler):
     @reqenv
@@ -213,6 +242,18 @@ class UserHandler(RequestHandler):
             args = ['pay', 'uid']
             meta = self.get_args(args)
             err, uid = yield from UserService.inst.admin_set_pay(self.acct, meta)
+            if err:
+                self.finish(err)
+                return
+            self.finish('S')
+            return
+        elif req == 'upload_pp':
+            try:
+                pp = self.request.files['pp'][0]
+            except:
+                pp = None
+            print(pp)
+            err, uid = UserService.inst.upload_pp(self.acct, pp)
             if err:
                 self.finish(err)
                 return
