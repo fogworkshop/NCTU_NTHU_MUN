@@ -3,10 +3,11 @@
 <div class="container-fluid">
 	<div class="row title-bar-height">
 		<div class="col-lg-10 col-md-9 col-sm-8 col-xs-8">
-			<h2><p>Welcome to TWMUN</p></h2>
-			{{meta["country"]}}<br>
-			{{meta["committee"]}}<br>
-			{{meta["flag"]}}<br>
+			<span><img src='/{{meta["uid"]}}{{meta["flag"]}}' class="flag-normal"></span>
+			<span>
+				{{meta["country"]}}<br>
+				{{meta["committee"]}}<br>
+			</span>
 		</div>
 		<div class="col-lg-2 col-md-3 col-sm-4 col-xs-4" style="text-align: right; margin-top: 18px;">
 			<div class="dropdown">
