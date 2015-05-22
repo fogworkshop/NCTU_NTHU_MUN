@@ -1,7 +1,7 @@
 <!DOCTYPE>
 <html>
 <head>
-<title>Admin2 | TWMUN</title>
+<title>Admin3 | TWMUN</title>
 <meta charset="UTF-8">
 <link href="/icon.ico" rel="SHORTCUT ICON">
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Crimson+Text" />
@@ -9,9 +9,15 @@
 <script type="text/javascript" src="/jquery.js"></script>
 <script type="text/javascript" src="/semantic/semantic.min.js"></script>
 <style>
+	#logout_button{
+		position: fixed;
+		bottom: 0px;
+		right: 0px;
+	}
 </style>
 </head>
 	<body style="padding: 20px;">
+		<a id="logout_button" class="ui button" href="/logout">Logout</a>
 		<table class="ui celled table">
 			<thead>
 				<th class="center aligned">中文名<br>英文名</th>
@@ -57,7 +63,10 @@ function update(uid){
         contentType: false,
         processData: false,
         cache: false,
-        success: function(res){alert(res);},
+        success: function(res){
+			alert(res);
+			window.location.reload();
+		}
     });
 
 }

@@ -28,9 +28,15 @@
 			.auto{
 				overflow: auto;
 			}
+			#logout_button{
+				position: fixed;
+				bottom: 0px;
+				right: 0px;
+			}
 		</style>
 	</head>
 	<body>
+		<a id="logout_button" class="ui button" href="/logout">Logout</a>
 		<div class="wrapper">
 			<div class="up_table">
 				<table class="ui celled table" style="height: 100%">
@@ -153,9 +159,10 @@ function save(){
 	preference = $('td.committee-preference').find('input[name=preference]:checked').val();
 	country = $('textarea[name=country]').val();
 	uid = $('#detail').attr('data-uid');
+	/*
 	if(typeof(preference) == 'undefined' || country == ''){
-		return false;
 	}
+	*/
 	$.post('/admin', {
 		'req': 'admin1',
 		'uid': uid,

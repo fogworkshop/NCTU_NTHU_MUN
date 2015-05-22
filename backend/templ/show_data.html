@@ -4,6 +4,8 @@
 	<div class="row" style="height: 120px;">
 		<div class="col-lg-10 col-md-9 col-sm-8 col-xs-8">
 			<h2><p>Welcome to TWMUN</p></h2>
+			{{meta["country"]}}<br>
+			{{meta["committee"]}}
 		</div>
 		<div class="col-lg-2 col-md-3 col-sm-4 col-xs-4" style="text-align: right; margin-top: 18px;">
 			<div class="dropdown">
@@ -69,12 +71,30 @@
 		<input type="hidden" name="req" value="update_pay">
 	</form>
 </div>
+<div class="hidden pay-online-modal">
+	<div class="btn btn-block"></div>
+	<form class="form-horizontal pay-form">
+		<div class="form-group">
+			<label class="col-sm-4 control-label">金融卡後四碼</label>
+			<div class="col-sm-7">
+				<input name="paycode" class="form-control" type="text">
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-4 control-label">繳費日期</label>
+			<div class="col-sm-7">
+				<input name="paydate" class="form-control" type="text" placeholder="2015/07/01">
+			</div>
+		</div>
+		<input type="hidden" name="req" value="update_pay">
+	</form>
+</div>
 <div class="hidden upload-pp-modal">
 	<form class="form-horizontal upload-pp-form">
 		<div class="form-group">
 			<label class="col-sm-4 control-label">檔案上傳</label>
 			<div class="col-sm-7">
-				<input name="npwd" class="form-control" type="file">
+				<input name="pp" type="file">
 			</div>
 		</div>
 		<input type="hidden" name="req" value="change">

@@ -13,7 +13,7 @@ class UserService:
             return ('Elogin', None)
         pass
 
-    def modify_info(self, acct, data):
+    def modify_info(self, acct, data, check=False):
         def gen_sql(data):
             first = True
             sql = ' SET '
@@ -29,18 +29,19 @@ class UserService:
 
         if not acct:
             return ('Elogin', None)
-        if data['englishname'].find(',') != -1 or data['englishname'].find('-') != -1:
-            return ('Eenglishname', None)
-        if data['cellphone'].isdigit() == False:
-            return ('Ecellphone', None)
-        if data['committee_preference'].find('0') != -1:
-            return ('Ecp', None)
+        if check: 
+            if data['englishname'].find(',') != -1 or data['englishname'].find('-') != -1:
+                return ('Eenglishname', None)
+            if data['cellphone'].isdigit() == False:
+                return ('Ecellphone', None)
+            if data['committee_preference'].find('0') != -1:
+                return ('Ecp', None)
 
         uid = data['uid']
         data.pop('uid')
 
         if acct['info_confirm']:
-            return ('Econfirm', None)
+            return ('Submitted.', None)
         
         cur = yield self.db.cursor()
         yield cur.execute('SELECT 1 FROM "account_info" WHERE "uid" = %s;', (uid, ))
@@ -48,7 +49,6 @@ class UserService:
             yield cur.execute('INSERT INTO "account_info" ("uid") VALUES(%s);', (uid,))
         (sql, prama) = gen_sql(data)
         yield cur.execute('UPDATE "account_info" '+sql+' WHERE "uid" = %s;', prama+(uid,))
-        
         if cur.rowcount != 1:
             return ('Edb', None)
 
@@ -58,7 +58,7 @@ class UserService:
         if not acct:
             return ('Elogin', None)
 
-        err, _ = yield from self.modify_info(acct, dict(data))
+        err, _ = yield from self.modify_info(acct, dict(data), True)
         if err:
             return (err, None)
 

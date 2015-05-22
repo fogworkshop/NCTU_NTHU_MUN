@@ -251,12 +251,12 @@
 						<div class="col-sm-4">
 							<div class="form-inline">
 								<label><input class="_hearabout" type="checkbox" onchange="HA_CHANGE();"
-								{% if meta["hearabout"][-1] not in _hearabout %}
+								{% if len(meta["hearabout"]) and meta["hearabout"][-1] not in _hearabout %}
 									checked
 								{% end %}
 								>Other:</label>
 								<input class="HA_OTHER" type="text" onchange="HA_CHANGE();" style="background-color: white; border: 0px; border-bottom: 1px solid; width: 120px;"
-								{% if meta["hearabout"][-1] not in _hearabout %}
+								{% if len(meta["hearabout"]) and meta["hearabout"][-1] not in _hearabout %}
 									value="{{meta['hearabout'][-1]}}"
 								{% end %}
 								>
@@ -319,9 +319,13 @@ function information_save(ele){
 	console.log(data);
     $.post('/user', data, function(res){
         $(ele).toggleClass("active disabled");
-        bootbox.alert('Saved', function(){
-            window.location = window.location;
-        });
+		if(res == "S"){
+			bootbox.alert('Saved', function(){
+				window.location = window.location;
+			});
+		} else {
+			bootbox.alert(res);
+		}
     });
 }
 function information_submit(ele){

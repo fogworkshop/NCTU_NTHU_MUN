@@ -63,9 +63,6 @@ class AdminService:
         if not acct or acct['admin'] == 0:
             return ('Eaccess', None)
 
-        if not flag_img:
-            return ('Eflagimg', None)
-
         uid = data['uid']
         data.pop('uid')
         sql, prama = gen_sql(data)
