@@ -6,6 +6,7 @@
 <link href="/icon.ico" rel="SHORTCUT ICON">
 <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Crimson+Text" />
 <link rel="stylesheet" type="text/css" href="/semantic/semantic.min.css">
+<link rel="stylesheet" type="text/css" href="/default.css">
 <script type="text/javascript" src="/jquery.js"></script>
 <script type="text/javascript" src="/semantic/semantic.min.js"></script>
 <style>
@@ -23,7 +24,7 @@
 				<th class="center aligned">中文名<br>英文名</th>
 				<th class="center aligned">國家名</th>
 				<th class="center aligned">委員會</th>
-				<th class="center aligned">上傳國旗圖片</th>
+				<th class="center aligned" colspan="2">上傳國旗圖片</th>
 				<th class="center aligned">Update</th>
 			</thead>
 			<tbody>
@@ -36,7 +37,16 @@
                             <td class="center aligned" style="padding: 0px;">
                                 <textarea name="committee-{{data['uid']}}" style="width: 100%; height: 100%; border: 0px; resize: none; background: inherit;">{{data["committee"]}}</textarea>
                             </td>
-                            <td class="center aligned"><input id="flag-{{data['uid']}}" type="file"></td>
+                            <td class="center aligned">
+								<input id="flag-{{data['uid']}}" type="file">
+							</td>
+							<td>
+								{% if data["flag"] != None %}
+									<div style="text-align: center;">
+										<img class="flag-small" src="/{{data['uid']}}{{data['flag']}}">
+									</div>
+								{% end %}
+							</td>
                             <td class="center aligned"><div class="ui green button" onclick="update({{data['uid']}})">Update</div></td>
 					</tr>
 				{% end %}
