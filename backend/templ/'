@@ -13,15 +13,33 @@
 					{{meta["committee"]}}</h2>
 			</div>
 		</div>
+		<div class="col-lg-2 col-md-3 col-sm-4 col-xs-4" style="text-align: right; margin-top: 30px;">
+			<div class="dropdown">
+				<span>{{meta["chinesename"]}}</span>
+				<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
+					<span class="glyphicon glyphicon-menu-hamburger"></span>
+				</button>
+				<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
+					{% if not meta["pay"] %}
+						<li role="presentation"><a role="menuitem" tabindex="-1" onclick="pay();">付款帳戶</a></li>
+						{% if not (meta["nationality"] == meta["residence"] and meta["residence"] == "Taiwan") %}
+						<li role="presentation"><a role="menuitem" tabindex="-1" onclick="pay_online();" >Pay Online</a></li>
+						{% end %}
+					{% end %}
+					<li role="presentation"><a role="menuitem" tabindex="-1" onclick="upload_pp();">Upload PP</a></li>
+					<li class="divider"></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" onclick="changepassword();">Change Password</a></li>
+					<li role="presentation"><a role="menuitem" tabindex="-1" onclick="logout();">Log Out</a></li>
+				</ul>
+			</div>
+		</div>
 	</div>
 </div>
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-8">
-			Welcome, {{meta["englishname"]}}<br>
-			
 		</div>
-		<div class="col-sm-4">
+		<div class="col-sm-4" style="background-color: red;>
 		</div>
 	</div>
 </div>
@@ -223,23 +241,3 @@ function upload_pp(){
 </script>
 {% end %}
 
-<!--div class="col-lg-2 col-md-3 col-sm-4 col-xs-4" style="text-align: right; margin-top: 30px;">
-	<div class="dropdown">
-		<span>{{meta["chinesename"]}}</span>
-		<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
-			<span class="glyphicon glyphicon-menu-hamburger"></span>
-		</button>
-		<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
-			{% if not meta["pay"] %}
-				<li role="presentation"><a role="menuitem" tabindex="-1" onclick="pay();">付款帳戶</a></li>
-				{% if not (meta["nationality"] == meta["residence"] and meta["residence"] == "Taiwan") %}
-				<li role="presentation"><a role="menuitem" tabindex="-1" onclick="pay_online();" >Pay Online</a></li>
-				{% end %}
-			{% end %}
-			<li role="presentation"><a role="menuitem" tabindex="-1" onclick="upload_pp();">Upload PP</a></li>
-			<li class="divider"></li>
-			<li role="presentation"><a role="menuitem" tabindex="-1" onclick="changepassword();">Change Password</a></li>
-			<li role="presentation"><a role="menuitem" tabindex="-1" onclick="logout();">Log Out</a></li>
-		</ul>
-	</div>
-</div-->
