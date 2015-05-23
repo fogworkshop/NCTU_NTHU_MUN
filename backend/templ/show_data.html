@@ -30,19 +30,22 @@
 		<div class="col-sm-2"></div>
 		<div class="col-sm-5">
 			<h1 style="font-size: 42px;">Your Account</h1>
-			<h2>Welcome, {{meta["englishname"]}}</h2>
-			<h4>
+			<h2>Welcome {{meta["englishname"]}} !</h2>
+			<h4 style="text-align: justify;">
 				Conference! As we get closer to conference, this page will become your central
 				hub from which to check payment status, see your country assignment and 
 				upload your position papers. We are very excited to have you in Hsinchu, Taiwan 
 				this October. See you soon!
 			</h4>
 			<h2>Payment</h2>
-			<h4>
+			<h4 style="text-align: justify;">
 				Please note that after you submit your personal information, you have to pay the 
 				conference fee within 5 days, and after which, you will come back here and fill 
-				out the “Billing Information” on the right. The ! icon on the top indicates that 
-				we haven’t confirmed your payment, and when we do it will turn into ○✓ .
+				out the “Billing Information” on the right. The 
+				<span class="glyphicon glyphicon-exclamation-sign" style="color: yellow;"></span>
+				icon on the top indicates that 
+				we haven’t confirmed your payment, and when we do it will turn into
+				<span class="glyphicon glyphicon-ok-sign" style="color: green;"></span>.
 				*Note that for Taiwanese students, you have to pay via wire transfer. For 
 				students coming from abroad, PayPal is available, although wire transfer is 
 				highly appreciated.
@@ -79,7 +82,7 @@
 			<h3>
 				<a class="d_link" href="http://www.taiwanmun.org/" target="_blank">TWMNU Home</a><br>
 				{% if not meta["pay"] %}
-					<a onclick="pay();">付款帳戶</a><br>
+					<a onclick="pay();">Wire Transfer Information</a><br>
 					{% if not (meta["nationality"] == meta["residence"] and meta["residence"] == "Taiwan") %}
 						<a onclick="pay_online();" >Pay Online</a><br>
 					{% end %}
@@ -118,14 +121,14 @@
 <div class="hidden pay-modal">
 	<form class="form-horizontal pay-form">
 		<div class="form-group">
-			<label class="col-sm-4 control-label">帳號後五碼</label>
-			<div class="col-sm-7">
+			<label class="col-sm-6 control-label">Last-five Digits of Paying Account</label>
+			<div class="col-sm-6">
 				<input name="paycode" class="form-control" type="text">
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-4 control-label">繳費日期</label>
-			<div class="col-sm-7">
+			<label class="col-sm-6 control-label">Date Transferred</label>
+			<div class="col-sm-6">
 				<input name="paydate" class="form-control" type="text" placeholder="2015/07/01">
 			</div>
 		</div>
@@ -138,14 +141,14 @@
 	<br>
 	<form class="form-horizontal pay-form">
 		<div class="form-group">
-			<label class="col-sm-4 control-label">金融卡後四碼</label>
-			<div class="col-sm-7">
+			<label class="col-sm-6 control-label">Last-four Digits of Credit Card</label>
+			<div class="col-sm-6">
 				<input name="paycode" class="form-control" type="text">
 			</div>
 		</div>
 		<div class="form-group">
-			<label class="col-sm-4 control-label">繳費日期</label>
-			<div class="col-sm-7">
+			<label class="col-sm-6 control-label">Date Paid</label>
+			<div class="col-sm-6">
 				<input name="paydate" class="form-control" type="text" placeholder="2015/07/01">
 			</div>
 		</div>
