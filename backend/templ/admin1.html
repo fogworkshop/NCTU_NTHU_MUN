@@ -102,6 +102,7 @@
 							{% set hear_about = "<br>".join(data["hearabout"]) %}
 							<tr class="pointer" onclick="show_detail(this);" 
 								data-id="{{data['uid']}}"
+								data-email="{{data['email']}}"
 								data-nationality="{{data['nationality']}}"
 								data-city="{{data['city']}}"
 								data-address="{{data['address']}}"
@@ -159,10 +160,6 @@ function save(){
 	preference = $('td.committee-preference').find('input[name=preference]:checked').val();
 	country = $('textarea[name=country]').val();
 	uid = $('#detail').attr('data-uid');
-	/*
-	if(typeof(preference) == 'undefined' || country == ''){
-	}
-	*/
 	$.post('/admin', {
 		'req': 'admin1',
 		'uid': uid,
