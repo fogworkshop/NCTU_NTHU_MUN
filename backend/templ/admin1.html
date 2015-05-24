@@ -115,6 +115,10 @@
 								data-preference="{{data['preference']}}"
 								data-country="{{data['country']}}"
 								data-hearabout="{{'<br>'.join(data['hearabout'])}}"
+								data-pc1="{{data['pc1']}}"
+								data-pc2="{{data['pc2']}}"
+								data-iachr1="{{data['iachr1']}}"
+								data-iachr2="{{data['iachr2']}}"
 								>
 								<td class="center aligned">{{data["chinesename"]}}<br>{{data["englishname"]}}</td>
 								<td class="center aligned">{{data["gender"]}}</td>
@@ -129,6 +133,48 @@
 			</div>
 		</div>
 	</body>
+	<div class="ui pc modal">
+		<div class="header">
+			PC
+		</div>
+		<div class="content">
+			<div class="description">
+				<div>
+					<form class="ui form">
+						<p class="ui header">How much you know about the PC?</p>
+						<textarea class="ui pc1" readonly style="resize: none;"></textarea>
+					</form>
+				</div>
+				<div>
+					<form class="ui form">
+						<p class="ui header">Why do you want to join the PC and how would you play your roll in the whole conference?</p>
+						<textarea class="ui pc2" readonly style="resize: none;"></textarea>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="ui iachr modal">
+		<div class="header">
+			IACHR
+		</div>
+		<div class="content">
+			<div class="description">
+				<div>
+					<form class="ui form">
+						<p class="ui header">Tell us if you have any experience discussing topics related to human rights. If not, why do you think that human rights are important for humanity?</p>
+						<textarea class="ui iachr1" readonly style="resize: none;"></textarea>
+					</form>
+				</div>
+				<div>
+					<form class="ui form">
+						<p class="ui header">Have you ever played a simulation of court before? If yes, which type of court and what role did you simulate? If not, what do you expect from the simulation?</p>
+						<textarea class="ui iachr2" readonly style="resize: none;"></textarea>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </html>
 
 <script>
@@ -150,11 +196,30 @@ function show_detail(ele){
 	$("#detail").html(template);
 	CP_OPTION = ["　", "DISEC", "SPECPOL", "ECOSOC", "IACHR", "PC", "立法院"];
 	CP = JSON.parse(ele.attr('data-committee-preference'));
+	CP_now = 0;
 	$('td.committee-preference').find('label').each(function(){
-		$(this).text(CP_OPTION[CP[$(this).attr('label-id')]]);
+		id = $(this).attr("label-id");
+		$(this).text(CP_OPTION[CP[id]]);
+		if(id < 3 && CP[id] == 4){
+			$(this).append('<i class="comment icon" onclick="show_iachr('+$(ele).attr("data-id")+');"></i>');
+			
+		} else if (id < 3 && CP[id] == 5) {
+			$(this).append('<i class="comment icon" onclick="show_pc('+$(ele).attr("data-id")+');"></i>');
+		}
+		CP_now++;
 	});
 	$('#detail').find('label[label-id='+ele.attr('data-preference')+']').parent().children('input').attr('checked',true);
 	$('.ui.radio.checkbox').checkbox();
+}
+function show_pc(id){
+	$("textarea.pc1").text($("[data-id="+id+"]").attr("data-pc1"));
+	$("textarea.pc2").text($("[data-id="+id+"]").attr("data-pc2"));
+	$(".ui.pc.modal").modal("show");
+}
+function show_iachr(id){
+	$("textarea.iachr1").text($("[data-id="+id+"]").attr("data-iachr1"));
+	$("textarea.iachr2").text($("[data-id="+id+"]").attr("data-iachr2"));
+	$(".ui.iachr.modal").modal("show");
 }
 function save(){
 	preference = $('td.committee-preference').find('input[name=preference]:checked').val();
