@@ -32,11 +32,11 @@ class UserService:
             return ('Elogin', None)
         if check: 
             if data['englishname'].find(',') != -1 or data['englishname'].find('-') != -1:
-                return ('Eenglishname', None)
+                return ('Wrong name.', None)
             if data['cellphone'].isdigit() == False:
-                return ('Ecellphone', None)
+                return ('You can only type in numbers in the "cellphone" blank.', None)
             if data['committee_preference'].find('0') != -1:
-                return ('Ecp', None)
+                return ('You must fill in all six preferences.', None)
 
         uid = data['uid']
         data.pop('uid')
@@ -57,7 +57,7 @@ class UserService:
 
     def confirm_info(self, acct, data):
         if not acct:
-            return ('Elogin', None)
+            return ('You have to login.', None)
 
         err, _ = yield from self.modify_info(acct, dict(data), True)
         if err:

@@ -57,7 +57,7 @@ CREATE TABLE account_info(
     paycode varchar(256) DEFAULT '',
     paydate varchar(256) DEFAULT '',
     paypalid varchar(256) DEFAULT '',
-    prefernce integer DEFAULT 0,
+    preference integer DEFAULT 0,
     country varchar(256) DEFAULT '',
     committee varchar(256) DEFAULT '',
 

@@ -5,7 +5,7 @@
 		<div class="col-lg-10 col-md-9 col-sm-8 col-xs-8" style="padding-top: 15px;">
 			{% if meta["flag"] != None %}
 				<div style="float: left">
-					<span><img src='/{{meta["uid"]}}{{meta["flag"]}}' class="flag-normal"></span>
+					<span><img src='/{{meta["uid"]}}{{meta["flag"]}}' class="flag-small"></span>
 				</div>
 			{% end %}
 			<div style="float: left">
@@ -13,13 +13,13 @@
 					{{meta["committee"]}}</h2>
 			</div>
 		</div>
-		<div class="col-lg-2 col-md-3 col-sm-4 col-xs-4" style="text-align: right; padding-top: 28px;">
+		<div class="col-lg-2 col-md-3 col-sm-4 col-xs-4" style="text-align: right; padding-top: 28px; padding-right: 28px;">
 			{% if meta["pay"] %}
 				<span class="glyphicon glyphicon-ok-sign" style="font-size: 20px; color: green;"></span>
 			{% else %}
 				<span class="glyphicon glyphicon-exclamation-sign" style="font-size: 20px; color: yellow;"></span>
 			{% end %}
-			<span style="font-size: 20px;">
+			<span style="font-size: 32px;">
 				{{meta["englishname"]}}
 			</span>
 		</div>
@@ -28,10 +28,11 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-2"></div>
-		<div class="col-sm-5">
+		<div class="col-sm-5" style="padding-bottom: 42px;">
 			<h1 style="color: #E05C5C; font-size: 42px;">Your Account</h1>
 			<h2 style="color: #3387A2;">Welcome {{meta["englishname"]}} !</h2>
 			<h4 style="text-align: justify;">
+				Welcome to your personalized webpage for Taiwan Model United Nations
 				Conference! As we get closer to conference, this page will become your central
 				hub from which to check payment status, see your country assignment and 
 				upload your position papers. We are very excited to have you in Hsinchu, Taiwan 
@@ -41,36 +42,18 @@
 			<h4 style="text-align: justify;">
 				Please note that after you submit your personal information, you have to pay the 
 				conference fee within 5 days, and after which, you will come back here and fill 
-				out the “Billing Information” on the right. The 
+				out the billing information on the right. The 
 				<span class="glyphicon glyphicon-exclamation-sign" style="color: yellow;"></span>
 				icon on the top indicates that 
-				we haven’t confirmed your payment, and when we do it will turn into
+				we haven’t confirmed your payment, and when we do, it will turn into a
 				<span class="glyphicon glyphicon-ok-sign" style="color: green;"></span>.
+			</h4>
+			<h4>
 				*Note that for Taiwanese students, you have to pay via wire transfer. For 
 				students coming from abroad, PayPal is available, although wire transfer is 
 				highly appreciated.
 			</h4>
 		</div>
-<!--div class="col-lg-2 col-md-3 col-sm-4 col-xs-4" style="text-align: right; margin-top: 30px;">
-	<div class="dropdown">
-		<span>{{meta["chinesename"]}}</span>
-		<button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown">
-			<span class="glyphicon glyphicon-menu-hamburger"></span>
-		</button>
-		<ul class="dropdown-menu dropdown-menu-right" role="menu" aria-labelledby="menu1">
-			{% if not meta["pay"] %}
-				<li role="presentation"><a role="menuitem" tabindex="-1" onclick="pay();">付款帳戶</a></li>
-				{% if not (meta["nationality"] == meta["residence"] and meta["residence"] == "Taiwan") %}
-				<li role="presentation"><a role="menuitem" tabindex="-1" onclick="pay_online();" >Pay Online</a></li>
-				{% end %}
-			{% end %}
-			<li role="presentation"><a role="menuitem" tabindex="-1" onclick="upload_pp();">Upload PP</a></li>
-			<li class="divider"></li>
-			<li role="presentation"><a role="menuitem" tabindex="-1" onclick="changepassword();">Change Password</a></li>
-			<li role="presentation"><a role="menuitem" tabindex="-1" onclick="logout();">Log Out</a></li>
-		</ul>
-	</div>
-</div-->
 		<style>
 			.d_link:hover{
 				text-decoration: none;
@@ -82,14 +65,15 @@
 			<h3>
 				<a class="d_link" href="http://www.taiwanmun.org/" target="_blank">TWMNU Home</a><br>
 				{% if not meta["pay"] %}
-					<a onclick="pay();">Wire Transfer Information</a><br>
+					<a class="d_link" onclick="pay();">Wire Transfer Information</a><br>
 					{% if not (meta["nationality"] == meta["residence"] and meta["residence"] == "Taiwan") %}
-						<a onclick="pay_online();" >Pay Online</a><br>
+						<a class="d_link" onclick="pay_online();" >Pay Online</a><br>
 					{% end %}
 				{% end %}
-				<a class="d_link" data-toggle="tooltip" data-placement="right" title="Not yet available">Accommodations</a><br>
-				<a class="d_link" data-toggle="tooltip" data-placement="right" title="Not yet available">Country Assignment</a><br>
+				<a class="d_link" data-toggle="tooltip" data-placement="right" title="Coming soon">Accommodations</a><br>
+				<a class="d_link" data-toggle="tooltip" data-placement="right" title="Coming soon">Country Assignment</a><br>
 				<a class="d_link" data-toggle="tooltip" data-placement="right" title="Not yet available">Upload Position Paper</a><br>
+				<a class="d_link">Contact</a><br>
 				<a class="d_link" onclick="changepassword();">Change Password</a><br>
 				<a class="d_link" href="/logout">Log Out</a>
 				<script>

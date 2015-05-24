@@ -330,28 +330,28 @@ function information_save(ele){
 }
 function information_submit(ele){
 	bootbox.dialog({
-		message: "送出後將無法修改 請確認資料無誤後按確認鍵送出",
+		message: "You won’t be able to change the information once you submit them. Please make sure that all the information here are correct.",
 		title: "Confirm",
 		buttons: {
 			success: {
-				label: "確認送出",
+				label: "Yes, submit.",
 				className: "btn-success",
 				callback: function(){
 					data = $(".information-form").serialize();
 					data += "&req=confirm_info";
 					$(ele).toggleClass("active disabled");
-					console.log(data);
 					$.post('/user', data, function(res){
-						alert(res);
 						$(ele).toggleClass("active disabled");
-						bootbox.alert('Jump to next page', function(){
+						if(res == "S"){
 							window.location = window.location;
-						});
+						} else {
+							bootbox.alert(res);
+						}
 					});
 				}
 			},
 			danger: {
-				label: "取消",
+				label: "Back",
 				className: "btn-danger",
 				callback: function(){
 				}
