@@ -87,6 +87,16 @@ class AdminService:
         f.close()
         return (None, uid)
 
+    def admin2_clean(self, acct, data):   
+        if not acct or acct['admin'] == 0:
+            return ('Eaccess', None)
+        uid = data['uid']
+        cur = yield self.dd.cursor()
+        yield cur.execute('UPDATE "account_info" SET "paycode" = '', "paydate" = '' WHERE "uid" = %s;', (uid, ))
+        if cur.rowcount != 1:
+            return ('Edb', None)
+        return (None, uid)
+
 
 class AdminHandler(RequestHandler):
     @reqenv
@@ -110,6 +120,15 @@ class AdminHandler(RequestHandler):
             args = ['uid', 'pay']
             meta = self.get_args(args)
             err, uid = yield from AdminService.inst.update_admin2(self.acct, meta)
+            if err:
+                self.finish(err)
+                return
+            self.finish('S')
+            return
+        elif req == 'admin2_clean':
+            args = ['uid']
+            meta = self.get_args(args)
+            err, uid = yield from AdminService.inst.admin2_clean(self.acct, meta)
             if err:
                 self.finish(err)
                 return
