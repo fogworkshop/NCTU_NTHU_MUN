@@ -2,25 +2,33 @@
 {% block content %}
 <div class="container-fluid">
 	<div class="row title-bar-height">
-		<div class="col-lg-10 col-md-9 col-sm-8 col-xs-8" style="padding-top: 15px;">
-			{% if meta["flag"] != None %}
-				<div style="float: left">
-					<span><img src='/{{meta["uid"]}}{{meta["flag"]}}' class="flag-small"></span>
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="padding-top: 15px;">
+			<div class="row">
+				{% if meta["flag"] != None %}
+					<div class="col-lg-1">
+						<img src='/{{meta["uid"]}}{{meta["flag"]}}' class="flag-small">
+					</div>
+					<div class="col-lg-10" style="padding-left: 30px; font-size: 28px; padding-top: 12px;">
+						{{meta["country"]}}
+					</div>
+				{% end %}
+			</div>
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					<h2 style="margin-top: 0px;">
+						{{meta["committee"]}}
+					</h2>
 				</div>
-			{% end %}
-			<div style="float: left">
-				<h2 style="margin-top: 0px;">{{meta["country"]}}<br>
-					{{meta["committee"]}}</h2>
 			</div>
 		</div>
-		<div class="col-lg-2 col-md-3 col-sm-4 col-xs-4" style="text-align: right; padding-top: 28px; padding-right: 28px;">
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6" style="text-align: right; padding-top: 28px; padding-right: 28px;">
 			{% if meta["pay"] %}
 				<span class="glyphicon glyphicon-ok-sign" style="font-size: 20px; color: green;"></span>
 			{% else %}
 				<span class="glyphicon glyphicon-exclamation-sign" style="font-size: 20px; color: yellow;"></span>
 			{% end %}
 			<span style="font-size: 32px;">
-				{{meta["englishname"]}}
+				{{meta["englishname"].split(" ")[0]}}
 			</span>
 		</div>
 	</div>
@@ -30,7 +38,7 @@
 		<div class="col-sm-2"></div>
 		<div class="col-sm-5" style="padding-bottom: 42px;">
 			<h1 style="color: #E05C5C; font-size: 42px;">Your Account</h1>
-			<h2 style="color: #3387A2;">Welcome {{meta["englishname"]}} !</h2>
+			<h2 style="color: #3387A2;">Welcome {{meta["englishname"].split(" ")[0]}} !</h2>
 			<h4 style="text-align: justify;">
 				Welcome to your personalized webpage for Taiwan Model United Nations
 				Conference! As we get closer to conference, this page will become your central
@@ -65,9 +73,16 @@
 			<h3>
 				<a class="d_link" href="http://www.taiwanmun.org/" target="_blank">TWMNU Home</a><br>
 				{% if not meta["pay"] %}
-					<a class="d_link" onclick="pay();">Wire Transfer Information</a><br>
-					{% if not (meta["nationality"] == meta["residence"] and meta["residence"] == "Taiwan") %}
-						<a class="d_link" onclick="pay_online();" >Pay Online</a><br>
+					{% if len(meta["paycode"]) %}
+						<a class="d_link" data-toggle="tooltip" data-placement="right" title="Waiting to check.">Wire Transfer Information</a><br>
+						{% if not (meta["nationality"] == meta["residence"] and meta["residence"] == "Taiwan") %}
+							<a class="d_link" data-toggle="tooltip" data-placement="right" title="Waiting to check.">Pay Online</a><br>
+						{% end %}
+					{% else %}
+						<a class="d_link" onclick="pay();">Wire Transfer Information</a><br>
+						{% if not (meta["nationality"] == meta["residence"] and meta["residence"] == "Taiwan") %}
+							<a class="d_link" onclick="pay_online();" >Pay Online</a><br>
+						{% end %}
 					{% end %}
 				{% end %}
 				<a class="d_link" data-toggle="tooltip" data-placement="right" title="Coming soon">Accommodations</a><br>

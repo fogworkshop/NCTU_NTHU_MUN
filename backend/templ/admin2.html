@@ -24,6 +24,7 @@
 				<th class="center aligned">帳號後五碼<br>信用卡後四碼</th>
 				<th class="center aligned">付款日期</th>
 				<th class="center aligned">付款</th>
+				<th class="center aligned">清空</th>
 			</thead>
 			<tbody>
 				{% for data in meta %}
@@ -38,6 +39,13 @@
 								<div class="ui red button" onclick="update({{data['uid']}}, 1);">未付</div>
 							{% end %}
 						</td>
+						<td class="center aligned">
+							{% if data["pay"] %}
+								<div class="ui disabled button">清空</div>
+							{% else %}
+							<div class="ui red button" onclick="clean({{data['uid']}});">清空</div>
+							{% end %}
+						</td>
 					</tr>
 				{% end %}
 			</tbody>
@@ -50,6 +58,14 @@ function update(uid, pay){
 		'req': 'admin2',
 		'uid': uid,
 		'pay': pay
+	}, function(res){
+		window.location.reload();
+	});
+}
+function clean(uid, pay){
+	$.post('/admin', {
+		'req': 'admin2_clean',
+		'uid': uid
 	}, function(res){
 		window.location.reload();
 	});
