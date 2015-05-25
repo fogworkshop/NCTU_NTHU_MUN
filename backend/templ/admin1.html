@@ -194,7 +194,7 @@ function show_detail(ele){
 		template = template.replace(reg, ele.attr("data-"+v));
 	});
 	$("#detail").html(template);
-	CP_OPTION = ["　", "DISEC", "SPECPOL", "ECOSOC", "IACHR", "PC", "立法院"];
+	CP_OPTION = ["　", "DISEC", "SOCHUM", "ECOSOC", "IACHR", "PC", "立法院"];
 	CP = JSON.parse(ele.attr('data-committee-preference'));
 	CP_now = 0;
 	$('td.committee-preference').find('label').each(function(){
