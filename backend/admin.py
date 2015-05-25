@@ -92,7 +92,7 @@ class AdminService:
             return ('Eaccess', None)
         uid = data['uid']
         cur = yield self.db.cursor()
-        yield cur.execute('UPDATE "account_info" SET "paycode" = '', "paydate" = '' WHERE "uid" = %s;', (uid, ))
+        yield cur.execute('UPDATE "account_info" SET "paycode" = \'\', "paydate" = \'\' WHERE "uid" = %s;', (uid, ))
         if cur.rowcount != 1:
             return ('Edb', None)
         return (None, uid)
