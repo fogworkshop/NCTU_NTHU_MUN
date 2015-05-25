@@ -36,7 +36,7 @@
 <div class="container-fluid">
 	<div class="row">
 		<div class="col-sm-2"></div>
-		<div class="col-sm-5" style="padding-bottom: 42px;">
+		<div id="content" class="col-sm-5" style="padding-bottom: 42px;">
 			<h1 style="color: #E05C5C; font-size: 42px;">Your Account</h1>
 			<h2 style="color: #3387A2;">Welcome {{meta["englishname"].split(" ")[0]}} !</h2>
 			<h4 style="text-align: justify;">
@@ -89,7 +89,7 @@
 				<a class="d_link" data-toggle="tooltip" data-placement="right" title="Coming soon">Country Assignment</a><br>
 				<a class="d_link" data-toggle="tooltip" data-placement="right" title="Not available">Upload Position Paper</a><br>
 				<a class="d_link" data-toggle="tooltip" data-placement="right" title="Not available">Study Guide</a><br>
-				<a class="d_link">Contact</a><br>
+				<a class="d_link" onclick="change_content('contact');">Contact</a><br>
 				<a class="d_link" onclick="changepassword();">Change Password</a><br>
 				<a class="d_link" href="/logout">Log Out</a>
 				<script>
@@ -101,6 +101,56 @@
 
 		</div>
 	</div>
+</div>
+<div class="hidden contact">
+	<h2>
+		Secretary-General
+	</h2>
+	<h4>
+		secgen@taiwanmun.org
+	</h4>
+
+	<h2>
+		Chief of Operations
+	</h2>
+	<h4>
+		chief.operations@taiwanmun.org
+	</h4>
+
+	<h2>
+		Academic
+	</h2>
+	<h4>
+		academic@taiwanmun.org
+	</h4>
+
+	<h2>
+		Activities
+	</h2>
+	<h4>
+		activities@taiwanmun.org
+	</h4>
+
+	<h2>
+		Delegate Affairs
+	</h2>
+	<h4>
+		delegate.affairs@taiwanmun.org
+	</h4>
+
+	<h2>
+		Marketing
+	</h2>
+	<h4>
+		marketing@taiwanmun.org
+	</h4>
+
+	<h2>
+		Public Relations
+	</h2>
+	<h4>
+		public.relations@taiwanmun.org
+	</h4>
 </div>
 <div class="hidden change-password-modal">
 	<form class="form-horizontal changepassword-form">
@@ -203,6 +253,9 @@ function changepassword(){
 			}
 		}
 	});
+}
+function change_content(con){
+	$("#content").html($("."+con).html());
 }
 function logout(){
 	$.post("/logout", function(){
