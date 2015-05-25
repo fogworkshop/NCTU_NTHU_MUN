@@ -1,7 +1,7 @@
-DBNAME = ''
-DBUSER = ''
-DBPASSWORD = ''
-DBHOST = ''
+DBNAME = 'mun'
+DBUSER = 'root'
+DBPASSWORD = 'root'
+DBHOST = 'localhost'
 COOKIE_SECRET = 'wef wqfqw wqefwqf2 f'
 PORT = '2519'
 MAX_WAIT_SECOND_BEFORE_SHUTDOWN = 2
