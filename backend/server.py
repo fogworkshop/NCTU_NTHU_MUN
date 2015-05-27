@@ -18,6 +18,7 @@ from payment import PaymentService
 from admin import AdminHandler
 from admin import AdminService
 import signal
+import datetime
 import time
 
 
@@ -39,7 +40,8 @@ class IndexHandler(RequestHandler):
             else:
                 err, meta = yield from Service.User.get_info(self.acct, self.acct['uid'])
                 if self.acct['info_confirm'] == False:
-                    self.render("modify_user.html", nationality=config.id2nationality, meta=meta)
+                    ticket = 0 if datetime.datetime.now() <= config.EARLYBIRD_DATE else 1
+                    self.render("modify_user.html", nationality=config.id2nationality, meta=meta, ticket=ticket)
                 else:
                     err, url = yield from Service.Payment.get_url(self.acct)
                     if err:

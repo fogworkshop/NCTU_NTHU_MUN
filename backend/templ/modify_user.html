@@ -21,6 +21,17 @@
                 <input type="hidden" name="uid" value="{{acct['uid']}}">
 				<h1>　</h1>
 				<div class="form-group">
+					<label class="col-sm-2 control-label">Ticket</label>
+					<div class="col-sm-3">
+                        {% set TICKET = ['Early Bird', 'Normal'] %}
+                        <select name="ticket" class="selectpicker" data-width="100%">
+                            {% for i,t in enumerate(TICKET) %}
+                            <option value="{{i}}" {% if i == 1-ticket %}disabled{% end %}>{{t}}</option>
+                            {% end %}
+                        </select>
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-sm-2 control-label">Chinese Name</label>
 					<div class="col-sm-3">
                         <input name="chinesename" class="form-control" type="text" value="{{meta['chinesename']}}">
@@ -304,6 +315,7 @@ $(document).ready(function(){
     $("[name=grade]").selectpicker('val', '{{ meta["grade"] }}');
     $("[name=delegation]").selectpicker('val', parseInt({{ meta["delegation"] }}));
     $("[name=require_accommodation]").selectpicker('val', parseInt({{ meta["require_accommodation"] }}));
+    $('[name=ticket]').selectpicker('val', {{ ticket }});
 	delegation_change();
 	CP = JSON.parse('{{meta["committee_preference"]}}');
 	now = 0;

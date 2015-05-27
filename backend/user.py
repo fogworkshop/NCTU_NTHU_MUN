@@ -1,6 +1,7 @@
 from req import Service
 from req import RequestHandler
 from req import reqenv
+import datetime
 import json
 import subprocess
 
@@ -93,7 +94,7 @@ class UserService:
                 'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
                 'residence', 'city', 'address', 'cellphone', 'require_accommodation', 
                 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2', 'committee', 
-                'hearabout', 'experience', 'paycode', 'paydate', 'preference', 'country', 'other']
+                'hearabout', 'experience', 'paycode', 'paydate', 'preference', 'country', 'other', 'ticket']
         sql = gen_sql(args)
         cur = yield self.db.cursor()
         yield cur.execute('SELECT '+sql+' FROM "account_info" WHERE "uid" = %s;', (uid, ))
@@ -231,7 +232,7 @@ class UserHandler(RequestHandler):
                     'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
                     'residence', 'city', 'address', 'cellphone', 'require_accommodation', 
                     'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 
-                    'iachr2', 'hearabout', 'experience', 'other']
+                    'iachr2', 'hearabout', 'experience', 'other', 'ticket']
             meta = self.get_args(args)
             err, uid = yield from UserService.inst.confirm_info(self.acct, meta)
             if err:
