@@ -194,7 +194,7 @@ function show_detail(ele){
 		template = template.replace(reg, ele.attr("data-"+v));
 	});
 	$("#detail").html(template);
-	CP_OPTION = ["　", "DISEC", "SOCHUM", "ECOSOC", "IACHR", "PC", "立法院"];
+	CP_OPTION = ["　", "DISEC(Disarmament and International Security Committee)", "SOCHUM(Social Humanitarian and Cultural Committee)", "ECOSOC(Economic and Social Council)", "IACHR(Inter-American Court of Human Rights)", "PC", "立法院(Legislative Yuan of ROC)"];
 	CP = JSON.parse(ele.attr('data-committee-preference'));
 	CP_now = 0;
 	$('td.committee-preference').find('label').each(function(){
