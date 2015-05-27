@@ -123,6 +123,15 @@ class UserService:
             meta['flag'] = '/flag.'+sub.split('.')[-1]
         else:
             meta['flag'] = None
+        sub = subprocess.Popen('find ../http/'+str(uid)+' | grep guide', shell=True, stdout=subprocess.PIPE)
+        sub = sub.communicate()[0].decode()
+        print('sub',sub)
+        if sub != '' and sub[-1] == '\n':
+            sub = sub[:-1]
+        if sub != '':
+            meta['guide'] = '/guide.'+sub.split('.')[-1]
+        else:
+            meta['guide'] = None
         return (None, meta)
 
     def get_info_all(self, acct):

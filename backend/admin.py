@@ -48,7 +48,7 @@ class AdminService:
             return ('Edb', None)
         return (None, data['uid'])
 
-    def update_admin3(self, acct, data, flag_img):
+    def update_admin3(self, acct, data, flag_img, guide):
         def gen_sql(data):
             first = True
             sql = ' SET '
@@ -71,20 +71,34 @@ class AdminService:
         yield cur.execute('UPDATE "account_info" '+sql+' WHERE "uid" = %s;', prama + (uid,))
         if cur.rowcount != 1:
             return ('Edb', None)
-
-        sub = subprocess.Popen('find ../http/'+str(uid)+' | grep flag', shell=True, stdout=subprocess.PIPE)
-        sub = sub.communicate()[0].decode()
-        print('sub',sub)
-        if sub != '' and sub[-1] == '\n':
-            sub = sub[:-1]
-        if sub != '':
-            subprocess.call('rm '+sub, shell=True)
-        filename = flag_img['filename']
-        path = os.path.abspath(os.path.join(os.path.dirname("__file__"),os.path.pardir)) + '/http/'
-        path += str(uid) + '/flag.' + filename.split('.')[-1]
-        f = open(path, 'wb')
-        f.write(flag_img['body'])
-        f.close()
+        if flag_img != None:
+            sub = subprocess.Popen('find ../http/'+str(uid)+' | grep flag', shell=True, stdout=subprocess.PIPE)
+            sub = sub.communicate()[0].decode()
+            print('sub',sub)
+            if sub != '' and sub[-1] == '\n':
+                sub = sub[:-1]
+            if sub != '':
+                subprocess.call('rm '+sub, shell=True)
+            filename = flag_img['filename']
+            path = os.path.abspath(os.path.join(os.path.dirname("__file__"),os.path.pardir)) + '/http/'
+            path += str(uid) + '/flag.' + filename.split('.')[-1]
+            f = open(path, 'wb')
+            f.write(flag_img['body'])
+            f.close()
+        if guide != None:
+            sub = subprocess.Popen('find ../http/'+str(uid)+' | grep guide', shell=True, stdout=subprocess.PIPE)
+            sub = sub.communicate()[0].decode()
+            print('sub',sub)
+            if sub != '' and sub[-1] == '\n':
+                sub = sub[:-1]
+            if sub != '':
+                subprocess.call('rm '+sub, shell=True)
+            filename = guide['filename']
+            path = os.path.abspath(os.path.join(os.path.dirname("__file__"),os.path.pardir)) + '/http/'
+            path += str(uid) + '/guide.' + filename.split('.')[-1]
+            f = open(path, 'wb')
+            f.write(guide['body'])
+            f.close()
         return (None, uid)
 
     def admin2_clean(self, acct, data):   
@@ -140,9 +154,14 @@ class AdminHandler(RequestHandler):
                 flag_img = self.request.files['flag'][0]
             except:
                 flag_img = None
+            try:
+                guide = self.request.files['guide'][0]
+            except:
+                guide = None
+            print(guide)
             meta = self.get_args(args)
             print('meta', meta)
-            err, uid = yield from AdminService.inst.update_admin3(self.acct, meta, flag_img)
+            err, uid = yield from AdminService.inst.update_admin3(self.acct, meta, flag_img, guide)
             if err:
                 self.finish(err)
                 return

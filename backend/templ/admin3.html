@@ -25,7 +25,7 @@
 				<th class="center aligned">國家名</th>
 				<th class="center aligned">委員會</th>
 				<th class="center aligned" colspan="2">上傳國旗圖片</th>
-				<th class="center aligned">上傳Guide</th>
+				<th class="center aligned" colspan="2">上傳Guide</th>
 				<th class="center aligned">Update</th>
 			</thead>
 			<tbody>
@@ -48,7 +48,14 @@
 									</div>
 								{% end %}
 							</td>
-							<td class="center aligned"></td>
+                            <td class="center aligned">
+                                <input id="guide-{{data['uid']}}" type="file">
+                            </td>
+                            <td class="center aligned">
+                                {% if data['guide'] %}
+                                    {{data['guide'][1:]}}
+                                {% end %}
+                            </td>
                             <td class="center aligned"><div class="ui green button" onclick="update({{data['uid']}})">Update</div></td>
 					</tr>
 				{% end %}
@@ -67,6 +74,8 @@ function update(uid){
     form.append('uid', uid);
     file = document.getElementById('flag-'+uid).files[0];
     form.append('flag', file);
+    file = document.getElementById('guide-'+uid).files[0];
+    form.append('guide', file);
     console.log(form);
     $.ajax({
         url: '/admin',
