@@ -166,7 +166,7 @@
 					</label>
 				</div>
 				{% set ORDER = ["First", "Second", "Third", "Fourth", "Fifth", "Sixth"] %}
-				{% set CP_OPTION = ["　", "DISEC(Disarmament and International Security Committee)", "SOCHUM(Social Humanitarian and Cultural Committee)", "ECOSOC(Economic and Social Council)", "IACHR(Inter-American Court of Human Rights)", "PC", "立法院(Legislative Yuan of ROC)"] %}
+				{% set CP_OPTION = ["　", "DISEC(Disarmament and International Security Committee)", "SOCHUM(Social Humanitarian and Cultural Committee)", "ECOSOC(Economic and Social Council)", "IACHR(Inter-American Court of Human Rights)", "MPC(Main Press Center)", "立法院(Legislative Yuan of ROC)"] %}
 				{% for x in range (6) %}
 					<div class="form-group">
 						<label class="col-sm-2 control-label">{{ORDER[x]}}</label>
@@ -182,7 +182,7 @@
 				<input type="hidden" name="committee_preference">
 				<div class="form-group PC" hidden>
 					<label class="col-sm-offset-2 col-sm-10">
-						How much you know about the PC?
+						How much you know about the MPC?
 					</label>
 					<div class="col-sm-offset-2 col-sm-5">
 						<textarea name="pc1" class="form-control" rows="5" style="resize: none">{{meta["pc1"]}}</textarea>
@@ -190,7 +190,7 @@
 				</div>
 				<div class="form-group PC" hidden>
 					<label class="col-sm-offset-2 col-sm-10">
-						Why do you want to join the PC and how would you play your roll in the whole conference?
+						Why do you want to join the MPC and how would you play your roll in the whole conference?
 					</label>
 					<div class="col-sm-offset-2 col-sm-5">
 						<textarea name="pc2" class="form-control" rows="5" style="resize: none">{{meta["pc2"]}}</textarea>

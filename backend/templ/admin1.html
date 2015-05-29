@@ -191,10 +191,14 @@ function show_detail(ele){
 	list = ["nationality", "city", "address", "hearabout", "delegation", "experience", "country"];
 	$.each(list, function(k, v){
 		reg = new RegExp("%"+v+"%", 'g');
-		template = template.replace(reg, ele.attr("data-"+v));
+		if(v == "delegation" && ele.attr("data-"+v)=="2"){
+			template = template.replace(reg, ele.attr("data-"+v) + "<br>" + ele.attr("data-delegation-englishname") + "<br>" + ele.attr("data-delegation-email"));
+		}
+		else
+			template = template.replace(reg, ele.attr("data-"+v));
 	});
 	$("#detail").html(template);
-	CP_OPTION = ["　", "DISEC(Disarmament and International Security Committee)", "SOCHUM(Social Humanitarian and Cultural Committee)", "ECOSOC(Economic and Social Council)", "IACHR(Inter-American Court of Human Rights)", "PC", "立法院(Legislative Yuan of ROC)"];
+	CP_OPTION = ["　", "DISEC", "SOCHUM", "ECOSOC", "IACHR", "MPC", "立法院"];
 	CP = JSON.parse(ele.attr('data-committee-preference'));
 	CP_now = 0;
 	$('td.committee-preference').find('label').each(function(){

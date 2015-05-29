@@ -8,9 +8,12 @@
 					<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
 						<img src='/{{meta["uid"]}}{{meta["flag"]}}' class="flag-small">
 					</div>
-					<div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="font-size: 28px; padding-top: 12px;">
+					<div style="position: absolute; margin-left: 100px; font-size: 28px; padding-top: 12px;">
 						{{meta["country"]}}
 					</div>
+					<!--div class="col-lg-10 col-md-10 col-sm-10 col-xs-10" style="font-size: 28px; padding-top: 12px;">
+						{{meta["country"]}}
+					</div-->
 				{% end %}
 			</div>
 			<div class="row">
@@ -37,31 +40,6 @@
 	<div class="row">
 		<div class="col-sm-2"></div>
 		<div id="content" class="col-sm-5" style="padding-bottom: 42px;">
-			<h1 style="color: #E05C5C; font-size: 42px;">Your Account</h1>
-			<h2 style="color: #3387A2;">Welcome {{meta["englishname"].split(" ")[0]}} !</h2>
-			<h4 style="text-align: justify;">
-				Welcome to your personalized webpage for Taiwan Model United Nations
-				Conference! As we get closer to conference, this page will become your central
-				hub from which you can check your payment status, see your country assignment,
-				download the Study Guide, and upload your Position Paper. We are looking
-				forward to your participation in TWMUN this October. See you soon!
-			</h4>
-			<h2 style="color: #3387A2">Payment</h2>
-			<h4 style="text-align: justify;">
-				Please note that after you have submitted your personal information, you
-				have to make the payment within 10 days after the submission. Once the
-				payment is made please fill up the billing information on the right. The
-				icon on the top indicates your payment status (
-				<span class="glyphicon glyphicon-ok-sign" style="color: green;"></span>
-				confirmed, 
-				<span class="glyphicon glyphicon-exclamation-sign" style="color: yellow;"></span>
-				not confirmed).
-			</h4>
-			<h4>
-				*Note that for Taiwanese students, you have to pay via wire transfer. For 
-				students coming from abroad, PayPal is available, although wire transfer is 
-				highly appreciated.
-			</h4>
 		</div>
 		<style>
 			.d_link:hover{
@@ -72,6 +50,7 @@
 		<div class="col-sm-4">
 			<h1 style="color: #E05C5C;">Account Quick Links</h1>
 			<h3>
+				<a class="d_link" onclick="change_content('account_info');">Your Account</a><br>
 				<a class="d_link" href="http://www.taiwanmun.org/" target="_blank">TWMNU Home</a><br>
 				{% if not meta["pay"] %}
 					{% if len(meta["paycode"]) %}
@@ -90,7 +69,7 @@
 				<a class="d_link" data-toggle="tooltip" data-placement="right" title="Coming soon">Study Guide</a><br>
 				<a class="d_link" data-toggle="tooltip" data-placement="right" title="Coming soon">Country Assignment</a><br>
 				<a class="d_link" data-toggle="tooltip" data-placement="right" title="Not available">Upload Position Paper</a><br>
-				<a class="d_link" onclick="change_content('contact');">Contact</a><br>
+				<a class="d_link" onclick="change_content('contact');">Contact Us</a><br>
 				<a class="d_link" onclick="changepassword();">Change Password</a><br>
 				<a class="d_link" href="/logout">Log Out</a>
 				<script>
@@ -102,6 +81,32 @@
 
 		</div>
 	</div>
+</div>
+<div class="hidden account_info">
+	<h1 style="color: #E05C5C; font-size: 42px;">Your Account</h1>
+	<h2 style="color: #3387A2;">Welcome {{meta["englishname"].split(" ")[0]}} !</h2>
+	<h4 style="text-align: justify;">
+		Welcome to your personalized webpage for Taiwan Model United Nations
+		Conference! As we get closer to conference, this page will become your central
+		hub from which you can check your payment status, see your country assignment,
+		download the Study Guide, and upload your Position Paper. We are looking
+		forward to your participation in TWMUN this October. See you soon!
+	</h4>
+	<h2 style="color: #3387A2">Payment</h2>
+	<h4 style="text-align: justify;">
+		Please note that after you have submitted your personal information, you
+		have to make the payment within 10 days after the submission. Once the
+		payment is made, please fill up the billing information on the right. The
+		icon on the top indicates your payment status (
+		<span class="glyphicon glyphicon-ok-sign" style="color: green;"></span>
+		confirmed, 
+		<span class="glyphicon glyphicon-exclamation-sign" style="color: yellow;"></span>
+		not confirmed).
+	</h4>
+	<h4>
+		*Note that for Taiwanese students, you have to pay via wire transfer. For
+		students coming from abroad, PayPal and wire transfer are both available.
+	</h4>
 </div>
 <div class="hidden contact">
 	<h2>
@@ -228,6 +233,7 @@
 <script>
 $(document).ready(function(){
 	document.title = "Homepage | TWMUN";
+	change_content("account_info");
 });
 
 function changepassword(){
