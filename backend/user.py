@@ -4,6 +4,7 @@ from req import reqenv
 import datetime
 import json
 import subprocess
+import config
 
 class UserService:
     def __init__(self, db):
@@ -234,6 +235,7 @@ class UserHandler(RequestHandler):
                     'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 
                     'iachr2', 'hearabout', 'experience', 'other', 'ticket']
             meta = self.get_args(args)
+            meta['ticket'] = '0' if datetime.datetime.now() <= config.EARLYBIRD_DATE else '1'
             err, uid = yield from UserService.inst.confirm_info(self.acct, meta)
             if err:
                 self.finish(err)
