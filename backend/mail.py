@@ -17,7 +17,8 @@ class MailHandler:
         try:
             p = sp.Popen(cmd, stdin=sp.PIPE)
             p.stdin.write(content.encode())
-            p.communicate()
+            err = p.communicate()[0]
+            print(err)
             p.stdin.close()
         except:
             return 1

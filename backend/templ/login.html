@@ -88,8 +88,8 @@
 		<input type="hidden" name="req" value="signup">
 	</form>
 </div>
-<div class="hidden forgot-modal">
-	<form class="form-horizontal forgot-form">
+<div class="hidden forget-modal">
+	<form class="form-horizontal forget-form">
 		<div class="form-group">
 			<label class="col-sm-4 control-label">Email</label>
 			<div class="col-sm-7">
@@ -142,16 +142,22 @@ function register(){
 	});
 }
 function forgot(){
-	message = $(".forgot-modal").html();
+	message = $(".forget-modal").html();
 
 	bootbox.dialog({
 		message: message,
-		title: "Forgot Password",
+		title: "Forget Password",
 		buttons: {
 			success: {
 				label: "Send",
 				className: "btn-success",
 				callback: function(){
+                    $.post('/login',{
+                        'email': $('.forget-form:visible').find('input[name=email]').val(),
+                        'req': 'forget',
+                    },function(res){
+                        alert(res);
+                    });
 					return false;
 				}
 			},

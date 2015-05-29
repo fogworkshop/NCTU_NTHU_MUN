@@ -58,7 +58,9 @@ class LoginService:
         def random_password():
             return str(random.randint(0,100000000000))
         cur = yield self.db.cursor()
-        yield cur.execute('SELECT "uid" FROM "account" WHERE "email" = %s;', (email))
+        print(email)
+        yield cur.execute('SELECT "uid" FROM "account" WHERE "email" = %s;', (email, ))
+        print(cur.rowcount)
         if cur.rowcount != 1:
             return ('Eemail', None)
         uid = cur.fetchone()[0]
@@ -66,6 +68,7 @@ class LoginService:
         hnpwd = _hash(npwd)
         yield cur.execute('UPDATE "account" SET "pwd" = %s WHERE "uid" = %s;', (hnpwd, uid))
         err = self.forget_mail.send(email, 'change password', email=email, pwd=npwd)
+        print(err)
         if err:
             return ('Esendmail', None)
         return (None, uid)

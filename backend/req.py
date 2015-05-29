@@ -67,17 +67,17 @@ def reqenv(func):
     def wrap(self,*args,**kwargs):
         uid = self.get_secure_cookie('uid')
         if uid:
-            #try:
-            uid = uid.decode()
-            err, self.acct = yield from Service.Login.get_account_info(str(uid))
-            err, meta = yield from Service.User.get_info(self.acct, self.acct['uid'])
-            self.acct.update(meta)
-            if self.acct['email'][:5] == 'admin' and len(self.acct['email']) <= 6:
-                self.acct['admin'] = 1
-            else:
-                self.acct['admin'] = 0
-            #except:
-                #self.clear_cookie('uid')
+            try:
+                uid = uid.decode()
+                err, self.acct = yield from Service.Login.get_account_info(str(uid))
+                err, meta = yield from Service.User.get_info(self.acct, self.acct['uid'])
+                self.acct.update(meta)
+                if self.acct['email'][:5] == 'admin' and len(self.acct['email']) <= 6:
+                    self.acct['admin'] = 1
+                else:
+                    self.acct['admin'] = 0
+            except:
+                self.clear_cookie('uid')
 
         else:
             self.acct = None
