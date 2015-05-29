@@ -2,7 +2,7 @@
 .*.sw[op]
 __pycache__/
 *.py[cod]
-
+config.py
 # C extensions
 *.so
 
