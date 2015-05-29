@@ -21,6 +21,7 @@
 		<table class="ui celled table">
 			<thead>
 				<th class="center aligned">中文名<br>英文名</th>
+				<th class="center aligned">票種</th>
 				<th class="center aligned">帳號後五碼<br>信用卡後四碼</th>
 				<th class="center aligned">付款日期</th>
 				<th class="center aligned">付款</th>
@@ -30,6 +31,7 @@
 				{% for data in meta %}
 					<tr>
 						<td class="center aligned">{{data["chinesename"]}}<br>{{data["englishname"]}}</td>
+						<td class="center aligned">{{"Regular" if data["ticket"] else "Early"}}</td>
 						<td class="center aligned">{{data["paycode"]}}</td>
 						<td class="center aligned">{{data["paydate"]}}</td>
 						<td class="center aligned">

@@ -97,6 +97,7 @@
 						</tr>
 					</thead>
 					<tbody style="height: 80%" id="sd">
+						{% set specb2s = ["Non", "Oui"] %}
 						{% set b2s = ["No", "Yes"] %}
 						{% for data in meta %}
 							{% set hear_about = "<br>".join(data["hearabout"]) %}
@@ -125,7 +126,7 @@
 								<td class="center aligned">{{data["birth"]}}<br>{{data["nationality"]}}</td>
 								<td class="center aligned">{{data["university"]}}<br>{{data["department"]}}<br>{{data["grade"]}}</td>
 								<td class="center aligned">{{data["cellphone"]}}<br>{{data["email"]}}</td>
-								<td class="center aligned">{{b2s[data["require_accommodation"]]}}<br>{{b2s[data["vegetarian"]]}}</td>
+								<td class="center aligned">*{{specb2s[data["require_accommodation"]]}}<br>#{{b2s[data["vegetarian"]]}}</td>
 							</tr>
 						{% end %}
 					</tbody>
