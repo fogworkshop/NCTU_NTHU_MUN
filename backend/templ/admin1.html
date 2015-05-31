@@ -91,9 +91,11 @@
 							<th class="center aligned">中文名<br>英文名</th>
 							<th class="center aligned">性別</th>
 							<th class="center aligned">生日<br>國籍</th>
+                            <th class="center aligned">身份證<br>緊急聯絡人<br>緊急聯絡人電話</th>
 							<th class="center aligned">大學<br>科系<br>class of</th>
 							<th class="center aligned">手機<br>Email</th>
 							<th class="center aligned">住宿<br>吃</th>
+							<th class="center aligned">Submit</th>
 						</tr>
 					</thead>
 					<tbody style="height: 80%" id="sd">
@@ -124,9 +126,11 @@
 								<td class="center aligned">{{data["chinesename"]}}<br>{{data["englishname"]}}</td>
 								<td class="center aligned">{{data["gender"]}}</td>
 								<td class="center aligned">{{data["birth"]}}<br>{{data["nationality"]}}</td>
+                                <td class="center aligned">{{data['id_number']}}<br>{{data['emergency_person']}}<br>{{data['emergency_phone']}}</td>
 								<td class="center aligned">{{data["university"]}}<br>{{data["department"]}}<br>{{data["grade"]}}</td>
 								<td class="center aligned">{{data["cellphone"]}}<br>{{data["email"]}}</td>
 								<td class="center aligned">*{{specb2s[data["require_accommodation"]]}}<br>#{{b2s[data["vegetarian"]]}}</td>
+								<td class="center aligned">{{"Submitted" if data['info_confirm'] else "Not yet"}}</td>
 							</tr>
 						{% end %}
 					</tbody>

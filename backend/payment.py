@@ -53,7 +53,7 @@ class PaymentService:
             #yield cur.execute('UPDATE "account" SET "pay" = %s WHERE "uid" = %s;', (1, acct['uid']))
             #yield cur.execute('UPDATE "account_info" SET "paydate" = now() WHERE "uid" = %s;',(acct['uid'],))
         return (None, res)
-        
+
 
 
 class PaymentHandler(RequestHandler):

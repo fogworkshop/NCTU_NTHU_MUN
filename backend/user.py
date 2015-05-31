@@ -45,7 +45,7 @@ class UserService:
 
         if acct['info_confirm']:
             return ('Submitted.', None)
-        
+
         cur = yield self.db.cursor()
         yield cur.execute('SELECT 1 FROM "account_info" WHERE "uid" = %s;', (uid, ))
         if cur.rowcount == 0:
@@ -95,7 +95,7 @@ class UserService:
                 'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
                 'residence', 'city', 'address', 'cellphone', 'require_accommodation', 
                 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2', 'committee', 
-                'hearabout', 'experience', 'paycode', 'paydate', 'preference', 'country', 'other', 'ticket']
+                'hearabout', 'experience', 'paycode', 'paydate', 'preference', 'country', 'other', 'ticket', 'id_number', 'emergency_person' ,'emergency_phone']
         sql = gen_sql(args)
         cur = yield self.db.cursor()
         yield cur.execute('SELECT '+sql+' FROM "account_info" WHERE "uid" = %s;', (uid, ))
@@ -173,7 +173,7 @@ class UserService:
         if cur.rowcount != 1:
             return ('Edb', None)
         return (None, acct['uid'])
-       
+
     def admin_set_pay(self, acct, data):
         if not acct:
             return ('Elogin', None)
@@ -220,7 +220,7 @@ class UserHandler(RequestHandler):
                     'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
                     'residence', 'city', 'address', 'cellphone', 'require_accommodation', 
                     'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 
-                    'iachr2', 'hearabout', 'experience', 'other']
+                    'iachr2', 'hearabout', 'experience', 'other', 'id_number', 'emergency_person' ,'emergency_phone']
             meta = self.get_args(args)
             err, uid = yield from UserService.inst.modify_info(self.acct, meta)
             if err:
@@ -233,7 +233,7 @@ class UserHandler(RequestHandler):
                     'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
                     'residence', 'city', 'address', 'cellphone', 'require_accommodation', 
                     'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 
-                    'iachr2', 'hearabout', 'experience', 'other', 'ticket']
+                    'iachr2', 'hearabout', 'experience', 'other', 'ticket', 'id_number', 'emergency_person' ,'emergency_phone']
             meta = self.get_args(args)
             meta['ticket'] = '0' if datetime.datetime.now() <= config.EARLYBIRD_DATE else '1'
             err, uid = yield from UserService.inst.confirm_info(self.acct, meta)

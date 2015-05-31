@@ -61,6 +61,9 @@ CREATE TABLE account_info(
     country varchar(256) DEFAULT '',
     committee varchar(256) DEFAULT '',
     ticket integer DEFAULT 0,
+	id_number varchar(256) DEFAULT '',
+	emergency_person varchar(256) DEFAULT '',
+	emergency_phone varchar(256) DEFAULT '',
 
 	created timestamp DEFAULT now(),
 	modified timestamp DEFAULT now()

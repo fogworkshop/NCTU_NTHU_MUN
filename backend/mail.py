@@ -8,14 +8,9 @@ class MailHandler:
 
     def send(self, to, subject, cc=[], bcc=[], **kwargs):
         content = re.sub('<%(?P<name>.*)?%>', lambda m: kwargs[m.group('name')], self.templ)
-        cmd = ['mail', '-s', subject]
-        for c in cc:
-            cmd += ['-c', c]
-        for b in bcc:
-            cmd += ['-b', b]
-        cmd += [to]
+        cmd = 'mail -s "$(echo "'+subject+'\nContent-Type: text/html\nFrom: \"Taiwan Model United Nations Conference\" <mytwmun@mytwmun.org>")" '+to
         try:
-            p = sp.Popen(cmd, stdin=sp.PIPE)
+            p = sp.Popen(cmd, stdin=sp.PIPE, shell=True)
             p.stdin.write(content.encode())
             err = p.communicate()[0]
             print(err)

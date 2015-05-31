@@ -44,9 +44,9 @@ class WrapCursor:
             self._db._execute(cur,'BEGIN;',callback =
                     lambda err : _exec_cb(cur,err))
 
-        def _exec_cb(cur,err = None):
-            if err != None:
-                self._db._end_tran(cur)
+            def _exec_cb(cur,err = None):
+                if err != None:
+                    self._db._end_tran(cur)
                 raise err
 
             self._oldcur = self._cur
@@ -73,7 +73,7 @@ class WrapCursor:
         assert(self._oldcur != None)
 
         self._db._execute(self._cur,'COMMIT;',callback = _cb)
-    
+
     @return_future
     def rollback(self,callback):
         def _cb(err = None):
@@ -114,7 +114,7 @@ class AsyncPG:
         self.INITCONN_FREE = 16
         self.OPER_CURSOR = 0
         self.OPER_EXECUTE = 1
-        
+
         self._ioloop = IOLoop.instance()
         self._dbname = dbname
         self._dbuser = dbuser
@@ -140,7 +140,7 @@ class AsyncPG:
                     return psycopg2.extensions.TimestampFromPy(
                             self.wrapped).getquoted()
 
-        psycopg2.extensions.register_adapter(datetime.datetime,_InfDateAdapter)
+                    psycopg2.extensions.register_adapter(datetime.datetime,_InfDateAdapter)
 
         for i in range(self.INITCONN_SHARE):
             conn = self._create_conn()
@@ -181,7 +181,7 @@ class AsyncPG:
             conn = self._share_connpool[
                     random.randrange(len(self._share_connpool))]
 
-        conn[1].append((self.OPER_CURSOR,None,wrap(_cb)))
+            conn[1].append((self.OPER_CURSOR,None,wrap(_cb)))
 
         if conn[2] == False:
             conn[2] = True
@@ -189,7 +189,7 @@ class AsyncPG:
 
     def _execute(self,cur,sql,param = (),callback = None):
         conn = self._conn_fdmap[cur.connection.fileno()]
-        
+
         conn[1].append((self.OPER_EXECUTE,(cur,sql,param),wrap(callback)))
 
         if conn[2] == False:
@@ -200,7 +200,7 @@ class AsyncPG:
         if len(self._free_connpool) == 0:
             conn = self._create_conn()
             self._ioloop.add_handler(conn[0],self._dispatch,IOLoop.ERROR)
-            
+
         else:
             conn = self._free_connpool.pop()
 
@@ -217,16 +217,16 @@ class AsyncPG:
 
     def _create_conn(self):
         dbconn = psycopg2.connect(database = self._dbname,
-                                user = self._dbuser,
-                                password = self._dbpasswd,
-                                async = 1,
-                                options = (
-                                    '-c search_path=%s '
-                                    '-c timezone=%s'
-                                )%(self._dbschema,self._dbtz),
-                                host = self._host,
-                                port = self._port)
-    
+                user = self._dbuser,
+                password = self._dbpasswd,
+                async = 1,
+                options = (
+                    '-c search_path=%s '
+                    '-c timezone=%s'
+                    )%(self._dbschema,self._dbtz),
+                host = self._host,
+                port = self._port)
+
         conn = [dbconn.fileno(),deque(),False,None,dbconn]
         self._conn_fdmap[conn[0]] = conn
 
@@ -273,7 +273,7 @@ class AsyncPG:
         else:
             try:
                 oper,data,cb = conn[1].popleft()
-                
+
             except IndexError:
                 conn[2] = False
                 return

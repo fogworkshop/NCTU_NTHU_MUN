@@ -68,11 +68,11 @@ class LoginService:
         hnpwd = _hash(npwd)
         yield cur.execute('UPDATE "account" SET "pwd" = %s WHERE "uid" = %s;', (hnpwd, uid))
         err = self.forget_mail.send(email, 'change password', email=email, pwd=npwd)
-        print(err)
+        print('mail',err)
         if err:
             return ('Esendmail', None)
         return (None, uid)
-    
+
     def change_password(self, acct, data):
         cur = yield self.db.cursor()
         yield cur.execute('SELECT "pwd" FROM "account" WHERE "uid" = %s;', (acct['uid'],))
