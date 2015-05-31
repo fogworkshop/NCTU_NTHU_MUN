@@ -50,6 +50,7 @@ class LoginService:
         if cur.rowcount != 1:
             return ('Eemail', None)
         (uid, hpwd) = cur.fetchone()
+        print('test',email,_hash(pwd),hpwd)
         if str(_hash(pwd)) != hpwd:
             return ('Epwd', None)
         return (None, int(uid))
@@ -78,10 +79,10 @@ class LoginService:
         yield cur.execute('SELECT "pwd" FROM "account" WHERE "uid" = %s;', (acct['uid'],))
         hpwd = cur.fetchone()[0]
         if str(hpwd) != str(_hash(data['opwd'])):
-            return ('Epwd', None)
+            return ('Password Error!', None)
 
         if data['npwd'] != data['rnpwd']:
-            return ('Enpwd', None)
+            return ('Confirm Password Error!', None)
         yield cur.execute('UPDATE "account" SET "pwd" = %s WHERE "uid" = %s;', (_hash(data['npwd']), acct['uid'], ))
         if cur.rowcount != 1:
             return ('Edb', None)
@@ -114,6 +115,7 @@ class LoginHandler(RequestHandler):
             email = self.get_argument('email', None)
             pwd = self.get_argument('pwd', None)
             err, uid = yield from LoginService.inst.signin(email, pwd)
+            print('err',err)
             if err:
                 self.finish(err)
                 return
@@ -142,5 +144,5 @@ class LoginHandler(RequestHandler):
             if err:
                 self.finish(err)
                 return
-            self.finish('S')
+            self.finish('Password changed successfully')
         return 

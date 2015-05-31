@@ -28,6 +28,7 @@ class IndexHandler(RequestHandler):
         islogin = False
         issetdata = False
         acct = "normal"
+        print('acct',self.acct)
         if not self.acct:
             self.render("login.html")
         else:

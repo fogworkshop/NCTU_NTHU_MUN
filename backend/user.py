@@ -144,9 +144,11 @@ class UserService:
         cur = yield self.db.cursor()
         yield cur.execute('SELECT "uid" FROM "account" WHERE "email" NOT LIKE \'admin%\' ;')
         uidlist = [ c[0] for c in cur ]
+        print('list',uidlist)
         meta = []
         for uid in uidlist:
             err, submeta = yield from self.get_info(acct, uid)
+            print('d',uid)
             if err:
                 return (err, None)
             meta.append(submeta)

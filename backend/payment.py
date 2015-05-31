@@ -1,10 +1,12 @@
 from req import RequestHandler
 from req import reqenv
 from req import Service
+import config
 
 from paypal import PaypalPayment
 from paypal import PaypalExecute
 from paypal import PaypalCheckPayment
+import datetime
 
 class PaymentService:
     def __init__(self, db):
@@ -18,7 +20,9 @@ class PaymentService:
             return(None, None)
         if acct['nationality'] == acct['residence'] and acct['residence'] == 'Taiwan':
             return (None, None)
-        paypal = PaypalPayment()
+        total = 2400 if datetime.datetime.now() <= config.EARLYBIRD_DATE else 2700
+        description = config.DESCRIPTION + '(%d)'%total
+        paypal = PaypalPayment(total=total,description=description)
         _id, url, meta = paypal.create() 
         cur = yield self.db.cursor()
         yield cur.execute('UPDATE "account_info" SET "paypalid" = %s WHERE "uid" = %s;', (_id, acct['uid']))

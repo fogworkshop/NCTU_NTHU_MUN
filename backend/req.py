@@ -70,13 +70,16 @@ def reqenv(func):
             try:
                 uid = uid.decode()
                 err, self.acct = yield from Service.Login.get_account_info(str(uid))
+                print('ee',err)
                 err, meta = yield from Service.User.get_info(self.acct, self.acct['uid'])
+                print('eee',err)
                 self.acct.update(meta)
                 if self.acct['email'][:5] == 'admin' and len(self.acct['email']) <= 6:
                     self.acct['admin'] = 1
                 else:
                     self.acct['admin'] = 0
             except:
+                self.acct = None
                 self.clear_cookie('uid')
 
         else:
