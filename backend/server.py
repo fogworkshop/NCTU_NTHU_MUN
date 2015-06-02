@@ -34,6 +34,7 @@ class IndexHandler(RequestHandler):
         else:
             if self.acct['admin'] == 1:
                 err, meta = yield from Service.User.get_info_all(self.acct)
+                print(meta)
                 if err:
                     self.finish(err)
                     return

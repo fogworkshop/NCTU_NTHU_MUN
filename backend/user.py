@@ -147,7 +147,7 @@ class UserService:
         if acct['admin'] == 0:
             return ('Eaccess', None)
         cur = yield self.db.cursor()
-        yield cur.execute('SELECT "uid" FROM "account" WHERE "email" NOT LIKE \'admin%\' ORDER BY "uid" ASC;')
+        yield cur.execute('SELECT "uid" FROM "account" WHERE "email" NOT LIKE \'admin%\' ORDER BY "info_confirm" DESC,"uid" ASC;')
         uidlist = [ c[0] for c in cur ]
         print('list',uidlist)
         meta = []
@@ -158,7 +158,7 @@ class UserService:
                 return (err, None)
             meta.append(submeta)
 
-        meta = sorted(meta, key=lambda m: int(m['uid']))
+        #meta = sorted(meta, key=lambda m: int(m['uid']))
 
         return (None, meta)
 
