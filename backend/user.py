@@ -32,13 +32,18 @@ class UserService:
 
         if not acct:
             return ('Elogin', None)
-        if check: 
-            if data['englishname'].find(',') != -1 or data['englishname'].find('-') != -1:
+        if check:
+            if data['englishname'].find(',') != -1 or data['englishname'].find('-') != -1 or data['englishname'] == '':
                 return ('Wrong name.', None)
             if data['cellphone'].isdigit() == False:
                 return ('You can only type in numbers in the "cellphone" blank.', None)
             if data['committee_preference'].find('0') != -1:
                 return ('You must fill in all six preferences.', None)
+            cp = json.loads(data['committee_preference'])
+            cp = [str(_) for _ in cp]
+            print(cp)
+            if cp.index('4')<3 and cp.index('5')<3 and (data['pc1']=='' or data['pc2']==''):
+                return ('Please make sure again that you have filled in all the required information.', None)
 
         uid = data['uid']
         data.pop('uid')
@@ -142,7 +147,7 @@ class UserService:
         if acct['admin'] == 0:
             return ('Eaccess', None)
         cur = yield self.db.cursor()
-        yield cur.execute('SELECT "uid" FROM "account" WHERE "email" NOT LIKE \'admin%\' ;')
+        yield cur.execute('SELECT "uid" FROM "account" WHERE "email" NOT LIKE \'admin%\' ORDER BY "uid" ASC;')
         uidlist = [ c[0] for c in cur ]
         print('list',uidlist)
         meta = []
