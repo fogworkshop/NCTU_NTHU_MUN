@@ -30,11 +30,7 @@ class AdminService:
         uid = data['uid']
         data.pop('uid')
         sql, prama = gen_sql(data)
-        print('sql', sql)
-        print('prama', prama)
-        print('uid', uid)
         yield cur.execute('UPDATE "account_info" '+sql+' WHERE "uid" = %s;', prama + (uid,))
-        print(cur.rowcount)
         if cur.rowcount != 1:
             return ('Edb', None)
         return (None, uid)
@@ -74,7 +70,6 @@ class AdminService:
         if flag_img != None:
             sub = subprocess.Popen('find ../http/'+str(uid)+' | grep flag', shell=True, stdout=subprocess.PIPE)
             sub = sub.communicate()[0].decode()
-            print('sub',sub)
             if sub != '' and sub[-1] == '\n':
                 sub = sub[:-1]
             if sub != '':
@@ -88,7 +83,6 @@ class AdminService:
         if guide != None:
             sub = subprocess.Popen('find ../http/'+str(uid)+' | grep guide', shell=True, stdout=subprocess.PIPE)
             sub = sub.communicate()[0].decode()
-            print('sub',sub)
             if sub != '' and sub[-1] == '\n':
                 sub = sub[:-1]
             if sub != '':
@@ -120,7 +114,6 @@ class AdminHandler(RequestHandler):
     @reqenv
     def post(self):
         req = self.get_argument('req', None)
-        print(req)
         if req == 'admin1':
             args = ['uid', 'preference', 'country']
             meta = self.get_args(args)
@@ -158,9 +151,7 @@ class AdminHandler(RequestHandler):
                 guide = self.request.files['guide'][0]
             except:
                 guide = None
-            print(guide)
             meta = self.get_args(args)
-            print('meta', meta)
             err, uid = yield from AdminService.inst.update_admin3(self.acct, meta, flag_img, guide)
             if err:
                 self.finish(err)

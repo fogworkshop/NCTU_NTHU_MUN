@@ -41,7 +41,6 @@ class UserService:
                 return ('You must fill in all six preferences.', None)
             cp = json.loads(data['committee_preference'])
             cp = [str(_) for _ in cp]
-            print(cp)
             if cp.index('4')<3 and cp.index('5')<3 and (data['pc1']=='' or data['pc2']==''):
                 return ('Please make sure again that you have filled in all the required information.', None)
 
@@ -123,7 +122,6 @@ class UserService:
         uid = meta['uid']
         sub = subprocess.Popen('find ../http/'+str(uid)+' | grep flag', shell=True, stdout=subprocess.PIPE)
         sub = sub.communicate()[0].decode()
-        print('sub',sub)
         if sub != '' and sub[-1] == '\n':
             sub = sub[:-1]
         if sub != '':
@@ -132,7 +130,6 @@ class UserService:
             meta['flag'] = None
         sub = subprocess.Popen('find ../http/'+str(uid)+' | grep guide', shell=True, stdout=subprocess.PIPE)
         sub = sub.communicate()[0].decode()
-        print('sub',sub)
         if sub != '' and sub[-1] == '\n':
             sub = sub[:-1]
         if sub != '':
@@ -149,11 +146,9 @@ class UserService:
         cur = yield self.db.cursor()
         yield cur.execute('SELECT "uid" FROM "account" WHERE "email" NOT LIKE \'admin%\' ORDER BY "info_confirm" DESC,"uid" ASC;')
         uidlist = [ c[0] for c in cur ]
-        print('list',uidlist)
         meta = []
         for uid in uidlist:
             err, submeta = yield from self.get_info(acct, uid)
-            print('d',uid)
             if err:
                 return (err, None)
             meta.append(submeta)
