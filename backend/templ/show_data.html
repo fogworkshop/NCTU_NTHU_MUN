@@ -65,10 +65,18 @@
 						{% end %}
 					{% end %}
 				{% end %}
-				<a class="d_link" data-toggle="tooltip" data-placement="right" title="Coming soon">Accommodations</a><br>
-				<a class="d_link" data-toggle="tooltip" data-placement="right" title="Coming soon">Study Guide</a><br>
+				<!--a class="d_link" data-toggle="tooltip" data-placement="right" title="Coming soon">Accommodations</a><br-->
+                <a class="d_link" href="http://www.taiwanmun.org/accommodations.html" target="_blank">Accommodations</a><br>
+                {% if meta["guide"] == None %}
+    				<a class="d_link" data-toggle="tooltip" data-placement="right" title="Coming soon">Study Guide</a><br>
+                {% else %}
+    				<a class="d_link" data-toggle="tooltip" data-placement="right" title="Coming soon">Study Guide</a><br>
+                    <!--a class="d_link" href="{{meta["guide"]}}" download>Study Guide</a><br-->
+                {% end %}
 				<a class="d_link" data-toggle="tooltip" data-placement="right" title="Coming soon">Country Assignment</a><br>
+
 				<a class="d_link" data-toggle="tooltip" data-placement="right" title="Not available">Upload Position Paper</a><br>
+				<!--a class="d_link" onclick="">Upload Position Paper</a><br-->
 				<a class="d_link" onclick="change_content('contact');">Contact Us</a><br>
 				<a class="d_link" onclick="changepassword();">Change Password</a><br>
 				<a class="d_link" href="/logout">Log Out</a>

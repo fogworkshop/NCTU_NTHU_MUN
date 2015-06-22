@@ -105,11 +105,53 @@ class AdminService:
             return ('Edb', None)
         return (None, uid)
 
+    def gen_csv(self, acct):
+        if not acct or acct['admin'] == 0:
+            return ('Eaccess', None)
+        err, meta = yield from Service.User.get_info_all(acct)
+        if err:
+            return (err, None)
+        args = ['uid', 'chinesename', 'englishname', 'gender', 'birth', 'nationality', 'vegetarian', 
+                'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
+                'residence', 'city', 'address', 'cellphone', 'require_accommodation', 
+                'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'email',
+                'iachr2', 'hearabout', 'experience', 'other', 'ticket', 'id_number', 'emergency_person' ,'emergency_phone']
+        res = ''
+        for a in args:
+            res += '="%s",'%a
+        res += '\n'
+
+        for data in meta:
+            for a in args:
+                if a == 'chinesename':
+                    res += '"%s",'%(data[a].replace('\n',' ').replace('\r', ''))
+                elif a =='cellphone':
+                    res += '="%s",'%(str(data[a]).replace('\n',' ').replace('\r', ''))
+                elif a =='emergency_phone':
+                    res += '="%s",'%(str(data[a]).replace('\n',' ').replace('\r', ''))
+                else:
+                    res += '"%s",'%(str(data[a]).replace('\n',' ').replace('\r', ''))
+            res += '\n'
+
+        f = open('../http/user.csv', 'wb')
+        f.write(res.encode('big5', 'ignore'))
+        f.close()
+        
+        return (None, res)
+
 
 class AdminHandler(RequestHandler):
     @reqenv
     def get(self):
-        pass
+        req  = self.get_argument('req', None)
+        if req == 'csv':
+            err, res = yield from AdminService.inst.gen_csv(self.acct)
+            if err:
+                self.finish(err)
+                return
+            self.finish(res)
+            return
+        return
 
     @reqenv
     def post(self):
@@ -158,5 +200,13 @@ class AdminHandler(RequestHandler):
                 return
             self.finish('S')
             return
+        elif req == 'csv':
+            err, res = yield from AdminService.inst.gen_csv(self.acct)
+            if err:
+                self.finish(err)
+                return
+            self.finish('S')
+            return
+
         self.finish('undefined')
         return

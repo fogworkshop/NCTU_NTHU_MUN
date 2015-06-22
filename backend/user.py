@@ -74,7 +74,7 @@ class UserService:
 
         uid = acct['uid']
         cur = yield self.db.cursor()
-        yield cur.execute('UPDATE "account" SET "info_confirm" = %s WHERE "uid" = %s', (True, uid,))
+        yield cur.execute('UPDATE "account" SET "info_confirm" = %s, "submit_time" = %s WHERE "uid" = %s', (True, datetime.datetime.now(), uid,))
         if cur.rowcount != 1:
             return ('Edb', None)
         return (None, uid)
@@ -97,7 +97,7 @@ class UserService:
             return ('Eaccess', None)
         args = ['uid', 'chinesename', 'englishname', 'gender', 'birth', 'nationality', 'vegetarian', 
                 'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
-                'residence', 'city', 'address', 'cellphone', 'require_accommodation', 
+                'residence', 'city', 'address', 'cellphone', 'require_accommodation',
                 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2', 'committee', 
                 'hearabout', 'experience', 'paycode', 'paydate', 'preference', 'country', 'other', 'ticket', 'id_number', 'emergency_person' ,'emergency_phone']
         sql = gen_sql(args)
@@ -110,7 +110,7 @@ class UserService:
         for i, a in enumerate(args):
             meta[a] = q[i]
         meta['hearabout'] = json.loads(meta['hearabout'])
-        args = ['email', 'pay', 'info_confirm']
+        args = ['email', 'pay', 'info_confirm', 'submit_time']
         sql = gen_sql(args)
         cur = yield self.db.cursor()
         yield cur.execute('SELECT '+sql+'FROM "account" WHERE "uid" = %s;', (uid, ))
@@ -133,7 +133,7 @@ class UserService:
         if sub != '' and sub[-1] == '\n':
             sub = sub[:-1]
         if sub != '':
-            meta['guide'] = '/guide.'+sub.split('.')[-1]
+            meta['guide'] = '/%d/guide.'%uid+sub.split('.')[-1]
         else:
             meta['guide'] = None
         return (None, meta)
@@ -144,7 +144,7 @@ class UserService:
         if acct['admin'] == 0:
             return ('Eaccess', None)
         cur = yield self.db.cursor()
-        yield cur.execute('SELECT "uid" FROM "account" WHERE "email" NOT LIKE \'admin%\' ORDER BY "info_confirm" DESC,"uid" ASC;')
+        yield cur.execute('SELECT "uid" FROM "account" WHERE "email" NOT LIKE \'admin%\' ORDER BY "info_confirm" DESC,"submit_time" ASC;')
         uidlist = [ c[0] for c in cur ]
         meta = []
         for uid in uidlist:
