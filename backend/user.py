@@ -12,11 +12,13 @@ class UserService:
         UserService.inst = self
 
     def is_info_confirmed(self, acct):
+        print("is info confirmed")
         if not acct:
             return ('Elogin', None)
         pass
 
     def modify_info(self, acct, data, check=False):
+        print("modify info")
         def gen_sql(data):
             first = True
             sql = ' SET '
@@ -80,6 +82,7 @@ class UserService:
         return (None, uid)
 
     def get_info(self, acct, uid):
+        print("get_info:", acct)
         def gen_sql(data):
             sql = ' '
             first = True
@@ -144,7 +147,7 @@ class UserService:
         if acct['admin'] == 0:
             return ('Eaccess', None)
         cur = yield self.db.cursor()
-        yield cur.execute('SELECT "uid" FROM "account" WHERE "email" NOT LIKE \'admin%\' ORDER BY "info_confirm" DESC,"submit_time" ASC;')
+        yield cur.execute('SELECT "uid" FROM "account" WHERE "email" NOT LIKE \'admin%\' ORDER BY "info_confirm" DESC,"submit_time" ASC, "uid" ASC;')
         uidlist = [ c[0] for c in cur ]
         meta = []
         for uid in uidlist:

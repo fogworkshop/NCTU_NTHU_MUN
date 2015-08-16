@@ -14,10 +14,16 @@
 		bottom: 0px;
 		right: 0px;
 	}
+    #csv_button{
+        position: fixed;
+        bottom: 40px;
+        right: 0px;
+    }
 </style>
 </head>
 	<body style="padding: 20px;">
 		<a id="logout_button" class="ui button" href="/logout">Logout</a>
+        <a id="csv_button" class="ui button" onclick="csv();">CSV</a>
 		<table class="ui celled table">
 			<thead>
 				<th class="center aligned">中文名<br>英文名</th>
@@ -71,5 +77,15 @@ function clean(uid, pay){
 	}, function(res){
 		window.location.reload();
 	});
+}
+function csv(){
+    $.post('/admin',{
+        'req': 'csv'
+    },function(res){
+    alert(res);
+        if(res == 'S'){
+            window.location = '/user.csv';
+        }
+    });
 }
 </script>

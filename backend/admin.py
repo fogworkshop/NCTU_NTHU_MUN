@@ -115,7 +115,7 @@ class AdminService:
                 'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
                 'residence', 'city', 'address', 'cellphone', 'require_accommodation', 
                 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'email',
-                'iachr2', 'hearabout', 'experience', 'other', 'ticket', 'id_number', 'emergency_person' ,'emergency_phone']
+                'iachr2', 'hearabout', 'experience', 'other', 'ticket', 'id_number', 'emergency_person' ,'emergency_phone','pay']
         res = ''
         for a in args:
             res += '="%s",'%a

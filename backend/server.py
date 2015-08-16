@@ -45,6 +45,7 @@ class IndexHandler(RequestHandler):
                     ticket = 0 if datetime.datetime.now() <= config.EARLYBIRD_DATE else 1
                     self.render("modify_user.html", nationality=config.id2nationality, meta=meta, ticket=ticket)
                 else:
+                    print("goto get_url and acct is:", self.acct)
                     err, url = yield from Service.Payment.get_url(self.acct)
                     if err:
                         self.finish(err)

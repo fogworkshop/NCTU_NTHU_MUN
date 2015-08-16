@@ -14,6 +14,7 @@ class PaymentService:
         PaymentService.inst = self
 
     def get_url(self, acct):
+        print("get url", acct)
         if not acct:
             return('Elogin', None)
         if acct['pay'] == 1:
@@ -31,6 +32,7 @@ class PaymentService:
         return (None, url)
 
     def cancel_payment(self, acct):
+        print("cancel payment")
         if not acct:
             return ('Elogin', None)
         if acct['pay'] == 1:
@@ -42,6 +44,7 @@ class PaymentService:
         return (None, acct['uid'])
 
     def execute_payment(self, acct, data):
+        print("execute_payment")
         if not acct:
             return ('Elogin', None)
         if acct['pay'] == 1:
