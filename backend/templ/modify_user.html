@@ -343,7 +343,6 @@ $(document).ready(function(){
     $("[name=gender]").selectpicker('val', '{{ meta["gender"] }}');
     $("[name=grade]").selectpicker('val', '{{ meta["grade"] }}');
     $("[name=delegation]").selectpicker('val', parseInt({{ meta["delegation"] }}));
-    $("[name=require_accommodation]").selectpicker('val', parseInt({{ meta["require_accommodation"] }}));
     $('[name=ticket]').selectpicker('val', {{ ticket }});
 	delegation_change();
 	CP = JSON.parse('{{meta["committee_preference"]}}');

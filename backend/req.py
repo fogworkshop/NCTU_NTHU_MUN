@@ -76,7 +76,7 @@ def reqenv(func):
                     self.acct['admin'] = 1
                 else:
                     self.acct['admin'] = 0
-            except:
+            except Exception as e:
                 self.acct = None
                 self.clear_cookie('uid')
 

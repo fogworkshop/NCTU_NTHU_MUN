@@ -87,13 +87,12 @@ class LoginService:
 
     def get_account_info(self, uid):
         cur = yield self.db.cursor()
-        yield cur.execute('SELECT "email", "type", "info_confirm", "pay" FROM "account" WHERE "uid" = %s;', (uid,))
+        yield cur.execute('SELECT "email", "info_confirm", "pay" FROM "account" WHERE "uid" = %s;', (uid,))
         if cur.rowcount != 1:
             return ('Euid', None)
-        (email, _type, info_confirm, pay) = cur.fetchone()
+        (email, info_confirm, pay) = cur.fetchone()
         meta = {'uid': uid,
                 'email': email,
-                'type': _type,
                 'info_confirm': info_confirm,
                 'pay': int(pay)
                 }

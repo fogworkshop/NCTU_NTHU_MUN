@@ -100,7 +100,7 @@ class UserService:
             return ('Eaccess', None)
         args = ['uid', 'chinesename', 'englishname', 'gender', 'birth', 'nationality', 'vegetarian', 
                 'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
-                'residence', 'city', 'address', 'cellphone', 'require_accommodation',
+                'residence', 'city', 'address', 'cellphone', 
                 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2', 'committee', 
                 'hearabout', 'experience', 'paycode', 'paydate', 'preference', 'country', 'other', 'ticket', 'id_number', 'emergency_person' ,'emergency_phone']
         sql = gen_sql(args)
@@ -223,7 +223,7 @@ class UserHandler(RequestHandler):
         if req == 'modify_info':
             args = ['uid', 'chinesename', 'englishname', 'gender', 'birth', 'nationality', 'vegetarian', 
                     'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
-                    'residence', 'city', 'address', 'cellphone', 'require_accommodation', 
+                    'residence', 'city', 'address', 'cellphone', 
                     'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 
                     'iachr2', 'hearabout', 'experience', 'other', 'id_number', 'emergency_person' ,'emergency_phone']
             meta = self.get_args(args)
@@ -236,7 +236,7 @@ class UserHandler(RequestHandler):
         elif req == 'confirm_info':
             args = ['uid', 'chinesename', 'englishname', 'gender', 'birth', 'nationality', 'vegetarian', 
                     'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
-                    'residence', 'city', 'address', 'cellphone', 'require_accommodation', 
+                    'residence', 'city', 'address', 'cellphone',
                     'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 
                     'iachr2', 'hearabout', 'experience', 'other', 'ticket', 'id_number', 'emergency_person' ,'emergency_phone']
             meta = self.get_args(args)

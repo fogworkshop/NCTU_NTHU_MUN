@@ -34,7 +34,6 @@ class IndexHandler(RequestHandler):
         else:
             if self.acct['admin'] == 1:
                 err, meta = yield from Service.User.get_info_all(self.acct)
-                print(meta)
                 if err:
                     self.finish(err)
                     return
@@ -94,7 +93,11 @@ if __name__ == '__main__':
         ('/test', TestHandler),
         ('/admin', AdminHandler),
         ('/(.*)', tornado.web.StaticFileHandler, {'path': '../http'}),
-        ], cookie_secret=config.COOKIE_SECRET, autoescape='xhtml_escape')
+        ], cookie_secret=config.COOKIE_SECRET, 
+        autoescape='xhtml_escape', 
+        compress_response = True,
+        debug = True)
+
     global srv
     srv = tornado.httpserver.HTTPServer(app)
     srv.listen(config.PORT)
