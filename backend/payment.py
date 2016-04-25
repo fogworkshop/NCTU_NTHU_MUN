@@ -25,9 +25,8 @@ class PaymentService:
         description = config.DESCRIPTION + '(%d)'%total
         paypal = PaypalPayment(total=total,description=description)
         _id, url, meta = paypal.create() 
-        cur = yield self.db.cursor()
-        yield cur.execute('UPDATE "account_info" SET "paypalid" = %s WHERE "uid" = %s;', (_id, acct['uid']))
-        if cur.rowcount != 1:
+        res = yield from self.db.execute('UPDATE "account_info" SET "paypalid" = %s WHERE "uid" = %s;', (_id, acct['uid']))
+        if res.rowcount != 1:
             return ('Edb', None)
         return (None, url)
 
@@ -37,9 +36,8 @@ class PaymentService:
             return ('Elogin', None)
         if acct['pay'] == 1:
             return ('Epaid', None)
-        cur = yield self.db.cursor()
-        yield cur.execute('UPDATE "account_info" SET "paypalid" = \'\' WHERE "uid" = %s;',(acct['uid'],))
-        if cur.rowcount != 1:
+        yield from self.db.execute('UPDATE "account_info" SET "paypalid" = \'\' WHERE "uid" = %s;',(acct['uid'],))
+        if res.rowcount != 1:
             return ('Edb', None)
         return (None, acct['uid'])
 
@@ -49,9 +47,8 @@ class PaymentService:
             return ('Elogin', None)
         if acct['pay'] == 1:
             return ('Epaid', None)
-        cur = yield self.db.cursor()
-        yield cur.execute('SELECT "paypalid" FROM "account_info" WHERE "uid" = %s;', (acct['uid'],))
-        _id = cur.fetchone()[0]
+        res = yield self.db.execute('SELECT "paypalid" FROM "account_info" WHERE "uid" = %s;', (acct['uid'],))
+        _id = res.fetchone()[0]
         if _id == '':
             return (None, False)
         paypal = PaypalExecute(data['paymentId'], data['PayerID'])

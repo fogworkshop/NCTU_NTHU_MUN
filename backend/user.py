@@ -52,13 +52,12 @@ class UserService:
         if acct['info_confirm']:
             return ('Submitted.', None)
 
-        cur = yield self.db.cursor()
-        yield cur.execute('SELECT 1 FROM "account_info" WHERE "uid" = %s;', (uid, ))
-        if cur.rowcount == 0:
-            yield cur.execute('INSERT INTO "account_info" ("uid") VALUES(%s);', (uid,))
+        res = yield from self.db.execute('SELECT 1 FROM "account_info" WHERE "uid" = %s;', (uid, ))
+        if res.rowcount == 0:
+            yield from self.db.execute('INSERT INTO "account_info" ("uid") VALUES(%s);', (uid,))
         (sql, prama) = gen_sql(data)
-        yield cur.execute('UPDATE "account_info" '+sql+' WHERE "uid" = %s;', prama+(uid,))
-        if cur.rowcount != 1:
+        res = yield from self.db.execute('UPDATE "account_info" '+sql+' WHERE "uid" = %s;', prama+(uid,))
+        if res.rowcount != 1:
             return ('Edb', None)
 
         return (None, uid)
@@ -75,9 +74,8 @@ class UserService:
         data.pop('uid')
 
         uid = acct['uid']
-        cur = yield self.db.cursor()
-        yield cur.execute('UPDATE "account" SET "info_confirm" = %s, "submit_time" = %s WHERE "uid" = %s', (True, datetime.datetime.now(), uid,))
-        if cur.rowcount != 1:
+        res = yield from self.db.execute('UPDATE "account" SET "info_confirm" = %s, "submit_time" = %s WHERE "uid" = %s', (True, datetime.datetime.now(), uid,))
+        if res.rowcount != 1:
             return ('Edb', None)
         return (None, uid)
 
@@ -104,22 +102,20 @@ class UserService:
                 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'iachr2', 'committee', 
                 'hearabout', 'experience', 'paycode', 'paydate', 'preference', 'country', 'other', 'ticket', 'id_number', 'emergency_person' ,'emergency_phone']
         sql = gen_sql(args)
-        cur = yield self.db.cursor()
-        yield cur.execute('SELECT '+sql+' FROM "account_info" WHERE "uid" = %s;', (uid, ))
-        if cur.rowcount != 1:
+        res = yield from self.db.execute('SELECT '+sql+' FROM "account_info" WHERE "uid" = %s;', (uid, ))
+        if res.rowcount != 1:
             return ('Enoinfo', None)
-        q = cur.fetchone()
+        q = res.fetchone()
         meta = {}
         for i, a in enumerate(args):
             meta[a] = q[i]
         meta['hearabout'] = json.loads(meta['hearabout'])
         args = ['email', 'pay', 'info_confirm', 'submit_time']
         sql = gen_sql(args)
-        cur = yield self.db.cursor()
-        yield cur.execute('SELECT '+sql+'FROM "account" WHERE "uid" = %s;', (uid, ))
-        if cur.rowcount != 1:
+        res = yield from self.db.execute('SELECT '+sql+'FROM "account" WHERE "uid" = %s;', (uid, ))
+        if res.rowcount != 1:
             return ('Enoinfo', None)
-        q = cur.fetchone()
+        q = res.fetchone()
         for i, a in enumerate(args):
             meta[a] = q[i]
         uid = meta['uid']
@@ -146,8 +142,7 @@ class UserService:
             return ('Elogin', None)
         if acct['admin'] == 0:
             return ('Eaccess', None)
-        cur = yield self.db.cursor()
-        yield cur.execute('SELECT "uid" FROM "account" WHERE "email" NOT LIKE \'admin%\' ORDER BY "info_confirm" DESC,"submit_time" ASC, "uid" ASC;')
+        res = yield from self.db.execute('SELECT "uid" FROM "account" WHERE "email" NOT LIKE \'admin%\' ORDER BY "info_confirm" DESC,"submit_time" ASC, "uid" ASC;')
         uidlist = [ c[0] for c in cur ]
         meta = []
         for uid in uidlist:
@@ -168,14 +163,13 @@ class UserService:
         if data['paycode'] == '' or data['paydate'] == '':
             return ('Eempty', None)
 
-        cur = yield self.db.cursor()
-        yield cur.execute('SELECT "paycode", "paydate" FROM "account_info" WHERE "uid" = %s;', (acct['uid'], ))
+        yield from self.db.execute('SELECT "paycode", "paydate" FROM "account_info" WHERE "uid" = %s;', (acct['uid'], ))
         paycode, paydate = cur.fetchone()
         if paycode != '' or paydate != '':
             return ('Efilled', None)
 
-        yield cur.execute('UPDATE "account_info" SET "paycode" = %s, "paydate" = %s WHERE "uid" = %s;', (data['paycode'], data['paydate'], acct['uid'], ))
-        if cur.rowcount != 1:
+        res = yield from self.db.execute('UPDATE "account_info" SET "paycode" = %s, "paydate" = %s WHERE "uid" = %s;', (data['paycode'], data['paydate'], acct['uid'], ))
+        if res.rowcount != 1:
             return ('Edb', None)
         return (None, acct['uid'])
 
@@ -185,9 +179,8 @@ class UserService:
         if acct['admin'] == 0:
             return ('Eaccess', None)
 
-        cur = yield self.db.cursor()
-        yield cur.execute('UPDATE "account" SET "pay" = %s WHERE "uid" = %s;', (data['pay'], data['uid']))
-        if cur.rowcount != 1:
+        res = yield from self.db.execute('UPDATE "account" SET "pay" = %s WHERE "uid" = %s;', (data['pay'], data['uid']))
+        if res.rowcount != 1:
             return ('Edb', None)
         return (None, data['uid'])
 

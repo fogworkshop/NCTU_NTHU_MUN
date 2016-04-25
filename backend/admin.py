@@ -26,21 +26,19 @@ class AdminService:
         if not acct or acct['admin'] == 0:
             return ('Eaccess', None)
 
-        cur = yield self.db.cursor()
         uid = data['uid']
         data.pop('uid')
         sql, prama = gen_sql(data)
-        yield cur.execute('UPDATE "account_info" '+sql+' WHERE "uid" = %s;', prama + (uid,))
-        if cur.rowcount != 1:
+        res = yield from self.db.execute('UPDATE "account_info" '+sql+' WHERE "uid" = %s;', prama + (uid,))
+        if res.rowcount != 1:
             return ('Edb', None)
         return (None, uid)
 
     def update_admin2(self, acct, data):
         if not acct or acct['admin'] == 0:
             return ('Eaccess', None)
-        cur = yield self.db.cursor()
-        yield cur.execute('UPDATE "account" SET "pay" = %s WHERE "uid" = %s;', (data['pay'], data['uid']))
-        if cur.rowcount != 1:
+        res = yield from self.db.execute('UPDATE "account" SET "pay" = %s WHERE "uid" = %s;', (data['pay'], data['uid']))
+        if res.rowcount != 1:
             return ('Edb', None)
         return (None, data['uid'])
 
@@ -63,9 +61,8 @@ class AdminService:
         uid = data['uid']
         data.pop('uid')
         sql, prama = gen_sql(data)
-        cur = yield self.db.cursor()
-        yield cur.execute('UPDATE "account_info" '+sql+' WHERE "uid" = %s;', prama + (uid,))
-        if cur.rowcount != 1:
+        res = yield from self.db.execute('UPDATE "account_info" '+sql+' WHERE "uid" = %s;', prama + (uid,))
+        if res.rowcount != 1:
             return ('Edb', None)
         if flag_img != None:
             sub = subprocess.Popen('find ../http/'+str(uid)+' | grep flag', shell=True, stdout=subprocess.PIPE)
@@ -99,9 +96,8 @@ class AdminService:
         if not acct or acct['admin'] == 0:
             return ('Eaccess', None)
         uid = data['uid']
-        cur = yield self.db.cursor()
-        yield cur.execute('UPDATE "account_info" SET "paycode" = \'\', "paydate" = \'\' WHERE "uid" = %s;', (uid, ))
-        if cur.rowcount != 1:
+        res = yield from self.db.execute('UPDATE "account_info" SET "paycode" = \'\', "paydate" = \'\' WHERE "uid" = %s;', (uid, ))
+        if res.rowcount != 1:
             return ('Edb', None)
         return (None, uid)
 
@@ -115,7 +111,7 @@ class AdminService:
                 'university', 'grade', 'delegation', 'delegation_englishname', 'delegation_email', 
                 'residence', 'city', 'address', 'cellphone', 'require_accommodation', 
                 'committee_preference', 'department', 'pc1', 'pc2', 'iachr1', 'email',
-                'iachr2', 'hearabout', 'experience', 'other', 'ticket', 'id_number', 'emergency_person' ,'emergency_phone','pay']
+                'hearabout', 'experience', 'paycode', 'paydate', 'preference', 'country', 'other', 'ticket', 'id_number', 'emergency_person' ,'emergency_phone']
         res = ''
         for a in args:
             res += '="%s",'%a

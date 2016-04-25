@@ -28,28 +28,26 @@ class LoginService:
             return ('Erpwd', None)
         if email.find('@') == -1:
             return ('Enotemail', None)
-        cur = yield self.db.cursor()
-        yield cur.execute('SELECT "uid" FROM "account" WHERE "email" = %s;', (email,))
-        if cur.rowcount != 0:
+        res = yield from self.db.execute('SELECT "uid" FROM "account" WHERE "email" = %s;', (email,))
+        if res.rowcount != 0:
             return ('Eemail', None)
         hpwd = _hash(pwd)
-        yield cur.execute('INSERT INTO "account" ("email", "pwd") VALUES(%s, %s) RETURNING "uid";',
+        yield from self.db.execute('INSERT INTO "account" ("email", "pwd") VALUES(%s, %s) RETURNING "uid";',
                 (email, hpwd))
-        if cur.rowcount != 1:
+        if res.rowcount != 1:
             return ('Edb', None)
-        uid = int(cur.fetchone()[0])
-        yield cur.execute('INSERT INTO "account_info" ("uid") VALUES(%s);', (uid,))
+        uid = int(res.fetchone()[0])
+        yield self.db..execute('INSERT INTO "account_info" ("uid") VALUES(%s);', (uid,))
         path = os.path.abspath(os.path.join(os.path.dirname("__file__"),os.path.pardir)) + '/http/'
         path += str(uid)
         os.mkdir(path)
         return (None, uid)
 
     def signin(self, email, pwd):
-        cur = yield self.db.cursor()
-        yield cur.execute('SELECT "uid", "pwd" FROM "account" WHERE "email" = %s;', (email,))
-        if cur.rowcount != 1:
+        res = yield from self.db.execute('SELECT "uid", "pwd" FROM "account" WHERE "email" = %s;', (email,))
+        if res.rowcount != 1:
             return ('Eemail', None)
-        (uid, hpwd) = cur.fetchone()
+        (uid, hpwd) = res.fetchone()
         if str(_hash(pwd)) != hpwd:
             return ('Epwd', None)
         return (None, int(uid))
@@ -57,40 +55,37 @@ class LoginService:
     def forget_password(self, email):
         def random_password():
             return str(random.randint(0,100000000000))
-        cur = yield self.db.cursor()
-        yield cur.execute('SELECT "uid" FROM "account" WHERE "email" = %s;', (email, ))
-        if cur.rowcount != 1:
+        yield from self.db.execute('SELECT "uid" FROM "account" WHERE "email" = %s;', (email, ))
+        if res.rowcount != 1:
             return ('Eemail', None)
-        uid = cur.fetchone()[0]
+        uid = res.fetchone()[0]
         npwd = random_password()
         hnpwd = _hash(npwd)
-        yield cur.execute('UPDATE "account" SET "pwd" = %s WHERE "uid" = %s;', (hnpwd, uid))
+        yield from self.db.execute('UPDATE "account" SET "pwd" = %s WHERE "uid" = %s;', (hnpwd, uid))
         err = self.forget_mail.send(email, 'change password', email=email, pwd=npwd)
         if err:
             return ('Esendmail', None)
         return (None, uid)
 
     def change_password(self, acct, data):
-        cur = yield self.db.cursor()
-        yield cur.execute('SELECT "pwd" FROM "account" WHERE "uid" = %s;', (acct['uid'],))
-        hpwd = cur.fetchone()[0]
+        res = yield from self.db.execute('SELECT "pwd" FROM "account" WHERE "uid" = %s;', (acct['uid'],))
+        hpwd = res.fetchone()[0]
         if str(hpwd) != str(_hash(data['opwd'])):
             return ('Password Error!', None)
 
         if data['npwd'] != data['rnpwd']:
             return ('Confirm Password Error!', None)
-        yield cur.execute('UPDATE "account" SET "pwd" = %s WHERE "uid" = %s;', (_hash(data['npwd']), acct['uid'], ))
-        if cur.rowcount != 1:
+        res = yield from self.db.execute('UPDATE "account" SET "pwd" = %s WHERE "uid" = %s;', (_hash(data['npwd']), acct['uid'], ))
+        if res.rowcount != 1:
             return ('Edb', None)
         return (None, acct['uid'])
 
 
     def get_account_info(self, uid):
-        cur = yield self.db.cursor()
-        yield cur.execute('SELECT "email", "info_confirm", "pay" FROM "account" WHERE "uid" = %s;', (uid,))
-        if cur.rowcount != 1:
+        res = yield from self.db.execute('SELECT "email", "info_confirm", "pay" FROM "account" WHERE "uid" = %s;', (uid,))
+        if res.rowcount != 1:
             return ('Euid', None)
-        (email, info_confirm, pay) = cur.fetchone()
+        (email, info_confirm, pay) = res.fetchone()
         meta = {'uid': uid,
                 'email': email,
                 'info_confirm': info_confirm,
