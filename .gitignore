@@ -2,6 +2,7 @@ mun.*.*.*.*.*
 mun.*.*.*.*
 mun.*.*.*
 mun.*.*
+user.csv
 
 # Byte-compiled / optimized / DLL files
 .*.sw[op]
